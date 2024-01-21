@@ -11,11 +11,12 @@ export default function Home() {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<any>(null);
   const [ps, setPs] = useState<any>(null);
+  const [cafes, setCafes] = useState<any[]>([]);
 
   const placesSearchCB = (data, status, pagination) => {
     if (status === window.kakao.maps.services.Status.OK) {
+      setCafes(pre => [...pre, ...data]);
       const bounds = new window.kakao.maps.LatLngBounds();
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
         displayMarker(data[i]);
         bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
@@ -61,8 +62,19 @@ export default function Home() {
     if (!map) return;
     if (!ps) return;
     ps.setMap(map);
-    keywordsSearch(['뺵다방', '메가커피', '컴포즈커피']);
+    keywordsSearch(['빽다방', '메가커피', '컴포즈커피']);
   }, [map, ps]);
 
-  return <div ref={mapRef} className='h-96 w-96'></div>;
+  console.log(cafes);
+
+  return (
+    <>
+      <div ref={mapRef} className='h-96 w-96'></div>
+      <ul>
+        {cafes.map(cafe => (
+          <li key={cafe.id}>{cafe.place_name}</li>
+        ))}
+      </ul>
+    </>
+  );
 }

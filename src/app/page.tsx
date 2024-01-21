@@ -35,6 +35,15 @@ export default function Home() {
     });
   };
 
+  const keywordsSearch = (keywords: string[]) => {
+    keywords.map(keyword => {
+      ps.keywordSearch(keyword, placesSearchCB, {
+        useMapCenter: true,
+        radius: 3000,
+      });
+    });
+  };
+
   useEffect(() => {
     window.kakao.maps.load(() => {
       const options = {
@@ -52,10 +61,7 @@ export default function Home() {
     if (!map) return;
     if (!ps) return;
     ps.setMap(map);
-    ps.keywordSearch('빽다방', placesSearchCB, {
-      useMapCenter: true,
-      radius: 1000,
-    });
+    keywordsSearch(['뺵다방', '메가커피', '컴포즈커피']);
   }, [map, ps]);
 
   return <div ref={mapRef} className='h-96 w-96'></div>;

@@ -19,7 +19,6 @@ const Map = ({ coords }: MapProps) => {
   const dispatch = useAppDispatch();
 
   const displayCurrentMarker = (map: any, coords: CoordsType) => {
-    console.log('current');
     const marker = new window.kakao.maps.Marker({
       map,
       position: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),

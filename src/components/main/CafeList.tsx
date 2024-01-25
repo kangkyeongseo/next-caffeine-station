@@ -76,6 +76,9 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
         displayMarker(cafes[i]);
         bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
       }
+      bounds.extend(
+        new window.kakao.maps.LatLng(coords?.latitude, coords?.longitude),
+      );
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다zx
       map.setBounds(bounds);

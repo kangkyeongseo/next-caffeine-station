@@ -6,10 +6,11 @@ import Cafe from './Cafe';
 
 interface CafeListProps {
   distance: number;
+  kerwords: string[];
   coords: CoordsType | null;
 }
 
-const CafeList = ({ distance, coords }: CafeListProps) => {
+const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   const { map } = useAppSelector(state => state.map);
   const [ps, setPs] = useState<any>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
@@ -60,15 +61,9 @@ const CafeList = ({ distance, coords }: CafeListProps) => {
     if (ps && map) {
       ps.setMap(map);
       setCafes([]);
-      keywordsSearch([
-        '빽다방',
-        '매가커피',
-        '컴포즈커피',
-        '매머드커피',
-        '더벤티',
-      ]);
+      keywordsSearch(kerwords);
     }
-  }, [ps, map, distance]);
+  }, [ps, map, distance, kerwords]);
 
   useEffect(() => {
     if (cafes.length === 0) return;

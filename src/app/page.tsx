@@ -17,7 +17,7 @@ export default function Home() {
         setKeywords={setKeywords}
       />
       <Map coords={coords} />
-      <CafeList distance={distance} coords={coords} />
+      <CafeList distance={distance} kerwords={kerwords} coords={coords} />
     </div>
   );
 }

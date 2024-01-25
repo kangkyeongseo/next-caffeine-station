@@ -1,9 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-
 import { setMap } from '@/redux/slices/mapSlice';
-import useCurrentLocation from '@/hooks/useCurrentLocation';
 import { useAppDispatch } from '@/redux/store';
+import { CoordsType } from '@/types';
 
 declare global {
   interface Window {
@@ -11,10 +10,13 @@ declare global {
   }
 }
 
-const Map = () => {
+interface MapProps {
+  coords: CoordsType | null;
+}
+
+const Map = ({ coords }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { coords, error } = useCurrentLocation();
 
   useEffect(() => {
     if (!coords) return;
@@ -31,7 +33,7 @@ const Map = () => {
 
   return (
     <>
-      <div ref={mapRef} className='h-96 w-96'></div>
+      <div ref={mapRef} className='h-screen w-screen'></div>
     </>
   );
 };

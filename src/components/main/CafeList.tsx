@@ -1,25 +1,23 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/store';
-import { CafeType } from '@/types';
+import { CafeType, CoordsType } from '@/types';
 import Cafe from './Cafe';
 
-const CafeList = () => {
+interface CafeListProps {
+  distance: number;
+  coords: CoordsType | null;
+}
+
+const CafeList = ({ distance, coords }: CafeListProps) => {
   const { map } = useAppSelector(state => state.map);
   const [ps, setPs] = useState<any>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
+  const [markers, setMarkers] = useState<any[]>([]);
 
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setCafes(pre => [...pre, ...data]);
-      const bounds = new window.kakao.maps.LatLngBounds();
-      for (let i = 0; i < data.length; i++) {
-        displayMarker(data[i]);
-        bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
-      }
-
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-      map.setBounds(bounds);
     } else {
       console.log('검색 실패', window.kakao.maps.services.Status);
     }
@@ -30,15 +28,26 @@ const CafeList = () => {
       map,
       position: new window.kakao.maps.LatLng(place.y, place.x),
     });
+    setMarkers(pre => [...pre, marker]);
+  };
+
+  const removeMarker = () => {
+    for (let i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    setMarkers([]);
   };
 
   const keywordsSearch = (keywords: string[]) => {
-    keywords.map(keyword => {
-      ps.keywordSearch(keyword, placesSearchCB, {
-        useMapCenter: true,
-        radius: 3000,
+    for (let i = 0; i < keywords.length; i++) {
+      ps.keywordSearch(keywords[i], placesSearchCB, {
+        location: new window.kakao.maps.LatLng(
+          coords?.latitude,
+          coords?.longitude,
+        ),
+        radius: distance * 1000,
       });
-    });
+    }
   };
 
   useEffect(() => {
@@ -50,9 +59,36 @@ const CafeList = () => {
   useEffect(() => {
     if (ps && map) {
       ps.setMap(map);
-      keywordsSearch(['빽다방', '메가커피', '컴포즈커피']);
+      setCafes([]);
+      keywordsSearch([
+        '빽다방',
+        '매가커피',
+        '컴포즈커피',
+        '매머드커피',
+        '더벤티',
+      ]);
     }
-  }, [ps, map]);
+  }, [ps, map, distance]);
+
+  useEffect(() => {
+    if (cafes.length === 0) return;
+    console.log('add');
+    const timeoutId = setTimeout(() => {
+      const bounds = new window.kakao.maps.LatLngBounds();
+
+      removeMarker();
+      for (let i = 0; i < cafes.length; i++) {
+        displayMarker(cafes[i]);
+        bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
+      }
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다zx
+      map.setBounds(bounds);
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [cafes]);
+
+  console.log(markers, cafes);
 
   return (
     <div>

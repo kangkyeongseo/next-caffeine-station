@@ -72,7 +72,7 @@ const CafeList = ({ distance, coords }: CafeListProps) => {
 
   useEffect(() => {
     if (cafes.length === 0) return;
-    console.log('add');
+
     const timeoutId = setTimeout(() => {
       const bounds = new window.kakao.maps.LatLngBounds();
 
@@ -87,8 +87,6 @@ const CafeList = ({ distance, coords }: CafeListProps) => {
     }, 1000);
     return () => clearTimeout(timeoutId);
   }, [cafes]);
-
-  console.log(markers, cafes);
 
   return (
     <div>

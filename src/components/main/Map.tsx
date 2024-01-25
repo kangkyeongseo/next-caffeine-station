@@ -18,6 +18,14 @@ const Map = ({ coords }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
+  const displayCurrentMarker = (map: any, coords: CoordsType) => {
+    console.log('current');
+    const marker = new window.kakao.maps.Marker({
+      map,
+      position: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),
+    });
+  };
+
   useEffect(() => {
     if (!coords) return;
     window.kakao.maps.load(() => {
@@ -27,6 +35,7 @@ const Map = ({ coords }: MapProps) => {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
+      displayCurrentMarker(newMap, coords);
       dispatch(setMap(newMap));
     });
   }, [coords]);

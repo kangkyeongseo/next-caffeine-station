@@ -1,9 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-
 import { setMap } from '@/redux/slices/mapSlice';
-import useCurrentLocation from '@/hooks/useCurrentLocation';
 import { useAppDispatch } from '@/redux/store';
+import { CoordsType } from '@/types';
 
 declare global {
   interface Window {
@@ -11,10 +10,20 @@ declare global {
   }
 }
 
-const Map = () => {
+interface MapProps {
+  coords: CoordsType | null;
+}
+
+const Map = ({ coords }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { coords, error } = useCurrentLocation();
+
+  const displayCurrentMarker = (map: any, coords: CoordsType) => {
+    const marker = new window.kakao.maps.Marker({
+      map,
+      position: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),
+    });
+  };
 
   useEffect(() => {
     if (!coords) return;
@@ -25,13 +34,14 @@ const Map = () => {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
+      displayCurrentMarker(newMap, coords);
       dispatch(setMap(newMap));
     });
   }, [coords]);
 
   return (
     <>
-      <div ref={mapRef} className='h-96 w-96'></div>
+      <div ref={mapRef} className='h-screen w-screen'></div>
     </>
   );
 };

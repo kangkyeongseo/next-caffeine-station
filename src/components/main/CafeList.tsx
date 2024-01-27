@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/store';
 import { CafeType, CoordsType } from '@/types';
+import jsxToString from '@/libs/client/jsxToString';
 import Cafe from './Cafe';
+import CafeOverlay from './CafeOverlay';
 
 interface CafeListProps {
   distance: number;
@@ -25,11 +27,17 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   };
 
   const displayMarker = (place: CafeType) => {
-    const marker = new window.kakao.maps.Marker({
-      map,
+    // const marker = new window.kakao.maps.Marker({
+    //   map,
+    //   position: new window.kakao.maps.LatLng(place.y, place.x),
+    // });
+    // setMarkers(pre => [...pre, marker]);
+    const overlay = new window.kakao.maps.CustomOverlay({
       position: new window.kakao.maps.LatLng(place.y, place.x),
+      content: jsxToString(<CafeOverlay cafe={place} />),
+      removavle: false,
     });
-    setMarkers(pre => [...pre, marker]);
+    overlay.setMap(map);
   };
 
   const removeMarker = () => {

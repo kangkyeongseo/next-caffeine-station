@@ -1,3 +1,5 @@
+import { setIsHot, setMode } from '@/redux/slices/filterSlice';
+import { useAppDispatch } from '@/redux/store';
 import React, { Dispatch, SetStateAction } from 'react';
 
 interface FilteringControllerProps {
@@ -11,6 +13,7 @@ const FilteringController = ({
   setDistance,
   setKeywords,
 }: FilteringControllerProps) => {
+  const dispatch = useAppDispatch();
   const onDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
@@ -44,6 +47,40 @@ const FilteringController = ({
       <div className='flex gap-4'>
         <span onClick={() => onKeywordsChange('가성비')}>가성비</span>
         <span onClick={() => onKeywordsChange('프리미엄')}>프리미엄</span>
+      </div>
+      <div className='flex gap-2'>
+        <div
+          className='cursor-pointer font-light'
+          onClick={() => dispatch(setMode('price'))}
+        >
+          가격(잔)
+        </div>
+        <div
+          className='cursor-pointer font-light'
+          onClick={() => dispatch(setMode('mlPrice'))}
+        >
+          가격(ml)
+        </div>
+        <div
+          className='cursor-pointer font-light'
+          onClick={() => dispatch(setMode('caffeinePrice'))}
+        >
+          카페인가격(ml)
+        </div>
+      </div>
+      <div className='flex gap-2'>
+        <div
+          className='cursor-pointer font-light'
+          onClick={() => dispatch(setIsHot(true))}
+        >
+          HOT
+        </div>
+        <div
+          className='cursor-pointer font-light'
+          onClick={() => dispatch(setIsHot(false))}
+        >
+          ICE
+        </div>
       </div>
     </div>
   );

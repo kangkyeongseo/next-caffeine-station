@@ -5,6 +5,7 @@ import { CafeType, CoordsType } from '@/types';
 import jsxToString from '@/libs/client/jsxToString';
 import Cafe from './Cafe';
 import CafeOverlay from './CafeOverlay';
+import Provider from '../Provider';
 
 interface CafeListProps {
   distance: number;
@@ -16,7 +17,8 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   const { map } = useAppSelector(state => state.map);
   const [ps, setPs] = useState<any>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
-  const [markers, setMarkers] = useState<any[]>([]);
+  // const [markers, setMarkers] = useState<any[]>([]);
+  const [overlay, setOverlay] = useState<any[]>([]);
 
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
@@ -34,17 +36,26 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
     // setMarkers(pre => [...pre, marker]);
     const overlay = new window.kakao.maps.CustomOverlay({
       position: new window.kakao.maps.LatLng(place.y, place.x),
-      content: jsxToString(<CafeOverlay cafe={place} />),
+      content: jsxToString(
+        <Provider>
+          <CafeOverlay cafe={place} />
+        </Provider>,
+      ),
       removavle: false,
     });
     overlay.setMap(map);
+    setOverlay(pre => [...pre, overlay]);
   };
 
   const removeMarker = () => {
-    for (let i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
+    // for (let i = 0; i < markers.length; i++) {
+    //   markers[i].setMap(null);
+    // }
+    // setMarkers([]);
+    for (let i = 0; i < overlay.length; i++) {
+      overlay[i].setMap(null);
     }
-    setMarkers([]);
+    setOverlay([]);
   };
 
   const keywordsSearch = (keywords: string[]) => {
@@ -95,7 +106,7 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   }, [cafes]);
 
   return (
-    <div>
+    <div className='absolute right-0 top-0 z-10'>
       <span>CafeList</span>
       {cafes.map(cafe => (
         <Cafe key={cafe.id} cafe={cafe} />

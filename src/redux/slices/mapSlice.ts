@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type Map = { map: any };
+type MapType = { map: any };
 
-const initialState: Map = { map: null };
+const initialState: MapType = { map: null };
 
 const mapSlice = createSlice({
   name: 'Map',

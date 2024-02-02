@@ -6,19 +6,29 @@ import jsxToString from '@/libs/client/jsxToString';
 import Cafe from './Cafe';
 import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
+import CafeModal from '@/components/main/cafeModal/CafeModal';
 
 interface CafeListProps {
-  distance: number;
-  kerwords: string[];
   coords: CoordsType | null;
 }
 
-const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
+const CafeList = ({ coords }: CafeListProps) => {
   const { map } = useAppSelector(state => state.map);
+  const { keywords } = useAppSelector(state => state.filter);
+  const { distance } = useAppSelector(state => state.filter);
   const [ps, setPs] = useState<any>(null);
+  const [selectedCafe, setSelectedCafe] = useState<CafeType | null>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // const [markers, setMarkers] = useState<any[]>([]);
   const [overlay, setOverlay] = useState<any[]>([]);
+  const [isPsReady, setIsPsReady] = useState(false);
+
+  const handleListClick = (cafe: CafeType) => {
+    setSelectedCafe(cafe);
+    setIsModalOpen(true);
+  };
 
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
@@ -65,7 +75,7 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
           coords?.latitude,
           coords?.longitude,
         ),
-        radius: distance * 1000,
+        radius: distance,
       });
     }
   };
@@ -79,10 +89,16 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   useEffect(() => {
     if (ps && map) {
       ps.setMap(map);
-      setCafes([]);
-      keywordsSearch(kerwords);
+      setIsPsReady(true);
     }
-  }, [ps, map, distance, kerwords]);
+  }, [ps, map]);
+
+  useEffect(() => {
+    if (isPsReady) {
+      setCafes([]);
+      keywordsSearch(keywords);
+    }
+  }, [isPsReady, distance, keywords]);
 
   useEffect(() => {
     if (cafes.length === 0) return;
@@ -106,12 +122,21 @@ const CafeList = ({ distance, kerwords, coords }: CafeListProps) => {
   }, [cafes]);
 
   return (
-    <div className='absolute right-0 top-0 z-10'>
-      <span>CafeList</span>
-      {cafes.map(cafe => (
-        <Cafe key={cafe.id} cafe={cafe} />
-      ))}
-    </div>
+    <>
+      <div className='absolute right-0 top-0 z-10'>
+        <span>CafeList</span>
+        <ul>
+          {cafes.map(cafe => (
+            <li key={cafe.id} onClick={() => handleListClick(cafe)}>
+              <Cafe cafe={cafe} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      {isModalOpen && (
+        <CafeModal cafe={selectedCafe} setIsModalOpen={setIsModalOpen} />
+      )}
+    </>
   );
 };
 

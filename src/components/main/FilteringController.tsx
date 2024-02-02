@@ -1,32 +1,29 @@
-import { setIsHot, setMode } from '@/redux/slices/filterSlice';
-import { useAppDispatch } from '@/redux/store';
-import React, { Dispatch, SetStateAction } from 'react';
-
-interface FilteringControllerProps {
-  distance: number;
-  setDistance: Dispatch<SetStateAction<number>>;
-  setKeywords: Dispatch<SetStateAction<string[]>>;
-}
-
-const FilteringController = ({
-  distance,
+import {
   setDistance,
+  setIsHot,
   setKeywords,
-}: FilteringControllerProps) => {
+  setMode,
+} from '@/redux/slices/filterSlice';
+import { useAppDispatch } from '@/redux/store';
+
+const FilteringController = () => {
   const dispatch = useAppDispatch();
-  const onDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { value },
-    } = event;
-    setDistance(Number(value));
+  const onDistanceChange = (newDistance: number) => {
+    dispatch(setDistance(newDistance));
   };
+  // const onDistanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   dispatch(setDistance(Number(value)));
+  // };
   const onKeywordsChange = (type: string) => {
     switch (type) {
       case '가성비':
-        setKeywords(['빽다방', '메가커피', '컴포즈커피']);
+        dispatch(setKeywords(['빽다방', '메가커피', '컴포즈커피']));
         break;
       case '프리미엄':
-        setKeywords(['스타벅스', '폴바셋', '투썸플레이스']);
+        dispatch(setKeywords(['스타벅스', '폴바셋', '투썸플레이스']));
         break;
       default:
     }
@@ -34,7 +31,10 @@ const FilteringController = ({
   return (
     <div className='fixed z-10 h-screen w-80 bg-white'>
       <div>
-        <input
+        <span onClick={() => onDistanceChange(300)}>300m</span>
+        <span onClick={() => onDistanceChange(500)}>500m</span>
+        <span onClick={() => onDistanceChange(1000)}>1km</span>
+        {/* <input
           type='range'
           max={10}
           min={1}
@@ -42,7 +42,7 @@ const FilteringController = ({
           value={distance}
           onChange={onDistanceChange}
         />
-        <span>{distance}</span>
+        <span>{distance}</span> */}
       </div>
       <div className='flex gap-4'>
         <span onClick={() => onKeywordsChange('가성비')}>가성비</span>

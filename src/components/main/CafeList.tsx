@@ -6,7 +6,6 @@ import jsxToString from '@/libs/client/jsxToString';
 import Cafe from './Cafe';
 import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
-import CafeModal from '@/components/main/cafeModal/CafeModal';
 
 interface CafeListProps {
   coords: CoordsType | null;
@@ -17,18 +16,11 @@ const CafeList = ({ coords }: CafeListProps) => {
   const { keywords } = useAppSelector(state => state.filter);
   const { distance } = useAppSelector(state => state.filter);
   const [ps, setPs] = useState<any>(null);
-  const [selectedCafe, setSelectedCafe] = useState<CafeType | null>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const [markers, setMarkers] = useState<any[]>([]);
   const [overlay, setOverlay] = useState<any[]>([]);
   const [isPsReady, setIsPsReady] = useState(false);
-
-  const handleListClick = (cafe: CafeType) => {
-    setSelectedCafe(cafe);
-    setIsModalOpen(true);
-  };
 
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
@@ -127,15 +119,10 @@ const CafeList = ({ coords }: CafeListProps) => {
         <span>CafeList</span>
         <ul>
           {cafes.map(cafe => (
-            <li key={cafe.id} onClick={() => handleListClick(cafe)}>
-              <Cafe cafe={cafe} />
-            </li>
+            <Cafe key={cafe.id} cafe={cafe} />
           ))}
         </ul>
       </div>
-      {isModalOpen && (
-        <CafeModal cafe={selectedCafe} setIsModalOpen={setIsModalOpen} />
-      )}
     </>
   );
 };

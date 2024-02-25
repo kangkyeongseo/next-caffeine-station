@@ -20,7 +20,7 @@ const FilteringController = () => {
   const onKeywordsChange = (type: string) => {
     switch (type) {
       case '가성비':
-        dispatch(setKeywords(['빽다방', '메가커피', '컴포즈커피']));
+        dispatch(setKeywords(['빽다방', '메가MGC커피', '컴포즈커피']));
         break;
       case '프리미엄':
         dispatch(setKeywords(['스타벅스', '폴바셋', '투썸플레이스']));

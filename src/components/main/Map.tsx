@@ -15,8 +15,9 @@ interface MapProps {
 }
 
 const Map = ({ coords }: MapProps) => {
-  const mapRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayCurrentMarker = (map: any, coords: CoordsType) => {
     const marker = new window.kakao.maps.Marker({
@@ -36,13 +37,18 @@ const Map = ({ coords }: MapProps) => {
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
       displayCurrentMarker(newMap, coords);
       dispatch(setMap(newMap));
+      setIsLoading(false);
     });
   }, [coords]);
 
   return (
-    <>
-      <div ref={mapRef} className='h-screen w-screen'></div>
-    </>
+    <div className='relative flex items-center justify-center'>
+      <span className='fixed top-[50%]'>Loading</span>
+      <div
+        ref={mapRef}
+        className={`h-screen w-screen ${isLoading ? 'invisible' : ''}`}
+      ></div>
+    </div>
   );
 };
 

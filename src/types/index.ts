@@ -17,3 +17,20 @@ export interface CafeType {
   x: string;
   y: string;
 }
+
+export interface nutritionalInfoType {
+  type: string;
+  size: string;
+  price: number;
+  amount: number;
+  kcal: number;
+  caffeine: number;
+}
+
+export interface MenuType {
+  menuName: string;
+  category: string;
+  types: string[];
+  sizes: string[];
+  nutritionalInfos: nutritionalInfoType[];
+}

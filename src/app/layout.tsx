@@ -13,8 +13,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang='ko'>
@@ -23,7 +25,10 @@ export default function RootLayout({
           strategy='beforeInteractive'
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services`}
         ></Script>
-        <Provider>{children}</Provider>
+        <Provider>
+          {children}
+          {modal}
+        </Provider>
       </body>
     </html>
   );

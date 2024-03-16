@@ -1,12 +1,24 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import { menus } from '@/content';
+import { MenuType } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { setMenu } from '@/redux/slices/menuSlice';
 
 interface ModalMenuProps {
   cafeId: string;
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalMenu = ({ cafeId }: ModalMenuProps) => {
+const ModalMenu = ({
+  cafeId,
+  isMenuOpen,
+  setIsMenuOpen,
+  setIsAnimation,
+}: ModalMenuProps) => {
+  const dispatch = useAppDispatch();
+  const { menu } = useAppSelector(state => state.menu);
   const brandMenus = menus.find(menu => {
     if (menu.bradnId === Number(cafeId)) {
       return menu;
@@ -15,18 +27,32 @@ const ModalMenu = ({ cafeId }: ModalMenuProps) => {
     }
   });
   const [selectedCategory, setSelectedCategory] = useState('coffee');
-  const [selectedMenus, setSelectedMenus] = useState<any[]>([]);
+  const [selectedMenus, setSelectedMenus] = useState<MenuType[]>([]);
 
   const handleNavClick = (category: string) => {
     setSelectedCategory(category);
   };
 
+  const handleMenuClick = (clickedMenu: MenuType) => {
+    if (!isMenuOpen) {
+      setIsMenuOpen(true);
+      dispatch(setMenu(clickedMenu));
+    } else if (clickedMenu.menuName === menu.menuName) {
+      setIsAnimation(false);
+      setTimeout(() => {
+        setIsMenuOpen(false);
+      }, 300);
+    } else {
+      dispatch(setMenu(clickedMenu));
+    }
+  };
+
   useEffect(() => {
     if (!brandMenus) return;
     setSelectedMenus(
-      brandMenus.menu.filter((menu: any) => {
-        if (menu.category === selectedCategory) {
-          return menu;
+      brandMenus.menu.filter(item => {
+        if (item.category === selectedCategory) {
+          return item;
         }
       }),
     );
@@ -45,6 +71,7 @@ const ModalMenu = ({ cafeId }: ModalMenuProps) => {
           <li
             key={menu.menuName}
             className='flex cursor-pointer items-center justify-between rounded-md border px-6 py-4'
+            onClick={() => handleMenuClick(menu)}
           >
             <div>
               <span>{menu.menuName}</span>
@@ -53,11 +80,11 @@ const ModalMenu = ({ cafeId }: ModalMenuProps) => {
               </div>
             </div>
             <div>
-              {menu.kind.map((kind: any) => (
-                <span key={kind.type}>
-                  {kind.type === 'hot'
-                    ? `HOT ${kind.price}원`
-                    : `ICE ${kind.price}원`}
+              {menu.nutritionalInfos.map((info: any) => (
+                <span key={info.type}>
+                  {info.type === 'hot'
+                    ? `HOT ${info.price}원`
+                    : `ICE ${info.price}원`}
                 </span>
               ))}
             </div>

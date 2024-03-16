@@ -13,7 +13,7 @@ const megaCoffee = {
   menu: [
     {
       menuName: '아메리카노',
-      kind: [
+      nutritionalInfos: [
         {
           type: 'hot',
           size: 'one_size',
@@ -43,7 +43,7 @@ const composeCoffee = {
   menu: [
     {
       menuName: '아메리카노',
-      kind: [
+      nutritionalInfo: [
         {
           type: 'hot',
           size: 'one_size',
@@ -73,7 +73,7 @@ const starbucks = {
   menu: [
     {
       menuName: '아메리카노',
-      kind: [
+      nutritionalInfo: [
         {
           type: 'hot',
           size: 'one_size',
@@ -103,7 +103,7 @@ const paulbassett = {
   menu: [
     {
       menuName: '아메리카노',
-      kind: [
+      nutritionalInfo: [
         {
           type: 'hot',
           size: 'one_size',
@@ -133,7 +133,7 @@ const twosome = {
   menu: [
     {
       menuName: '아메리카노',
-      kind: [
+      nutritionalInfo: [
         {
           type: 'hot',
           size: 'one_size',
@@ -173,7 +173,7 @@ export const menus = [
         category: 'coffee',
         types: ['hot', 'ice'],
         sizes: ['one_size'],
-        kind: [
+        nutritionalInfos: [
           {
             type: 'hot',
             size: 'one_size',
@@ -197,7 +197,7 @@ export const menus = [
         category: 'coffee',
         types: ['hot', 'ice'],
         sizes: ['one_size'],
-        kind: [
+        nutritionalInfos: [
           {
             type: 'hot',
             size: 'one_size',
@@ -221,7 +221,7 @@ export const menus = [
         category: 'coffee',
         types: ['hot', 'ice'],
         sizes: ['one_size'],
-        kind: [
+        nutritionalInfos: [
           {
             type: 'hot',
             size: 'one_size',
@@ -245,7 +245,7 @@ export const menus = [
         category: 'beverage',
         types: ['ice'],
         sizes: ['one_size'],
-        kind: [
+        nutritionalInfos: [
           {
             type: 'ice',
             size: 'one_size',
@@ -261,7 +261,7 @@ export const menus = [
         category: 'dessert',
         types: [],
         sizes: ['one_size'],
-        kind: [
+        nutritionalInfos: [
           {
             type: 'ice',
             size: 'one_size',

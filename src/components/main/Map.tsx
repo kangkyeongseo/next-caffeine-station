@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { setMap } from '@/redux/slices/mapSlice';
 import { useAppDispatch } from '@/redux/store';
 import { CoordsType } from '@/types';
+import Loading from '@/app/loading';
 
 declare global {
   interface Window {
@@ -43,11 +44,8 @@ const Map = ({ coords }: MapProps) => {
 
   return (
     <div className='relative flex items-center justify-center'>
-      <span className='fixed top-[50%]'>Loading</span>
-      <div
-        ref={mapRef}
-        className={`h-screen w-screen ${isLoading ? 'invisible' : ''}`}
-      ></div>
+      {isLoading && <Loading />}
+      <div ref={mapRef} className={`h-screen w-screen`}></div>
     </div>
   );
 };

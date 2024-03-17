@@ -1,7 +1,7 @@
 'use client';
-import Map from '@/components/main/Map';
-import CafeList from '@/components/main/CafeList';
-import FilteringController from '@/components/main/FilteringController';
+import Map from '@/components/Main/Map';
+import CafeList from '@/components/Main/CafeList';
+import FilteringController from '@/components/Main/FilteringController';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 export default function Home() {

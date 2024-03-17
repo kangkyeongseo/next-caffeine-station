@@ -11,7 +11,7 @@ const initialState: FilterType = {
   mode: 'price',
   isHot: true,
   distance: 300,
-  keywords: [],
+  keywords: ['빽다방', '메가MGC커피', '컴포즈커피'],
 };
 
 const filterSlice = createSlice({

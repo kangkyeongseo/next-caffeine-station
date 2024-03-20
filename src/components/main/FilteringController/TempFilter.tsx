@@ -11,7 +11,7 @@ const TempFilter = ({ isHot, onTempChange }: TempFilterProps) => {
       {['hot', 'ice'].map(temp => (
         <span
           key={temp}
-          className={`cursor-pointer py-2 text-center uppercase ${(isHot && temp === 'hot') || (!isHot && temp === 'ice') ? 'bg-gray-200 font-medium' : 'bg-white'}`}
+          className={`cursor-pointer py-2 text-center uppercase duration-100 ${(isHot && temp === 'hot') || (!isHot && temp === 'ice') ? 'bg-gray-200 font-medium' : 'bg-white hover:bg-gray-100'}`}
           onClick={() => onTempChange(temp)}
         >
           {temp}

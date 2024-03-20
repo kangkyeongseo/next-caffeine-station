@@ -11,12 +11,12 @@ const ModeFilter = ({ modeState, onModeChange }: ModeFilterProps) => {
       {['price', 'mlPrice', 'caffeinePrice'].map(mode => (
         <span
           key={mode}
-          className={`cursor-pointer py-2 text-center text-white ${modeState === mode ? 'bg-[#0e4022] font-medium' : 'bg-green-900'}`}
+          className={`cursor-pointer py-2 text-center text-white duration-100 ${modeState === mode ? 'bg-emerald-800 font-medium' : 'bg-emerald-600 hover:bg-emerald-700'}`}
           onClick={() => onModeChange(mode)}
         >
           {mode === 'price' && '가격(잔)'}
           {mode === 'mlPrice' && '가격(ml)'}
-          {mode === 'caffeinePrice' && '카페인가격(ml)'}
+          {mode === 'caffeinePrice' && '카페인가격'}
         </span>
       ))}
     </div>

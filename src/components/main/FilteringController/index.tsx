@@ -12,6 +12,7 @@ import KeywordsFilter from './KeywordsFilter';
 import ModeFilter from './ModeFilter';
 import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
+import FilterStates from './FilterStates';
 
 const FilteringController = () => {
   const dispatch = useAppDispatch();
@@ -53,7 +54,7 @@ const FilteringController = () => {
   return (
     <div className='fixed left-4 top-4 z-10 flex w-80 flex-col-reverse overflow-hidden'>
       <div
-        className={`z-10 h-fit text-sm duration-300 ${isOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-full opacity-0'}`}
+        className={`h-fit text-sm duration-300 ${isOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-full opacity-0'}`}
       >
         <DistanceFilter
           distanceState={distanceState}
@@ -69,6 +70,13 @@ const FilteringController = () => {
       <div className='z-20'>
         <FilteringControllerHeader isOpen={isOpen} setIsOpen={setIsOpen} />
         <SearchFilter />
+        <FilterStates
+          distance={distanceState}
+          keywordType={keywordType}
+          mode={modeState}
+          isHot={isHot}
+          setIsOpen={setIsOpen}
+        />
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const KeywordsFilter = ({
       {['가성비', '프리미엄'].map(keyword => (
         <span
           key={keyword}
-          className={`cursor-pointer py-2 text-center ${keywordType === keyword ? 'bg-gray-200 font-medium' : 'bg-white'}`}
+          className={`cursor-pointer py-2 text-center duration-100 ${keywordType === keyword ? 'bg-gray-200 font-medium' : 'bg-white hover:bg-gray-100'}`}
           onClick={() => onKeywordsChange(keyword)}
         >
           {keyword}

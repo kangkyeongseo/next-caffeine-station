@@ -1,8 +1,9 @@
+import { CoordsType } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 
-type MapType = { map: any };
+type MapType = { map: any; coords: CoordsType | null };
 
-const initialState: MapType = { map: null };
+const initialState: MapType = { map: null, coords: null };
 
 const mapSlice = createSlice({
   name: 'Map',
@@ -11,8 +12,11 @@ const mapSlice = createSlice({
     setMap(state, action) {
       state.map = action.payload;
     },
+    setCoords(state, action) {
+      state.coords = action.payload;
+    },
   },
 });
 
-export const { setMap } = mapSlice.actions;
+export const { setMap, setCoords } = mapSlice.actions;
 export default mapSlice.reducer;

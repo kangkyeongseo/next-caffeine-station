@@ -7,12 +7,8 @@ import Cafe from './Cafe';
 import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
 
-interface CafeListProps {
-  coords: CoordsType | null;
-}
-
-const CafeList = ({ coords }: CafeListProps) => {
-  const { map } = useAppSelector(state => state.map);
+const CafeList = () => {
+  const { map, coords } = useAppSelector(state => state.map);
   const { keywords } = useAppSelector(state => state.filter);
   const { distance } = useAppSelector(state => state.filter);
   const [ps, setPs] = useState<any>(null);
@@ -90,7 +86,7 @@ const CafeList = ({ coords }: CafeListProps) => {
       setCafes([]);
       keywordsSearch(keywords);
     }
-  }, [isPsReady, distance, keywords]);
+  }, [isPsReady, distance, keywords, coords]);
 
   useEffect(() => {
     if (cafes.length === 0) return;

@@ -4,7 +4,7 @@ import FilteringController from '@/components/Main/FilteringController';
 
 export default function Home() {
   return (
-    <div className='relative'>
+    <div className='relative h-screen w-screen overflow-hidden'>
       <FilteringController />
       <Map />
       <CafeList />

@@ -3,12 +3,14 @@ import mapSlice from './slices/mapSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import filterSlice from './slices/filterSlice';
 import menuSlice from './slices/menuSlice';
+import overlayCafeSlice from './slices/overlayCafeSlice';
 
 export const store = configureStore({
   reducer: {
     map: mapSlice,
     filter: filterSlice,
     menu: menuSlice,
+    overlayCafe: overlayCafeSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

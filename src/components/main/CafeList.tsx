@@ -4,7 +4,7 @@ import { useAppSelector } from '@/redux/store';
 import { CafeType } from '@/types';
 import jsxToString from '@/libs/client/jsxToString';
 import { ChevrongLeft, ChevrongRight } from '@/image/svgs ';
-import Cafe from './Cafe';
+import CafeItem from './CafeItem';
 import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
 import CafeFilter from './CafeFilter';
@@ -121,7 +121,7 @@ const CafeList = () => {
           </li>
         )}
         {filteringCafes.map(cafe => (
-          <Cafe key={cafe.id} cafe={cafe} />
+          <CafeItem key={cafe.id} cafe={cafe} />
         ))}
       </ul>
       <div

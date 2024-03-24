@@ -8,7 +8,7 @@ import {
   setOverlayCafeId,
 } from '@/redux/slices/overlayCafeSlice';
 
-const Cafe = ({ cafe }: { cafe: CafeType }) => {
+const CafeItem = ({ cafe }: { cafe: CafeType }) => {
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
   // 브랜드 검색
@@ -62,4 +62,4 @@ const Cafe = ({ cafe }: { cafe: CafeType }) => {
   );
 };
 
-export default Cafe;
+export default CafeItem;

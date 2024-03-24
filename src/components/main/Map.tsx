@@ -1,8 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { setMap } from '@/redux/slices/mapSlice';
-import { useAppDispatch } from '@/redux/store';
+import { setCoords, setMap } from '@/redux/slices/mapSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { CoordsType } from '@/types';
+import Loading from '@/app/loading';
+import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 declare global {
   interface Window {
@@ -10,13 +12,11 @@ declare global {
   }
 }
 
-interface MapProps {
-  coords: CoordsType | null;
-}
-
-const Map = ({ coords }: MapProps) => {
+const Map = () => {
   const dispatch = useAppDispatch();
   const mapRef = useRef<HTMLDivElement>(null);
+  const { map, coords: coordsState } = useAppSelector(state => state.map);
+  const { coords, error } = useCurrentLocation();
   const [isLoading, setIsLoading] = useState(true);
 
   const displayCurrentMarker = (map: any, coords: CoordsType) => {
@@ -27,27 +27,31 @@ const Map = ({ coords }: MapProps) => {
   };
 
   useEffect(() => {
-    if (!coords) return;
+    dispatch(setCoords(coords));
+  }, [coords]);
+
+  useEffect(() => {
+    if (!coordsState) return;
     window.kakao.maps.load(() => {
       const options = {
         //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(coords.latitude, coords.longitude), //지도의 중심좌표.
+        center: new window.kakao.maps.LatLng(
+          coordsState.latitude,
+          coordsState.longitude,
+        ), //지도의 중심좌표.
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
-      displayCurrentMarker(newMap, coords);
+      displayCurrentMarker(newMap, coordsState);
       dispatch(setMap(newMap));
       setIsLoading(false);
     });
-  }, [coords]);
+  }, [coordsState]);
 
   return (
     <div className='relative flex items-center justify-center'>
-      <span className='fixed top-[50%]'>Loading</span>
-      <div
-        ref={mapRef}
-        className={`h-screen w-screen ${isLoading ? 'invisible' : ''}`}
-      ></div>
+      {isLoading && <Loading />}
+      <div ref={mapRef} className={`h-screen w-screen`}></div>
     </div>
   );
 };

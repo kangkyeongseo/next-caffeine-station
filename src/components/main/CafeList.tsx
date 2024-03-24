@@ -86,19 +86,22 @@ const CafeList = () => {
   useEffect(() => {
     if (cafes.length === 0) return;
 
-    const bounds = new window.kakao.maps.LatLngBounds();
+    const timeoutId = setTimeout(() => {
+      const bounds = new window.kakao.maps.LatLngBounds();
 
-    removeMarker();
-    for (let i = 0; i < cafes.length; i++) {
-      displayMarker(cafes[i]);
-      bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
-    }
-    bounds.extend(
-      new window.kakao.maps.LatLng(coords?.latitude, coords?.longitude),
-    );
+      removeMarker();
+      for (let i = 0; i < cafes.length; i++) {
+        displayMarker(cafes[i]);
+        bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
+      }
+      bounds.extend(
+        new window.kakao.maps.LatLng(coords?.latitude, coords?.longitude),
+      );
 
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다zx
+      map.setBounds(bounds);
+    }, 500);
+    return () => clearTimeout(timeoutId);
   }, [cafes]);
 
   useEffect(() => {

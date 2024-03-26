@@ -1,47 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ModalMap from './ModalMap';
-import { useSearchParams } from 'next/navigation';
 import { CafeType } from '@/types';
-import { Phone, Place } from '@/image/svgs ';
+import ModalCafeDescription from './ModalCafeDescription';
 
-const ModalCafeInfo = () => {
-  const params = useSearchParams();
-  const cafeName = params.get('name');
-  const [cafe, setCafe] = useState<CafeType | null>(null);
+interface ModalCafeInfoProps {
+  cafe: CafeType | null;
+}
 
-  useEffect(() => {
-    if (!cafeName) return;
-    const places = new window.kakao.maps.services.Places();
-
-    const callback = function (result: CafeType[], status: string) {
-      if (status === window.kakao.maps.services.Status.OK) {
-        setCafe(result[0]);
-      }
-    };
-
-    places.keywordSearch(cafeName, callback);
-  }, [cafeName]);
-
+const ModalCafeInfo = ({ cafe }: ModalCafeInfoProps) => {
   if (!cafe) return;
   return (
-    <div>
+    <div className='space-y-4 '>
       <ModalMap
         coords={{ latitude: Number(cafe.y), longitude: Number(cafe.x) }}
       />
-      <div className='flex flex-col'>
-        <span className='text-xl font-bold'>{cafe.place_name}</span>
-        <div className='flex gap-2'>
-          <div className='flex'>
-            <Place />
-            <span className='font-light'>{cafe.road_address_name}</span>
-          </div>
-          <div className='flex'>
-            <Phone />
-            <span className='font-light'>{cafe.phone}</span>
-          </div>
-        </div>
-        <div>{cafe.distance}m 떨어진 위치에 있습니다.</div>
-      </div>
+      <ModalCafeDescription cafe={cafe} />
     </div>
   );
 };

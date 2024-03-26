@@ -2,7 +2,7 @@ import React from 'react';
 
 function Loading() {
   return (
-    <div className='fixed flex h-screen w-screen items-center justify-center'>
+    <div className='absolute flex h-screen w-screen items-center justify-center'>
       <svg className='h-6 w-6 animate-spin fill-green-900' viewBox='3 3 18 18'>
         <path
           className='opacity-20'

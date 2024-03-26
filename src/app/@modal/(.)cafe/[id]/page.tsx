@@ -1,4 +1,4 @@
-import Modal from '../../../../components/Cafe/Modal';
+import Modal from '../../../../components/Modal';
 import ModalContainer from '../../../../components/Cafe/ModalContainer';
 
 export default function CafeModal({ params }: { params: { id: string } }) {

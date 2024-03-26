@@ -172,11 +172,13 @@ export const menus = [
         menuName: '앗!메리카노',
         category: 'coffee',
         types: ['hot', 'ice'],
-        sizes: ['one_size'],
+        sizes: ['원사이즈'],
+        description:
+          '빽다방만의 맛과 향을 더한 100% 아라비카 로스팅 원두로 뽑아내 깊고 진한 맛의 앗!메리카노',
         nutritionalInfos: [
           {
             type: 'hot',
-            size: 'one_size',
+            size: '원사이즈',
             price: 1500,
             amount: 400,
             kcal: 14,
@@ -184,7 +186,7 @@ export const menus = [
           },
           {
             type: 'ice',
-            size: 'one_size',
+            size: '원사이즈',
             price: 2000,
             amount: 625,
             kcal: 13,
@@ -196,11 +198,12 @@ export const menus = [
         menuName: '원조커피',
         category: 'coffee',
         types: ['hot', 'ice'],
-        sizes: ['one_size'],
+        sizes: ['원사이즈'],
+        description: '달콤한 빽다방 대표메뉴, 믹스커피 종결자!',
         nutritionalInfos: [
           {
             type: 'hot',
-            size: 'one_size',
+            size: '원사이즈',
             price: 2500,
             amount: 375,
             kcal: 471,
@@ -208,7 +211,7 @@ export const menus = [
           },
           {
             type: 'ice',
-            size: 'one_size',
+            size: '원사이즈',
             price: 2500,
             amount: 625,
             kcal: 425,
@@ -220,11 +223,13 @@ export const menus = [
         menuName: '빽s라떼',
         category: 'coffee',
         types: ['hot', 'ice'],
-        sizes: ['one_size'],
+        sizes: ['원사이즈'],
+        description:
+          '진한 에스프레소와 우유가 어우려져 탄생한 부드러운 빽다방 라떼',
         nutritionalInfos: [
           {
             type: 'hot',
-            size: 'one_size',
+            size: '원사이즈',
             price: 3000,
             amount: 300,
             kcal: 253,
@@ -232,9 +237,51 @@ export const menus = [
           },
           {
             type: 'ice',
-            size: 'one_size',
+            size: '원사이즈',
             price: 3000,
             amount: 625,
+            kcal: 198,
+            caffeine: 237,
+          },
+        ],
+      },
+      {
+        menuName: '카페라떼',
+        category: 'coffee',
+        types: ['hot', 'ice'],
+        sizes: ['small', 'large'],
+        description:
+          '진한 에스프레소와 우유가 어우려져 탄생한 부드러운 빽다방 라떼',
+        nutritionalInfos: [
+          {
+            type: 'hot',
+            size: 'small',
+            price: 3000,
+            amount: 300,
+            kcal: 253,
+            caffeine: 237,
+          },
+          {
+            type: 'ice',
+            size: 'small',
+            price: 3500,
+            amount: 500,
+            kcal: 253,
+            caffeine: 237,
+          },
+          {
+            type: 'hot',
+            size: 'large',
+            price: 4000,
+            amount: 625,
+            kcal: 198,
+            caffeine: 237,
+          },
+          {
+            type: 'ice',
+            size: 'large',
+            price: 4500,
+            amount: 825,
             kcal: 198,
             caffeine: 237,
           },
@@ -244,11 +291,13 @@ export const menus = [
         menuName: '딸기라떼',
         category: 'beverage',
         types: ['ice'],
-        sizes: ['one_size'],
+        sizes: ['원사이즈'],
+        description:
+          '달콤한 딸기 과육이 가득! 부드럽고 달콤하게 즐기는 딸기라떼',
         nutritionalInfos: [
           {
             type: 'ice',
-            size: 'one_size',
+            size: '원사이즈',
             price: 4000,
             amount: 590,
             kcal: 331,
@@ -259,12 +308,13 @@ export const menus = [
       {
         menuName: '사라다빵',
         category: 'dessert',
-        types: [],
-        sizes: ['one_size'],
+        types: ['dessert'],
+        sizes: ['원사이즈'],
+        description: '어린시절 빵집에서 사먹던 추억의 감자 사라다빵',
         nutritionalInfos: [
           {
-            type: 'ice',
-            size: 'one_size',
+            type: 'dessert',
+            size: '원사이즈',
             price: 3000,
             amount: 0,
             kcal: 386,

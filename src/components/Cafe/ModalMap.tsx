@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { CoordsType } from '@/types';
 
 interface ModalMapProps {
@@ -22,6 +22,7 @@ const ModalMap = ({ coords }: ModalMapProps) => {
         //지도를 생성할 때 필요한 기본 옵션
         center: new window.kakao.maps.LatLng(coords.latitude, coords.longitude), //지도의 중심좌표.
         level: 2, //지도의 레벨(확대, 축소 정도)
+        draggable: false,
       };
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
       displayCurrentMarker(newMap, {

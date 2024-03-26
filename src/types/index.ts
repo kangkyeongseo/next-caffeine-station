@@ -32,5 +32,6 @@ export interface MenuType {
   category: string;
   types: string[];
   sizes: string[];
+  description: string;
   nutritionalInfos: nutritionalInfoType[];
 }

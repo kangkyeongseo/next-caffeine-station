@@ -1,5 +1,5 @@
-import Modal from './(component)/Modal';
-import ModalContainer from './(component)/ModalContainer';
+import Modal from '../../../../components/Modal';
+import ModalContainer from '../../../../components/Cafe/ModalContainer';
 
 export default function CafeModal({ params }: { params: { id: string } }) {
   return (

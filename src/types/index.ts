@@ -35,3 +35,30 @@ export interface MenuType {
   description: string;
   nutritionalInfos: nutritionalInfoType[];
 }
+
+export interface BrandType {
+  id: string;
+  name: string;
+  type: string;
+  hot: {
+    price: number;
+    amount: number;
+    caffeine: number;
+  };
+  ice: {
+    price: number;
+    amount: number;
+    caffeine: number;
+  };
+}
+
+export interface BrandFormType {
+  cafeName: string;
+  cafeType: string;
+  hotPrice: number;
+  hotAmount: number;
+  hotCaffeine: number;
+  icePrice: number;
+  iceAmount: number;
+  iceCaffeine: number;
+}

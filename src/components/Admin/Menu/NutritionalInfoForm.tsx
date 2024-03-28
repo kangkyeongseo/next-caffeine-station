@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import React, { ChangeEvent } from 'react';
+import { UseFormSetValue } from 'react-hook-form';
 import { MenuFormType, NutritionalInfoType } from '@/types';
 import { Close } from '@/image/svgs ';
 
-interface AddNutritionalInfoFormProps {
-  setValue: UseFormSetValue<MenuFormType>;
+interface NutritionalInfoFormProps {
   types: string[];
   setTypes: React.Dispatch<React.SetStateAction<string[]>>;
   sizes: string[];
@@ -13,14 +12,15 @@ interface AddNutritionalInfoFormProps {
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
   selectedSize: string;
   setSelectedSize: React.Dispatch<React.SetStateAction<string>>;
-  nutritionalInfos: NutritionalInfoType[] | null;
+  nutritionalInfos: NutritionalInfoType[];
   setNutritionalInfos: React.Dispatch<
-    React.SetStateAction<NutritionalInfoType[] | null>
+    React.SetStateAction<NutritionalInfoType[]>
   >;
+  removeTypeInNutritionalInfos: (type: string) => void;
+  removeSizeInNutritionalInfos: (size: string) => void;
 }
 
-const AddNutritionalInfoForm = ({
-  setValue,
+const NutritionalInfoForm = ({
   types,
   setTypes,
   sizes,
@@ -31,13 +31,19 @@ const AddNutritionalInfoForm = ({
   setSelectedSize,
   nutritionalInfos,
   setNutritionalInfos,
-}: AddNutritionalInfoFormProps) => {
+  removeTypeInNutritionalInfos,
+  removeSizeInNutritionalInfos,
+}: NutritionalInfoFormProps) => {
   const handleDeleyeType = (type: string) => {
     setTypes(pre => pre.filter(item => item !== type));
+    setSelectedType('');
+    if (removeTypeInNutritionalInfos) removeTypeInNutritionalInfos(type);
   };
 
   const handleDeleyeSize = (size: string) => {
     setSizes(pre => pre.filter(item => item !== size));
+    setSelectedSize('');
+    if (removeSizeInNutritionalInfos) removeSizeInNutritionalInfos(size);
   };
 
   const handleNutritionalInfoChange = (
@@ -47,7 +53,6 @@ const AddNutritionalInfoForm = ({
       target: { name, value },
     } = event;
 
-    if (!nutritionalInfos) return;
     const newNutritionalInfos = nutritionalInfos.map(info => {
       if (info.type === selectedType && info.size === selectedSize) {
         return { ...info, [name]: Number(value) };
@@ -56,20 +61,7 @@ const AddNutritionalInfoForm = ({
     });
 
     setNutritionalInfos(newNutritionalInfos);
-
-    // setNutritionalInfos(pre => {
-    //   if (!pre) return;
-    //   return { ...pre, [name]: value };
-    // });
   };
-
-  useEffect(() => {
-    setValue('types', types);
-  }, [types]);
-
-  useEffect(() => {
-    setValue('sizes', sizes);
-  }, [sizes]);
 
   return (
     <div className='w-[400px] bg-white'>
@@ -207,4 +199,4 @@ const AddNutritionalInfoForm = ({
   );
 };
 
-export default AddNutritionalInfoForm;
+export default NutritionalInfoForm;

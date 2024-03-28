@@ -3,8 +3,8 @@ import { MenuFormType, NutritionalInfoType } from '@/types';
 import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import AddMenuForm from './AddMenuForm';
-import AddNutritionalInfoForm from './AddNutritionalInfoForm';
+import MenuForm from './MenuForm';
+import NutritionalInfoForm from './NutritionalInfoForm';
 import { useForm } from 'react-hook-form';
 
 interface AddMenuModalProps {
@@ -21,7 +21,7 @@ const AddMenuModal = ({
   const [types, setTypes] = useState<string[]>([]);
   const [sizes, setSizes] = useState<string[]>([]);
   const [nutritionalInfos, setNutritionalInfos] = useState<
-    NutritionalInfoType[] | null
+    NutritionalInfoType[]
   >([]);
 
   const [selectedType, setSelectedType] = useState<string>('');
@@ -52,39 +52,46 @@ const AddMenuModal = ({
     router.refresh();
   };
 
-  useEffect(() => {
-    setSelectedType('');
-    setSelectedSize('');
-    if (types.length === 0) {
-      setNutritionalInfos([]);
-      return;
-    }
-    if (sizes.length === 0) {
-      setNutritionalInfos([]);
-      return;
-    }
-    const nutritionalInfoArray: NutritionalInfoType[] = [];
-    types.map(type => {
-      let nutritionalInfo: NutritionalInfoType;
-      sizes.map(size => {
-        nutritionalInfo = {
-          type,
-          size,
-          price: 0,
-          amount: 0,
-          kcal: 0,
-          caffeine: 0,
-        };
-        nutritionalInfoArray.push(nutritionalInfo);
-      });
+  const addTypeInNutritionalInfos = (type: string) => {
+    if (sizes.length === 0) return;
+    sizes.forEach(size => {
+      setNutritionalInfos(pre => [
+        ...pre,
+        { type, size, price: 0, amount: 0, kcal: 0, caffeine: 0 },
+      ]);
     });
-    setNutritionalInfos(nutritionalInfoArray);
-  }, [types, sizes]);
+  };
+
+  const addSizeInNutritionalInfos = (size: string) => {
+    if (types.length === 0) return;
+    types.forEach(type => {
+      setNutritionalInfos(pre => [
+        ...pre,
+        { type, size, price: 0, amount: 0, kcal: 0, caffeine: 0 },
+      ]);
+    });
+  };
+
+  const removeTypeInNutritionalInfos = (type: string) => {
+    setNutritionalInfos(pre => pre.filter(info => info.type !== type));
+  };
+
+  const removeSizeInNutritionalInfos = (size: string) => {
+    setNutritionalInfos(pre => pre.filter(info => info.size !== size));
+  };
+
+  useEffect(() => {
+    setValue('types', types);
+  }, [types]);
+
+  useEffect(() => {
+    setValue('sizes', sizes);
+  }, [sizes]);
 
   return (
     <div className='absolute left-0 top-0 flex h-screen w-screen items-center justify-center gap-4 bg-black/70'>
       <div className='min-h-[700px]'>
-        <AddMenuForm
+        <MenuForm
           register={register}
           watch={watch}
           setValue={setValue}
@@ -95,9 +102,10 @@ const AddMenuModal = ({
           setTypes={setTypes}
           sizes={sizes}
           setSizes={setSizes}
+          addTypeInNutritionalInfos={addTypeInNutritionalInfos}
+          addSizeInNutritionalInfos={addSizeInNutritionalInfos}
         />
-        <AddNutritionalInfoForm
-          setValue={setValue}
+        <NutritionalInfoForm
           types={types}
           setTypes={setTypes}
           sizes={sizes}
@@ -108,6 +116,8 @@ const AddMenuModal = ({
           setSelectedSize={setSelectedSize}
           nutritionalInfos={nutritionalInfos}
           setNutritionalInfos={setNutritionalInfos}
+          removeTypeInNutritionalInfos={removeTypeInNutritionalInfos}
+          removeSizeInNutritionalInfos={removeSizeInNutritionalInfos}
         />
         <div className='grid grid-cols-2'>
           <button

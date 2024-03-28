@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import {
   FieldErrors,
   UseFormClearErrors,
@@ -9,7 +9,7 @@ import {
 } from 'react-hook-form';
 import { MenuFormType } from '@/types';
 
-interface AddMenuFormProps {
+interface MenuFormProps {
   register: UseFormRegister<MenuFormType>;
   watch: UseFormWatch<MenuFormType>;
   setValue: UseFormSetValue<MenuFormType>;
@@ -20,9 +20,11 @@ interface AddMenuFormProps {
   sizes: string[];
   setTypes: React.Dispatch<React.SetStateAction<string[]>>;
   setSizes: React.Dispatch<React.SetStateAction<string[]>>;
+  addTypeInNutritionalInfos: (type: string) => void;
+  addSizeInNutritionalInfos: (size: string) => void;
 }
 
-const AddMenuForm = ({
+const MenuForm = ({
   register,
   watch,
   setValue,
@@ -33,7 +35,9 @@ const AddMenuForm = ({
   sizes,
   setTypes,
   setSizes,
-}: AddMenuFormProps) => {
+  addTypeInNutritionalInfos,
+  addSizeInNutritionalInfos,
+}: MenuFormProps) => {
   const [typeValue, setTypeValue] = useState('');
   const [sizeValue, setSizeValue] = useState('');
 
@@ -68,6 +72,7 @@ const AddMenuForm = ({
     } else {
       setTypes(pre => [...pre, typeValue]);
       setTypeValue('');
+      if (addTypeInNutritionalInfos) addTypeInNutritionalInfos(typeValue);
     }
   };
 
@@ -82,16 +87,9 @@ const AddMenuForm = ({
     } else {
       setSizes(pre => [...pre, sizeValue]);
       setSizeValue('');
+      if (addSizeInNutritionalInfos) addSizeInNutritionalInfos(sizeValue);
     }
   };
-
-  useEffect(() => {
-    setValue('types', types);
-  }, [types]);
-
-  useEffect(() => {
-    setValue('sizes', sizes);
-  }, [sizes]);
 
   return (
     <div className='w-[400px] bg-white'>
@@ -169,4 +167,4 @@ const AddMenuForm = ({
   );
 };
 
-export default AddMenuForm;
+export default MenuForm;

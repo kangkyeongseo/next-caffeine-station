@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/store';
-import { CafeType } from '@/types';
+import { BrandType, CafeType } from '@/types';
 import jsxToString from '@/libs/client/jsxToString';
 import { ChevrongLeft, ChevrongRight } from '@/image/svgs ';
 import CafeItem from './CafeItem';
@@ -9,7 +9,11 @@ import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
 import CafeFilter from './CafeFilter';
 
-const CafeList = () => {
+interface CafeListProps {
+  brands: BrandType[];
+}
+
+const CafeList = ({ brands }: CafeListProps) => {
   const { map, coords } = useAppSelector(state => state.map);
   const { keywords } = useAppSelector(state => state.filter);
   const { distance } = useAppSelector(state => state.filter);
@@ -35,7 +39,7 @@ const CafeList = () => {
       position: new window.kakao.maps.LatLng(place.y, place.x),
       content: jsxToString(
         <Provider>
-          <CafeOverlay cafe={place} />
+          <CafeOverlay cafe={place} brands={brands} />
         </Provider>,
       ),
     });
@@ -124,7 +128,7 @@ const CafeList = () => {
           </li>
         )}
         {filteringCafes.map(cafe => (
-          <CafeItem key={cafe.id} cafe={cafe} />
+          <CafeItem key={cafe.id} cafe={cafe} brands={brands} />
         ))}
       </ul>
       <div

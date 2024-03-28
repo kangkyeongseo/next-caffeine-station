@@ -46,6 +46,7 @@ const AddMenuModal = ({
       category: data.category,
       types: data.types,
       sizes: data.sizes,
+      description: data.description,
       nutritionalInfos: nutritionalInfos,
     });
     setIsAddMenuModalOpen(false);

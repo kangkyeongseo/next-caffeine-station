@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import ModalMenuCard from './ModalMenuCard';
 import ModalMainCard from './ModalMainCard';
+import { MenuType } from '@/types';
 
 interface ModalContainerProps {
-  cafeId: string;
+  menus: MenuType[];
 }
 
-const ModalContainer = ({ cafeId }: ModalContainerProps) => {
+const ModalContainer = ({ menus }: ModalContainerProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
 
@@ -19,7 +20,7 @@ const ModalContainer = ({ cafeId }: ModalContainerProps) => {
   return (
     <div className='relative'>
       <ModalMainCard
-        cafeId={cafeId}
+        menus={menus}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         setIsAnimation={setIsAnimation}

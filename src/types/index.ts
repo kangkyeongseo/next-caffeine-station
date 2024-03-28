@@ -71,5 +71,6 @@ export interface MenuFormType {
   category: string;
   types: string[];
   sizes: string[];
+  description: string;
   nutritionalInfos: NutritionalInfoType[];
 }

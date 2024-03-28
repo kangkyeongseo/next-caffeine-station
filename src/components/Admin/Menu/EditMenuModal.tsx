@@ -44,6 +44,7 @@ const EditMenuModal = ({
       category: menu.category,
       types: menu.types,
       sizes: menu.sizes,
+      description: menu.description,
       nutritionalInfos: menu.nutritionalInfos,
     },
   });
@@ -55,6 +56,7 @@ const EditMenuModal = ({
       category: data.category,
       types: data.types,
       sizes: data.sizes,
+      description: data.description,
       nutritionalInfos: nutritionalInfos,
     });
     setIsEditMenuModalOpen(false);

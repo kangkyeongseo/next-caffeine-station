@@ -1,14 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { CafeType } from '@/types';
-import { brands } from '@/content';
+import { BrandType, CafeType } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import {
   setIsEnterLink,
   setOverlayCafeId,
 } from '@/redux/slices/overlayCafeSlice';
 
-const CafeItem = ({ cafe }: { cafe: CafeType }) => {
+interface CafeItemProps {
+  cafe: CafeType;
+  brands: BrandType[];
+}
+
+const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
   // 브랜드 검색

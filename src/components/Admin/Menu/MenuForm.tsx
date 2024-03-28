@@ -128,6 +128,16 @@ const MenuForm = ({
         </ul>
       </div>
       <div className='grid grid-cols-[1fr,3fr] border-b-2'>
+        <span className='flex items-center justify-center border-r-2 bg-emerald-600 text-white'>
+          설명
+        </span>
+        <textarea
+          {...register('description', { required: true })}
+          placeholder='상품을 설명해주세요.'
+          className='resize-none px-4 outline-none'
+        />
+      </div>
+      <div className='grid grid-cols-[1fr,3fr] border-b-2'>
         <span className='border-r-2 bg-emerald-600 py-2 text-center text-white'>
           타입
         </span>

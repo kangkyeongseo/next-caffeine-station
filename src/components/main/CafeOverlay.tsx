@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { brands } from '@/content';
 import {
   setIsEnterLink,
   setOverlayCafeId,
 } from '@/redux/slices/overlayCafeSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { CafeType } from '@/types';
+import { BrandType, CafeType } from '@/types';
 
 interface CafeOverlayProps {
   cafe: CafeType;
+  brands: BrandType[];
 }
 
-const CafeOverlay = ({ cafe }: CafeOverlayProps) => {
+const CafeOverlay = ({ cafe, brands }: CafeOverlayProps) => {
   const dispatch = useAppDispatch();
   const brand = brands.find(brand => {
     if (cafe.place_name.includes(brand.name)) {

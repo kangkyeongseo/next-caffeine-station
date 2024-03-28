@@ -37,7 +37,7 @@ const megaCoffee = {
 
 const composeCoffee = {
   id: 3,
-  name: '컴포즈커피',
+  name: '     ',
   hot: { price: 1500, amount: 567, caffeine: 156 },
   ice: { price: 1500, amount: 567, caffeine: 156 },
   menu: [

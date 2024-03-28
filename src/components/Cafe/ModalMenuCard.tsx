@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/redux/store';
-import { nutritionalInfoType } from '@/types';
+import { NutritionalInfoType } from '@/types';
 import React, { useEffect, useState } from 'react';
 
 interface ModalMenuCardProps {
@@ -11,7 +11,7 @@ const ModalMenuCard = ({ isAnimation }: ModalMenuCardProps) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [nutritionalInfo, setNutritionalInfo] =
-    useState<nutritionalInfoType | null>();
+    useState<NutritionalInfoType | null>();
 
   useEffect(() => {
     menu.nutritionalInfos.forEach(info => {

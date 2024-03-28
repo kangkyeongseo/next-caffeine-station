@@ -55,8 +55,8 @@ export interface BrandType {
 }
 
 export interface BrandFormType {
-  cafeName: string;
-  cafeType: string;
+  name: string;
+  type: string;
   hotPrice: number;
   hotAmount: number;
   hotCaffeine: number;

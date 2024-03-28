@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
-import { MenuFormType, NutritionalInfoType } from '@/types';
+import { NutritionalInfoType } from '@/types';
 import { Close } from '@/image/svgs ';
 
 interface NutritionalInfoFormProps {

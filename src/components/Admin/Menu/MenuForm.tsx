@@ -119,7 +119,7 @@ const MenuForm = ({
           ].map(array => (
             <li
               key={array[0]}
-              className={`flex h-full items-center justify-center border-r-2 last:border-r-0 ${watch('category') === array[1] ? 'bg-emerald-800 text-white' : ''}`}
+              className={`flex h-full cursor-pointer items-center justify-center border-r-2 last:border-r-0 ${watch('category') === array[1] ? 'bg-emerald-800 text-white' : ''}`}
               onClick={() => setValue('category', array[1])}
             >
               {array[0]}

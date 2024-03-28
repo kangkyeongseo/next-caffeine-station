@@ -1,5 +1,5 @@
-import { db } from '@/libs/server/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/libs/server/firebase';
 import BrandContainer from '@/components/Admin/Brand/BrandContainer';
 import { BrandType } from '@/types';
 
@@ -17,7 +17,7 @@ const fetchData = async () => {
 export default async function BrandPage() {
   const brands = await fetchData();
   return (
-    <div className='relative flex w-screen justify-center pt-10'>
+    <div className='mx-auto mt-20 min-h-[700px] w-[600px] border-2'>
       <BrandContainer brands={brands} />
     </div>
   );

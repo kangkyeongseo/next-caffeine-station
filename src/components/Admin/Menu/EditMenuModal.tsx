@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '@/libs/server/firebase';
 import { MenuFormType, MenuType, NutritionalInfoType } from '@/types';
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 import MenuForm from './MenuForm';
 import NutritionalInfoForm from './NutritionalInfoForm';
-import { useForm } from 'react-hook-form';
 
 interface EditMenuModalProps {
   menu: MenuType;
@@ -111,7 +111,7 @@ const EditMenuModal = ({
 
   return (
     <div className='absolute left-0 top-0 flex h-screen w-screen items-center justify-center gap-4 bg-black/70'>
-      <div className='min-h-[700px]'>
+      <div className='min-h-[750px]'>
         <MenuForm
           register={register}
           watch={watch}

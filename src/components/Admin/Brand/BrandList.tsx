@@ -1,95 +1,41 @@
 import React from 'react';
-import { UseFormSetValue } from 'react-hook-form';
-import { BrandFormType, BrandType } from '@/types';
+import { BrandType } from '@/types';
+import BrandItem from './BrandItem';
 
 interface BrandListProps {
   brands: BrandType[];
-  setSelectedBrandId: React.Dispatch<React.SetStateAction<string>>;
-  setIsSettingOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setValue: UseFormSetValue<BrandFormType>;
+  setSelectedBrand: React.Dispatch<React.SetStateAction<BrandType | null>>;
+  setIsEditBrandModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BrandList = ({
   brands,
-  setSelectedBrandId,
-  setIsSettingOpen,
-  setValue,
+  setSelectedBrand,
+  setIsEditBrandModalOpen,
 }: BrandListProps) => {
-  const onListClick = (brand: any) => {
-    setIsSettingOpen(true);
-    setSelectedBrandId(brand.id);
-    setValue('cafeName', brand.name);
-    setValue('cafeType', brand.type);
-    setValue('hotPrice', brand.hot.price);
-    setValue('hotAmount', brand.hot.amount);
-    setValue('hotCaffeine', brand.hot.caffeine);
-    setValue('icePrice', brand.ice.price);
-    setValue('iceAmount', brand.ice.amount);
-    setValue('iceCaffeine', brand.ice.caffeine);
+  const onClickToOpenEditModal = (brand: BrandType) => {
+    setIsEditBrandModalOpen(true);
+    setSelectedBrand(brand);
   };
 
   return (
-    <ul className='w-[800px] list-none'>
-      <li className='grid grid-cols-4 bg-emerald-600 text-white'>
-        <div className='w-full border border-black py-1 text-center'>
-          카페명
-        </div>
-        <div className='w-full border border-l-0 border-black py-1 text-center'>
-          타입
-        </div>
-        <div className='w-full border border-l-0 border-black py-1 text-center'>
-          Hot
-        </div>
-        <div className='w-full border border-l-0 border-black py-1 text-center'>
-          Ice
-        </div>
-      </li>
-      {brands.map(brand => (
-        <li
-          key={brand.id}
-          onClick={() => onListClick(brand)}
-          className='group relative grid cursor-pointer grid-cols-4'
-        >
-          <div className='flex w-full items-center justify-center border border-t-0 border-black text-center'>
-            {brand.name}
-          </div>
-          <div className='flex w-full items-center justify-center border border-l-0 border-t-0 border-black text-center'>
-            {brand.type}
-          </div>
-          <div className='w-full border border-l-0 border-t-0 border-black text-center'>
-            <div className='grid grid-cols-[2fr,5fr] border-b border-black'>
-              <span className='border-r border-black'>가격</span>
-              <span>{brand.hot.price}원</span>
-            </div>
-            <div className='grid grid-cols-[2fr,5fr] border-b border-black'>
-              <span className='border-r border-black'>용량</span>
-              <span>{brand.hot.amount}ml</span>
-            </div>
-            <div className='grid grid-cols-[2fr,5fr] '>
-              <span className='border-r border-black'>카페인</span>
-              <span>{brand.hot.caffeine}mg</span>
-            </div>
-          </div>
-          <div className='w-full border border-l-0 border-t-0 border-black text-center'>
-            <div className='grid grid-cols-[2fr,5fr] border-b border-black'>
-              <span className='border-r border-black'>가격</span>
-              <span>{brand.ice.price}원</span>
-            </div>
-            <div className='grid grid-cols-[2fr,5fr] border-b border-black'>
-              <span className='border-r border-black'>용량</span>
-              <span>{brand.ice.amount}ml</span>
-            </div>
-            <div className='grid grid-cols-[2fr,5fr] '>
-              <span className='border-r border-black'>카페인</span>
-              <span>{brand.ice.caffeine}mg</span>
-            </div>
-          </div>
-          <div className='absolute  hidden h-full w-full items-center justify-center bg-black/70 text-xl text-white group-hover:flex'>
-            수정하기
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <div className='grid grid-cols-4 border-b-2 bg-gray-500 text-white'>
+        <span className='w-full border-r-2 py-2 text-center'>카페명</span>
+        <span className='w-full border-r-2 py-2 text-center'>타입</span>
+        <span className='w-full border-r-2 py-2 text-center'>Hot</span>
+        <span className='w-full py-2 text-center'>Ice</span>
+      </div>
+      <ul>
+        {brands.map(brand => (
+          <BrandItem
+            key={brand.id}
+            brand={brand}
+            onClickToOpenEditModal={onClickToOpenEditModal}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

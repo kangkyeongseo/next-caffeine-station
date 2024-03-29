@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '@/redux/store';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { BrandType, CafeType } from '@/types';
 import jsxToString from '@/libs/client/jsxToString';
 import { ChevrongLeft, ChevrongRight } from '@/image/svgs ';
@@ -8,13 +8,15 @@ import CafeItem from './CafeItem';
 import CafeOverlay from './CafeOverlay';
 import Provider from '../Provider';
 import CafeFilter from './CafeFilter';
+import { setIsMapLoading } from '@/redux/slices/mapSlice';
 
 interface CafeListProps {
   brands: BrandType[];
 }
 
 const CafeList = ({ brands }: CafeListProps) => {
-  const { map, coords } = useAppSelector(state => state.map);
+  const dispatch = useAppDispatch();
+  const { map, coords, isMapLoading } = useAppSelector(state => state.map);
   const { keywords } = useAppSelector(state => state.filter);
   const { distance } = useAppSelector(state => state.filter);
 
@@ -29,8 +31,6 @@ const CafeList = ({ brands }: CafeListProps) => {
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setCafes(pre => [...pre, ...data]);
-    } else {
-      console.log('검색 실패', window.kakao.maps.services.Status);
     }
   };
 
@@ -85,15 +85,16 @@ const CafeList = ({ brands }: CafeListProps) => {
       setCafes([]);
     }
     keywordsSearch(keywords);
+    dispatch(setIsMapLoading(true));
   }, [isPsReady, distance, keywords, coords]);
 
   useEffect(() => {
-    if (cafes.length === 0) return;
+    if (!isPsReady) return;
+    // if (cafes.length === 0) return;
 
     const timeoutId = setTimeout(() => {
-      const bounds = new window.kakao.maps.LatLngBounds();
-
       removeMarker();
+      const bounds = new window.kakao.maps.LatLngBounds();
       for (let i = 0; i < cafes.length; i++) {
         displayMarker(cafes[i]);
         bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
@@ -104,9 +105,10 @@ const CafeList = ({ brands }: CafeListProps) => {
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다zx
       map.setBounds(bounds);
+      dispatch(setIsMapLoading(false));
     }, 500);
     return () => clearTimeout(timeoutId);
-  }, [cafes]);
+  }, [isPsReady, cafes]);
 
   useEffect(() => {
     setFilteringCafes(

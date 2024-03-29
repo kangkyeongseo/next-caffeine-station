@@ -15,9 +15,12 @@ declare global {
 const Map = () => {
   const dispatch = useAppDispatch();
   const mapRef = useRef<HTMLDivElement>(null);
-  const { map, coords: coordsState } = useAppSelector(state => state.map);
+  const {
+    map,
+    coords: coordsState,
+    isMapLoading,
+  } = useAppSelector(state => state.map);
   const { coords, error } = useCurrentLocation();
-  const [isLoading, setIsLoading] = useState(true);
 
   const displayCurrentMarker = (map: any, coords: CoordsType) => {
     const marker = new window.kakao.maps.Marker({
@@ -39,18 +42,17 @@ const Map = () => {
           coordsState.latitude,
           coordsState.longitude,
         ), //지도의 중심좌표.
-        level: 3, //지도의 레벨(확대, 축소 정도)
+        level: 2, //지도의 레벨(확대, 축소 정도)
       };
       const newMap = new window.kakao.maps.Map(mapRef.current, options);
       displayCurrentMarker(newMap, coordsState);
       dispatch(setMap(newMap));
-      setIsLoading(false);
     });
   }, [coordsState]);
 
   return (
     <div className='relative flex items-center justify-center'>
-      {isLoading && <MapLoading />}
+      {isMapLoading && <MapLoading />}
       <div ref={mapRef} className={`h-screen w-screen`}></div>
     </div>
   );

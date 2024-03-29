@@ -12,7 +12,6 @@ const SetMapButtons = () => {
 
   const onMapPositionClick = () => {
     const mapPosition = map.getCenter();
-    console.log(mapPosition.La);
     dispatch(
       setCoords({ latitude: mapPosition.Ma, longitude: mapPosition.La }),
     );

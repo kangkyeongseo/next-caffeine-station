@@ -10,13 +10,11 @@ import NutritionalInfoForm from './NutritionalInfoForm';
 interface EditMenuModalProps {
   menu: MenuType;
   setIsEditMenuModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  brandId: string;
 }
 
 const EditMenuModal = ({
   menu,
   setIsEditMenuModalOpen,
-  brandId,
 }: EditMenuModalProps) => {
   const router = useRouter();
 
@@ -51,7 +49,7 @@ const EditMenuModal = ({
 
   const onValidToEditMenu = async (data: MenuFormType) => {
     await setDoc(doc(db, 'menu', menu.id), {
-      brandId,
+      brandId: data.brandId,
       menuName: data.menuName,
       category: data.category,
       types: data.types,

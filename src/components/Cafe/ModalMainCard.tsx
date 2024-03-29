@@ -38,7 +38,7 @@ const ModalMainCard = ({
   }, [cafeName]);
 
   return (
-    <div className='z-30 overflow-hidden rounded-md bg-white pb-4'>
+    <div className='z-30 w-[500px] overflow-hidden rounded-md bg-white pb-4'>
       <ModalMainHeader cafePlaceName={cafe?.place_name} />
       <div className='space-y-2'>
         <ModalCafeInfo cafe={cafe} />

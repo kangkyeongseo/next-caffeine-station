@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Loading() {
+function MapLoading() {
   return (
     <div className='absolute flex h-screen w-screen items-center justify-center'>
       <svg className='h-6 w-6 animate-spin fill-green-900' viewBox='3 3 18 18'>
@@ -14,4 +14,4 @@ function Loading() {
   );
 }
 
-export default Loading;
+export default MapLoading;

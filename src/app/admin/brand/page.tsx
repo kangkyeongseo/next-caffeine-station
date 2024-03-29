@@ -6,9 +6,15 @@ import { BrandType } from '@/types';
 const fetchData = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'brand'));
-    return querySnapshot.docs.map(doc => {
+    const brands = querySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() } as BrandType;
     });
+
+    brands.sort((a, b) => {
+      return a.hot.price - b.hot.price;
+    });
+
+    return brands;
   } catch (error) {
     return [];
   }

@@ -38,6 +38,10 @@ const fetchData = async (brandId: string) => {
       ...brandDocSnapshot.data(),
     } as BrandType;
 
+    menus.sort((a, b) => {
+      return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
+    });
+
     return { menus, brand };
   } catch (error) {
     return {};

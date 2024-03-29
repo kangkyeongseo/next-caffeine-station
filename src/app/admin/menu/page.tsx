@@ -6,10 +6,11 @@ import { BrandType } from '@/types';
 const fetchData = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, 'brand'));
-    const brand = querySnapshot.docs.map(doc => {
+    const brands = querySnapshot.docs.map(doc => {
       return { id: doc.id, name: doc.data().name } as BrandType;
     });
-    return brand;
+
+    return brands;
   } catch (error) {
     return [];
   }

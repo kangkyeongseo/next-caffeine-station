@@ -14,6 +14,9 @@ const fetchData = async (brandId: string) => {
     const menus = menuQuerySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() } as MenuType;
     });
+    menus.sort((a, b) => {
+      return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
+    });
 
     return menus;
   } catch (error) {

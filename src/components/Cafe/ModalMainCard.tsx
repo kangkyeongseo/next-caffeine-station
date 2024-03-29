@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { CafeType } from '@/types';
+import { CafeType, MenuType } from '@/types';
 import ModalCafeInfo from './ModalCafeInfo';
 import ModalMenu from './ModalMenuList';
 import ModalMainHeader from './ModalMainHeader';
 
 interface ModalMainCardProps {
-  cafeId: string;
+  menus: MenuType[];
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalMainCard = ({
-  cafeId,
+  menus,
   isMenuOpen,
   setIsMenuOpen,
   setIsAnimation,
@@ -38,12 +38,12 @@ const ModalMainCard = ({
   }, [cafeName]);
 
   return (
-    <div className='z-30 overflow-hidden rounded-md bg-white pb-4'>
+    <div className='z-30 w-[500px] overflow-hidden rounded-md bg-white pb-4'>
       <ModalMainHeader cafePlaceName={cafe?.place_name} />
       <div className='space-y-2'>
         <ModalCafeInfo cafe={cafe} />
         <ModalMenu
-          cafeId={cafeId}
+          menus={menus}
           isMenuOpen={isMenuOpen}
           setIsMenuOpen={setIsMenuOpen}
           setIsAnimation={setIsAnimation}

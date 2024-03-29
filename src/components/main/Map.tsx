@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { setCoords, setMap } from '@/redux/slices/mapSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { CoordsType } from '@/types';
-import Loading from '@/app/loading';
+import MapLoading from '@/components/MapLoading';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 declare global {
@@ -50,7 +50,7 @@ const Map = () => {
 
   return (
     <div className='relative flex items-center justify-center'>
-      {isLoading && <Loading />}
+      {isLoading && <MapLoading />}
       <div ref={mapRef} className={`h-screen w-screen`}></div>
     </div>
   );

@@ -3,10 +3,13 @@ import { MenuType } from '@/types';
 
 const initialState: { menu: MenuType } = {
   menu: {
+    id: '',
+    brandId: '',
     menuName: '',
     category: '',
     types: [],
     sizes: [],
+    description: '',
     nutritionalInfos: [],
   },
 };

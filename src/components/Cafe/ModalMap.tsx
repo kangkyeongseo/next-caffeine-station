@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CoordsType } from '@/types';
+import MapLoading from '../MapLoading';
 
 interface ModalMapProps {
   coords: CoordsType;
@@ -7,6 +8,7 @@ interface ModalMapProps {
 
 const ModalMap = ({ coords }: ModalMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayCurrentMarker = (map: any, coords: CoordsType) => {
     const marker = new window.kakao.maps.Marker({
@@ -29,12 +31,17 @@ const ModalMap = ({ coords }: ModalMapProps) => {
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
+      setIsLoading(false);
     });
   }, [coords]);
 
   return (
     <>
-      <div ref={mapRef} className='aspect-video w-[500px]'></div>
+      {isLoading && <div className='aspect-video w-[500px] bg-gray-50' />}
+      <div
+        ref={mapRef}
+        className={`aspect-video w-[500px] ${isLoading ? 'hidden' : 'block'}`}
+      ></div>
     </>
   );
 };

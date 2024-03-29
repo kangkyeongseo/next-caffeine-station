@@ -1,31 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { menus } from '@/content';
 import { MenuType } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setMenu } from '@/redux/slices/menuSlice';
 
 interface ModalMenuProps {
-  cafeId: string;
+  menus: MenuType[];
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalMenuList = ({
-  cafeId,
+  menus,
   isMenuOpen,
   setIsMenuOpen,
   setIsAnimation,
 }: ModalMenuProps) => {
   const dispatch = useAppDispatch();
   const { menu: selectedMenu } = useAppSelector(state => state.menu);
-  const brandMenus = menus.find(menu => {
-    if (menu.bradnId === Number(cafeId)) {
-      return menu;
-    } else {
-      return null;
-    }
-  });
   const [selectedCategory, setSelectedCategory] = useState('coffee');
   const [selectedMenus, setSelectedMenus] = useState<MenuType[]>([]);
 
@@ -48,11 +40,11 @@ const ModalMenuList = ({
   };
 
   useEffect(() => {
-    if (!brandMenus) return;
+    if (!menus) return;
     setSelectedMenus(
-      brandMenus.menu.filter(item => {
-        if (item.category === selectedCategory) {
-          return item;
+      menus.filter(menu => {
+        if (menu.category === selectedCategory) {
+          return menu;
         }
       }),
     );

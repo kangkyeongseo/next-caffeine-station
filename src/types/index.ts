@@ -18,7 +18,7 @@ export interface CafeType {
   y: string;
 }
 
-export interface nutritionalInfoType {
+export interface NutritionalInfoType {
   type: string;
   size: string;
   price: number;
@@ -28,10 +28,49 @@ export interface nutritionalInfoType {
 }
 
 export interface MenuType {
+  id: string;
+  brandId: string;
   menuName: string;
   category: string;
   types: string[];
   sizes: string[];
   description: string;
-  nutritionalInfos: nutritionalInfoType[];
+  nutritionalInfos: NutritionalInfoType[];
+}
+
+export interface BrandType {
+  id: string;
+  name: string;
+  type: string;
+  hot: {
+    price: number;
+    amount: number;
+    caffeine: number;
+  };
+  ice: {
+    price: number;
+    amount: number;
+    caffeine: number;
+  };
+}
+
+export interface BrandFormType {
+  name: string;
+  type: string;
+  hotPrice: number;
+  hotAmount: number;
+  hotCaffeine: number;
+  icePrice: number;
+  iceAmount: number;
+  iceCaffeine: number;
+}
+
+export interface MenuFormType {
+  brandId: string;
+  menuName: string;
+  category: string;
+  types: string[];
+  sizes: string[];
+  description: string;
+  nutritionalInfos: NutritionalInfoType[];
 }

@@ -53,7 +53,7 @@ const FilteringController = () => {
   };
 
   return (
-    <div className='fixed left-4 top-4 z-20 flex w-80 flex-col-reverse overflow-hidden '>
+    <div className='left-4 top-4 z-20 flex w-full flex-col-reverse md:fixed md:w-80'>
       <div
         className={`h-fit text-sm duration-300 ${isOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-full opacity-0'}`}
       >

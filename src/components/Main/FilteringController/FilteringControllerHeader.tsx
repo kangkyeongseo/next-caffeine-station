@@ -11,10 +11,10 @@ const FilteringControllerHeader = ({
   setIsOpen,
 }: FilteringControllerHeaderProps) => {
   return (
-    <div className='flex items-center justify-between rounded-t-md bg-emerald-600 px-4 py-3 text-white'>
+    <div className='flex items-center justify-between bg-emerald-600 px-4 py-3 text-white md:rounded-t-md'>
       <span>CAFFEINESTATION</span>
       <span
-        className='h-5 w-5 cursor-pointer'
+        className='hidden h-5 w-5 cursor-pointer md:block'
         onClick={() => setIsOpen(pre => !pre)}
       >
         {isOpen ? <ChevrongDown /> : <ChevrongUp />}

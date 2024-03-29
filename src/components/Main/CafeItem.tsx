@@ -50,7 +50,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
       <Link
         ref={linkRef}
         href={`/cafe/${brand?.id}?name=${cafe.place_name}`}
-        className={`flex items-center justify-between px-4 py-2 hover:bg-gray-100 ${cafe.id === id && 'bg-gray-100'}`}
+        className={`pointer-events-none flex items-center justify-between px-4 py-2 hover:bg-gray-100 md:pointer-events-auto ${cafe.id === id && 'bg-gray-100'}`}
       >
         <div className='flex flex-col'>
           <span className='font-medium'>{placeName}</span>

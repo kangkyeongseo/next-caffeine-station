@@ -22,7 +22,7 @@ const SetMapButtons = () => {
   };
 
   return (
-    <div className='absolute left-[350px] top-5 z-10 flex flex-col gap-2 text-xs text-white'>
+    <div className='absolute left-3 top-[250px] z-10 flex flex-col gap-2 text-xs text-white md:left-[350px] md:top-5'>
       <button
         className='rounded-md bg-emerald-600 px-4 py-1 hover:bg-emerald-700'
         onClick={onMapPositionClick}

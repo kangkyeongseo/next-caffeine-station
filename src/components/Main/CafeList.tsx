@@ -120,7 +120,7 @@ const CafeList = ({ brands }: CafeListProps) => {
 
   return (
     <div
-      className={`absolute right-0 top-0 z-10 h-full w-80 bg-white shadow-md duration-200 ${isOpen ? 'translate-x-0' : 'translate-x-80'}`}
+      className={`right-0 top-0 z-10 h-full w-full bg-white shadow-md duration-200 md:absolute md:w-80 ${isOpen ? 'translate-x-0' : 'translate-x-80'}`}
     >
       <CafeFilter cafes={cafes} setFilteringCafes={setFilteringCafes} />
       <ul className='hide-scroll h-full overflow-y-scroll'>
@@ -134,7 +134,7 @@ const CafeList = ({ brands }: CafeListProps) => {
         ))}
       </ul>
       <div
-        className='absolute left-[-25px] top-[50%] flex h-10 w-5 cursor-pointer rounded-md bg-white shadow-md'
+        className='absolute left-[-25px] top-[50%]  hidden h-10 w-5 cursor-pointer rounded-md bg-white shadow-md md:flex'
         onClick={() => setIsOpen(pre => !pre)}
       >
         {isOpen ? <ChevrongRight /> : <ChevrongLeft />}

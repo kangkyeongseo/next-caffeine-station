@@ -20,7 +20,7 @@ const FilterStates = ({
   };
   return (
     <div
-      className='grid cursor-pointer grid-cols-5 bg-gray-200 py-1 text-xs text-gray-500'
+      className='hidden cursor-pointer grid-cols-5 bg-gray-200 py-1 text-xs text-gray-500 md:grid'
       onClick={onClick}
     >
       <span className='text-center'>필터</span>

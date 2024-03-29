@@ -28,7 +28,7 @@ const MenuContainer = ({ menus, brand }: MenuContainerProps) => {
 
   useEffect(() => {
     setFilteredMenus(menus.filter(menu => menu.category === selectedCategory));
-  }, [selectedCategory]);
+  }, [selectedCategory, menus]);
 
   return (
     <div>
@@ -75,7 +75,6 @@ const MenuContainer = ({ menus, brand }: MenuContainerProps) => {
         <EditMenuModal
           menu={selectedMenu}
           setIsEditMenuModalOpen={setIsEditMenuModalOpen}
-          brandId={brand.id}
         />
       )}
     </div>

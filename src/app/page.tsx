@@ -20,7 +20,7 @@ const fetchData = async () => {
 export default async function Home() {
   const brands = await fetchData();
   return (
-    <div className='relative h-screen w-screen overflow-hidden'>
+    <div className='relative h-full w-screen overflow-hidden md:h-screen'>
       <FilteringController />
       <Map />
       <CafeList brands={brands} />

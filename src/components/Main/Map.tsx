@@ -53,7 +53,10 @@ const Map = () => {
   return (
     <div className='relative flex items-center justify-center'>
       {isMapLoading && <MapLoading />}
-      <div ref={mapRef} className={`h-screen w-screen`}></div>
+      <div
+        ref={mapRef}
+        className={`aspect-square w-full md:h-screen md:w-screen`}
+      ></div>
     </div>
   );
 };

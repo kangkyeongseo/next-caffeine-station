@@ -26,6 +26,7 @@ const ModalMenuList = ({
   };
 
   const handleMenuClick = (clickedMenu: MenuType) => {
+    console.log(1);
     if (!isMenuOpen) {
       setIsMenuOpen(true);
       dispatch(setMenu(clickedMenu));
@@ -53,11 +54,11 @@ const ModalMenuList = ({
   return (
     <div className='flex flex-col gap-2'>
       <div className='space-y-2 px-4'>
-        <span className='font-bold'>메뉴</span>
-        <nav>
+        <span className='text-sm font-bold md:text-base'>메뉴</span>
+        <nav className='text-sm md:text-base'>
           <span
             onClick={() => handleNavClick('coffee')}
-            className={`cursor-pointer  rounded-md px-4 py-1 ${selectedCategory === 'coffee' ? 'bg-emerald-600 text-white' : 'bg-white'}`}
+            className={`cursor-pointer rounded-md px-4 py-1 ${selectedCategory === 'coffee' ? 'bg-emerald-600 text-white' : 'bg-white'}`}
           >
             커피
           </span>
@@ -79,7 +80,7 @@ const ModalMenuList = ({
         {selectedMenus?.map(menu => (
           <li
             key={menu.menuName}
-            className='flex cursor-pointer items-center justify-between rounded-md border-b p-4 hover:bg-gray-100'
+            className='pointer-events-none flex cursor-pointer items-center justify-between rounded-md border-b p-4 hover:bg-gray-100 md:pointer-events-auto '
             onClick={() => handleMenuClick(menu)}
           >
             <div className='flex flex-col gap-[2px]'>

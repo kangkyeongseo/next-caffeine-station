@@ -11,7 +11,7 @@ const FilteringControllerHeader = ({
   setIsOpen,
 }: FilteringControllerHeaderProps) => {
   return (
-    <div className='flex items-center justify-between bg-emerald-600 px-4 py-3 text-white md:rounded-t-md'>
+    <div className='flex items-center justify-between bg-emerald-600 px-4 py-2 text-white  md:rounded-t-md md:py-3'>
       <span>CAFFEINESTATION</span>
       <span
         className='hidden h-5 w-5 cursor-pointer md:block'

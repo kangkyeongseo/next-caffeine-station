@@ -4,7 +4,7 @@ import React from 'react';
 function Loading() {
   return (
     <Modal>
-      <div className='z-30 flex h-[802.25px] w-[500px] items-center justify-center overflow-hidden rounded-md bg-white pb-4'>
+      <div className='z-30 flex h-[90%] w-[90%] items-center justify-center overflow-hidden rounded-md bg-white pb-4 md:h-[802.25px] md:w-[500px]'>
         <svg
           className='h-6 w-6 animate-spin fill-green-900'
           viewBox='3 3 18 18'

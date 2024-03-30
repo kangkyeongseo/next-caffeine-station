@@ -9,7 +9,7 @@ interface ModalCafeInfoProps {
 
 const ModalCafeInfo = ({ cafe }: ModalCafeInfoProps) => {
   return (
-    <div className='space-y-4 '>
+    <div className='space-y-4'>
       <ModalMap
         coords={{ latitude: Number(cafe?.y), longitude: Number(cafe?.x) }}
       />

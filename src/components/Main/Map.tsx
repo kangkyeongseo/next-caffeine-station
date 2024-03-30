@@ -55,7 +55,7 @@ const Map = () => {
       {isMapLoading && <MapLoading />}
       <div
         ref={mapRef}
-        className={`aspect-square w-full  md:h-screen md:w-screen`}
+        className={`aspect-square w-full md:h-screen md:w-screen`}
       ></div>
     </div>
   );

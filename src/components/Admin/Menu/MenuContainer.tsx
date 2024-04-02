@@ -31,7 +31,7 @@ const MenuContainer = ({ menus, brand }: MenuContainerProps) => {
   }, [selectedCategory, menus]);
 
   return (
-    <div>
+    <div className='mt-20 h-[700px] w-[600px] overflow-hidden border-2'>
       <div className='relative bg-black/80 py-2 text-center'>
         <span className='text-white'>{brand.name}</span>
         <button

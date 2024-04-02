@@ -8,7 +8,7 @@ interface MenuListProps {
 
 const MenuList = ({ menus, onClickToOpenEditModal }: MenuListProps) => {
   return (
-    <ul>
+    <ul className='hide-scroll h-[620px] overflow-y-scroll'>
       {menus.map(menu => (
         <li
           key={menu.id}

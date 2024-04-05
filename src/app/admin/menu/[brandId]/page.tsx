@@ -10,16 +10,16 @@ import { db } from '@/libs/server/firebase';
 import { BrandType, MenuType } from '@/types';
 import MenuContainer from '@/components/Admin/Menu/MenuContainer';
 
-export async function generateStaticParams() {
-  const querySnapshot = await getDocs(collection(db, 'brand'));
-  const brands = querySnapshot.docs.map(doc => {
-    return { id: doc.id, ...doc.data() } as BrandType;
-  });
+// export async function generateStaticParams() {
+//   const querySnapshot = await getDocs(collection(db, 'brand'));
+//   const brands = querySnapshot.docs.map(doc => {
+//     return { id: doc.id, ...doc.data() } as BrandType;
+//   });
 
-  return brands.map(brand => ({
-    brandId: brand.id,
-  }));
-}
+//   return brands.map(brand => ({
+//     brandId: brand.id,
+//   }));
+// }
 
 const fetchData = async (brandId: string) => {
   try {
@@ -57,7 +57,7 @@ export default async function BrandMenuPage({
   if (!menus) return;
   if (!brand) return;
   return (
-    <div className='mx-auto mt-20 min-h-[700px] w-[600px] border-2'>
+    <div className='flex h-screen w-screen justify-center'>
       <MenuContainer menus={menus} brand={brand} />
     </div>
   );

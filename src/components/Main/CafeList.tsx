@@ -31,6 +31,8 @@ const CafeList = ({ brands }: CafeListProps) => {
   const placesSearchCB = (data: CafeType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setCafes(pre => [...pre, ...data]);
+    } else {
+      dispatch(setIsMapLoading(false));
     }
   };
 
@@ -90,7 +92,6 @@ const CafeList = ({ brands }: CafeListProps) => {
 
   useEffect(() => {
     if (!isPsReady) return;
-    // if (cafes.length === 0) return;
 
     const timeoutId = setTimeout(() => {
       removeMarker();

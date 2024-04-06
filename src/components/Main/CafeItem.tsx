@@ -28,7 +28,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
       : cafe.place_name.substring(0, 15).concat('...');
   // 지도의 커스텀 오버레이와 상태 공유
   const { id, isEnterLink } = useAppSelector(state => state.overlayCafe);
-  console.log(id, isEnterLink);
+
   // 지도의 커스텀 오버레이와 상태 공유
   const onMouseEnter = () => {
     dispatch(setOverlayCafeId(cafe.id));

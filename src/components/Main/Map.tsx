@@ -22,32 +22,26 @@ const Map = () => {
   } = useAppSelector(state => state.map);
   const { coords, error } = useCurrentLocation();
 
-  const displayCurrentMarker = (map: any, coords: CoordsType) => {
-    const marker = new window.kakao.maps.Marker({
-      map,
-      position: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),
-    });
-  };
-
   useEffect(() => {
     dispatch(setCoords(coords));
   }, [coords]);
 
   useEffect(() => {
     if (!coordsState) return;
-    window.kakao.maps.load(() => {
-      const options = {
-        //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(
-          coordsState.latitude,
-          coordsState.longitude,
-        ), //지도의 중심좌표.
-        level: 2, //지도의 레벨(확대, 축소 정도)
-      };
-      const newMap = new window.kakao.maps.Map(mapRef.current, options);
-      displayCurrentMarker(newMap, coordsState);
-      dispatch(setMap(newMap));
-    });
+    if (!map) {
+      window.kakao.maps.load(() => {
+        const options = {
+          //지도를 생성할 때 필요한 기본 옵션
+          center: new window.kakao.maps.LatLng(
+            coordsState.latitude,
+            coordsState.longitude,
+          ), //지도의 중심좌표.
+          level: 2, //지도의 레벨(확대, 축소 정도)
+        };
+        const newMap = new window.kakao.maps.Map(mapRef.current, options);
+        dispatch(setMap(newMap));
+      });
+    }
   }, [coordsState]);
 
   return (

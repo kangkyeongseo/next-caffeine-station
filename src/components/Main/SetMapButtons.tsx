@@ -18,7 +18,12 @@ const SetMapButtons = () => {
   };
 
   const onCurrentPositionClick = () => {
+    const moveLatLon = new window.kakao.maps.LatLng(
+      coords?.latitude,
+      coords?.longitude,
+    );
     dispatch(setCoords(coords));
+    map.setCenter(moveLatLon);
   };
 
   return (

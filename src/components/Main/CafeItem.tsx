@@ -28,6 +28,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
       : cafe.place_name.substring(0, 15).concat('...');
   // 지도의 커스텀 오버레이와 상태 공유
   const { id, isEnterLink } = useAppSelector(state => state.overlayCafe);
+
   // 지도의 커스텀 오버레이와 상태 공유
   const onMouseEnter = () => {
     dispatch(setOverlayCafeId(cafe.id));
@@ -38,10 +39,10 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   };
   // 커스텀 오버레이에서 클릭 시 Link태그 클릭
   useEffect(() => {
-    if (!linkRef) return;
-    if (isEnterLink && linkRef.current) {
-      linkRef.current.click();
-    }
+    if (!linkRef.current) return;
+    if (!isEnterLink) return;
+    if (id === cafe.id) linkRef.current.click();
+
     dispatch(setIsEnterLink(false));
   }, [isEnterLink]);
 

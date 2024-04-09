@@ -17,13 +17,13 @@ interface CafeListProps {
 const CafeList = ({ brands }: CafeListProps) => {
   const dispatch = useAppDispatch();
   const { map, coords, isMapLoading } = useAppSelector(state => state.map);
-  const { keywords } = useAppSelector(state => state.filter);
-  const { distance } = useAppSelector(state => state.filter);
+  const { keywords, distance } = useAppSelector(state => state.filter);
 
   const [ps, setPs] = useState<any>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
   const [filteringCafes, setFilteringCafes] = useState<CafeType[]>([]);
 
+  const [marker, setMarker] = useState<any>(null);
   const [overlays, setOverlays] = useState<any[]>([]);
   const [isPsReady, setIsPsReady] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
@@ -53,7 +53,12 @@ const CafeList = ({ brands }: CafeListProps) => {
     for (let i = 0; i < overlays.length; i++) {
       overlays[i].setMap(null);
     }
+    if (marker) {
+      marker.setMap(null);
+    }
+
     setOverlays([]);
+    setMarker(null);
   };
 
   const keywordsSearch = (keywords: string[]) => {
@@ -98,16 +103,46 @@ const CafeList = ({ brands }: CafeListProps) => {
       const bounds = new window.kakao.maps.LatLngBounds();
       for (let i = 0; i < cafes.length; i++) {
         displayMarker(cafes[i]);
-        bounds.extend(new window.kakao.maps.LatLng(cafes[i].y, cafes[i].x));
       }
       bounds.extend(
-        new window.kakao.maps.LatLng(coords?.latitude, coords?.longitude),
+        new window.kakao.maps.LatLng(
+          (coords?.latitude ? coords.latitude : 0) + distance / 1110000,
+          coords?.longitude,
+        ),
+      );
+      bounds.extend(
+        new window.kakao.maps.LatLng(
+          (coords?.latitude ? coords.latitude : 0) - distance / 1110000,
+          coords?.longitude,
+        ),
+      );
+      bounds.extend(
+        new window.kakao.maps.LatLng(
+          coords?.latitude,
+          (coords?.longitude ? coords?.longitude : 0) + distance / 111320,
+        ),
+      );
+      bounds.extend(
+        new window.kakao.maps.LatLng(
+          coords?.latitude,
+          (coords?.longitude ? coords?.longitude : 0) - distance / 111320,
+        ),
       );
 
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다zx
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position: new window.kakao.maps.LatLng(
+          coords?.latitude,
+          coords?.longitude,
+        ),
+      });
+      setMarker(marker);
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);
       dispatch(setIsMapLoading(false));
     }, 500);
+
     return () => clearTimeout(timeoutId);
   }, [isPsReady, cafes]);
 

@@ -22,13 +22,6 @@ const Map = () => {
   } = useAppSelector(state => state.map);
   const { coords, error } = useCurrentLocation();
 
-  const displayCurrentMarker = (map: any, coords: CoordsType) => {
-    const marker = new window.kakao.maps.Marker({
-      map,
-      position: new window.kakao.maps.LatLng(coords.latitude, coords.longitude),
-    });
-  };
-
   useEffect(() => {
     dispatch(setCoords(coords));
   }, [coords]);
@@ -46,7 +39,6 @@ const Map = () => {
           level: 2, //지도의 레벨(확대, 축소 정도)
         };
         const newMap = new window.kakao.maps.Map(mapRef.current, options);
-        displayCurrentMarker(newMap, coordsState);
         dispatch(setMap(newMap));
       });
     }

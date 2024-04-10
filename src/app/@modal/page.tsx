@@ -1,7 +1,5 @@
-import React from 'react';
-
-function Cafe() {
+function ModalPage() {
   return null;
 }
 
-export default Cafe;
+export default ModalPage;

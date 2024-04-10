@@ -6,6 +6,8 @@ import ChevrongDown from './chevron-down.svg';
 import ChevrongLeft from './chevron-left.svg';
 import ChevrongRight from './chevron-right.svg';
 import Search from './search.svg';
+import User from './user.svg';
+import Lock from './lock.svg';
 
 export {
   Close,
@@ -16,4 +18,6 @@ export {
   ChevrongLeft,
   ChevrongRight,
   Search,
+  User,
+  Lock,
 };

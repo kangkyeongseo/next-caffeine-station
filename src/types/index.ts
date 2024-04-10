@@ -74,3 +74,8 @@ export interface MenuFormType {
   description: string;
   nutritionalInfos: NutritionalInfoType[];
 }
+
+export interface LoginFormType {
+  userId: string;
+  password: string;
+}

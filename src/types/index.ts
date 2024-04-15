@@ -79,3 +79,9 @@ export interface LoginFormType {
   userId: string;
   password: string;
 }
+
+export interface JoinFormType {
+  userId: string;
+  password: string;
+  passwordConfirm: string;
+}

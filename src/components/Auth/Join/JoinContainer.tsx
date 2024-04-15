@@ -1,17 +1,17 @@
 import React from 'react';
 import BoxContainer from '../BoxContainer';
 import AuthHeader from '../AuthHeader';
-import LoginForm from './LoginForm';
+import JoinForm from './JoinForm';
 
-const LoginContainer = () => {
+const JoginContainer = () => {
   return (
     <BoxContainer>
       <AuthHeader />
       <div className='mt-20 flex justify-center'>
-        <LoginForm />
+        <JoinForm />
       </div>
     </BoxContainer>
   );
 };
 
-export default LoginContainer;
+export default JoginContainer;

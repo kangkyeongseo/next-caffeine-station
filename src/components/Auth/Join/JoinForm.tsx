@@ -1,19 +1,12 @@
 'use client';
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { Lock, User } from '@/image/svgs ';
 import { useForm } from 'react-hook-form';
-import { LoginFormType } from '@/types';
+import { JoinFormType } from '@/types';
 
-const LoginForm = () => {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm<LoginFormType>();
-
-  const onLinkClick = () => {
-    router.back();
-    router.push('/join');
-  };
-  const onLoginValid = (data: LoginFormType) => {
+const JoinForm = () => {
+  const { register, handleSubmit } = useForm<JoinFormType>();
+  const onLoginValid = (data: JoinFormType) => {
     console.log(data);
   };
 
@@ -44,20 +37,24 @@ const LoginForm = () => {
           <Lock />
         </span>
       </div>
-      <div className='space-x-3 text-center '>
-        <span className='text-sm text-gray-400' onClick={onLinkClick}>
-          회원가입
+      <div className='relative'>
+        <input
+          {...register('passwordConfirm')}
+          type='password'
+          className='peer h-12 w-full rounded-full border px-12 outline-none focus:border-emerald-600'
+          placeholder='비밀번호 확인'
+        />
+        <span className='absolute left-4 top-[50%] w-5 translate-y-[-50%] text-gray-300 peer-focus:text-emerald-600'>
+          <Lock />
         </span>
-        <span className='text-sm text-gray-400'>/</span>
-        <span className='text-sm text-gray-400'>비밀번호 찾기</span>
       </div>
       <input
         type='submit'
-        value='로그인'
+        value='회원가입'
         className='h-12 w-full cursor-pointer rounded-full bg-black/70 text-white hover:bg-black/80'
       />
     </form>
   );
 };
 
-export default LoginForm;
+export default JoinForm;

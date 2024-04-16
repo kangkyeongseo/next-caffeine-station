@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
+import { useSearchParams } from 'next/navigation';
 import AuthHeader from './AuthHeader';
 import LoginForm from './Login/LoginForm';
-import { useSearchParams } from 'next/navigation';
 import JoinForm from './Join/JoinForm';
+import PasswordForm from './Password/PasswordForm';
 
 const AuthContainer = () => {
   const searchParams = useSearchParams();
@@ -14,6 +15,7 @@ const AuthContainer = () => {
       <div className='mt-20 flex justify-center'>
         {!authType && <LoginForm />}
         {authType === 'join' && <JoinForm />}
+        {authType === 'password' && <PasswordForm />}
       </div>
     </div>
   );

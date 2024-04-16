@@ -85,3 +85,7 @@ export interface JoinFormType {
   password: string;
   passwordConfirm: string;
 }
+
+export interface PasswordFormType {
+  userId: string;
+}

@@ -19,6 +19,9 @@ const AuthHeader = ({ authType }: AuthHeaderProps) => {
       case 'join':
         setTtitle('회원가입');
         break;
+      case 'password':
+        setTtitle('비밀번호 변경');
+        break;
     }
   }, [authType]);
 

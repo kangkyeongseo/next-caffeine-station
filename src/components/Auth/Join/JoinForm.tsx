@@ -1,11 +1,13 @@
 'use client';
 import React from 'react';
-import { Lock, User } from '@/image/svgs ';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import { Lock, User } from '@/image/svgs ';
 import { JoinFormType } from '@/types';
 
 const JoinForm = () => {
   const { register, handleSubmit } = useForm<JoinFormType>();
+
   const onLoginValid = (data: JoinFormType) => {
     console.log(data);
   };
@@ -47,6 +49,19 @@ const JoinForm = () => {
         <span className='absolute left-4 top-[50%] w-5 translate-y-[-50%] text-gray-300 peer-focus:text-emerald-600'>
           <Lock />
         </span>
+      </div>
+      <div className='space-x-3 text-center '>
+        <Link href={'/auth'} className='text-sm text-gray-400' replace>
+          로그인
+        </Link>
+        <span className='text-sm text-gray-400'>/</span>
+        <Link
+          href={'/auth?type=password'}
+          className='text-sm text-gray-400'
+          replace
+        >
+          비밀번호 변경
+        </Link>
       </div>
       <input
         type='submit'

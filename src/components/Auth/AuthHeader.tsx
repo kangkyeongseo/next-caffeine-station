@@ -1,24 +1,26 @@
-'use client';
 import React, { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Close } from '@/image/svgs ';
 
-const AuthHeader = () => {
+interface AuthHeaderProps {
+  authType: null | string;
+}
+
+const AuthHeader = ({ authType }: AuthHeaderProps) => {
   const router = useRouter();
-  const pathname = usePathname();
 
   const [title, setTtitle] = useState('');
 
   useEffect(() => {
-    switch (pathname) {
-      case '/login':
+    switch (authType) {
+      case null:
         setTtitle('로그인');
         break;
-      case '/join':
+      case 'join':
         setTtitle('회원가입');
         break;
     }
-  }, [pathname]);
+  }, [authType]);
 
   return (
     <div className='grid h-[45px] grid-cols-[1fr,10fr,1fr] items-center justify-center bg-emerald-600 px-4 text-white'>

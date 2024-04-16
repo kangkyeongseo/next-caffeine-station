@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Lock, User } from '@/image/svgs ';
 import { useForm } from 'react-hook-form';
 import { LoginFormType } from '@/types';
+import Link from 'next/link';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -45,9 +46,9 @@ const LoginForm = () => {
         </span>
       </div>
       <div className='space-x-3 text-center '>
-        <span className='text-sm text-gray-400' onClick={onLinkClick}>
+        <Link href={'/auth?type=join'} className='text-sm text-gray-400'>
           회원가입
-        </span>
+        </Link>
         <span className='text-sm text-gray-400'>/</span>
         <span className='text-sm text-gray-400'>비밀번호 찾기</span>
       </div>

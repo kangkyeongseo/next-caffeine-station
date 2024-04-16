@@ -1,12 +1,12 @@
 import React from 'react';
-import JoginContainer from '@/components/Auth/Join/JoinContainer';
+import AuthContainer from '@/components/Auth/AuthContainer';
 
-function JoinPage() {
+function LoginPage() {
   return (
     <div className='flex h-screen w-screen items-center justify-center bg-black/80'>
-      <JoginContainer />
+      <AuthContainer />
     </div>
   );
 }
 
-export default JoinPage;
+export default LoginPage;

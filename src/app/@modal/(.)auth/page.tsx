@@ -1,10 +1,10 @@
 import Modal from '@/components/Modal';
-import LoginContainer from '@/components/Auth/Login/LoginContainer';
+import AuthContainer from '@/components/Auth/AuthContainer';
 
 export default function LoginModal() {
   return (
     <Modal>
-      <LoginContainer />
+      <AuthContainer />
     </Modal>
   );
 }

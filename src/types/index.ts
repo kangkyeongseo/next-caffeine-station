@@ -81,6 +81,7 @@ export interface LoginFormType {
 }
 
 export interface JoinFormType {
+  email: string;
   userId: string;
   password: string;
   passwordConfirm: string;

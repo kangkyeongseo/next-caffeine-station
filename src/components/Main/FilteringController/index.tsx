@@ -14,8 +14,11 @@ import ModeFilter from './ModeFilter';
 import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
+import useUser from '@/hooks/useUser';
 
 const FilteringController = () => {
+  const { user } = useUser();
+  console.log(user);
   const dispatch = useAppDispatch();
   const {
     mode: modeState,

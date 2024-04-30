@@ -76,13 +76,12 @@ export interface MenuFormType {
 }
 
 export interface LoginFormType {
-  userId: string;
+  email: string;
   password: string;
 }
 
 export interface JoinFormType {
   email: string;
-  userId: string;
   password: string;
   passwordConfirm: string;
 }

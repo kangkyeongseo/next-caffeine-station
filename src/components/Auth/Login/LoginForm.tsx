@@ -1,15 +1,33 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { Lock, User } from '@/image/svgs ';
 import { LoginFormType } from '@/types';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/libs/server/firebase';
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm<LoginFormType>();
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormType>();
 
-  const onLoginValid = (data: LoginFormType) => {
-    console.log(data);
+  const onLoginValid = async (data: LoginFormType) => {
+    signInWithEmailAndPassword(auth, data.email, data.password)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user;
+        router.back();
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+      });
   };
 
   return (
@@ -19,18 +37,25 @@ const LoginForm = () => {
     >
       <div className='relative'>
         <input
-          {...register('userId')}
+          {...register('email', {
+            required: '이메일을 입력해 주세요.',
+            pattern: {
+              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+              message: '이메일 형식을 확인해 주세요.',
+            },
+          })}
           type='text'
           className='peer h-12 w-full rounded-full border px-12 outline-none focus:border-emerald-600'
-          placeholder='아이디'
+          placeholder='이메일'
         />
         <span className='absolute left-4 top-[50%] w-5 translate-y-[-50%] text-gray-300 peer-focus:text-emerald-600'>
           <User />
         </span>
       </div>
+      <div className='px-3 text-xs text-red-500'>{errors.email?.message}</div>
       <div className='relative'>
         <input
-          {...register('password')}
+          {...register('password', { required: '비밀번호를 입력해 주세요.' })}
           type='password'
           className='peer h-12 w-full rounded-full border px-12 outline-none focus:border-emerald-600'
           placeholder='비밀번호'
@@ -38,6 +63,9 @@ const LoginForm = () => {
         <span className='absolute left-4 top-[50%] w-5 translate-y-[-50%] text-gray-300 peer-focus:text-emerald-600'>
           <Lock />
         </span>
+      </div>
+      <div className='px-3 text-xs text-red-500'>
+        {errors.password?.message}
       </div>
       <div className='space-x-3 text-center '>
         <Link

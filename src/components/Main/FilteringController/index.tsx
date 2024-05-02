@@ -18,7 +18,6 @@ import useUser from '@/hooks/useUser';
 
 const FilteringController = () => {
   const { user } = useUser();
-  console.log(user);
   const dispatch = useAppDispatch();
   const {
     mode: modeState,
@@ -72,7 +71,11 @@ const FilteringController = () => {
         <TempFilter isHot={isHot} onTempChange={onTempChange} />
       </div>
       <div className='z-20'>
-        <FilteringControllerHeader isOpen={isOpen} setIsOpen={setIsOpen} />
+        <FilteringControllerHeader
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          user={user}
+        />
         <SearchFilter />
         <FilterStates
           distance={distanceState}

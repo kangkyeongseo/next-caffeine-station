@@ -81,7 +81,7 @@ const LoginForm = () => {
           className='text-sm text-gray-400'
           replace
         >
-          비밀번호 변경
+          비밀번호 재설정
         </Link>
       </div>
       <input

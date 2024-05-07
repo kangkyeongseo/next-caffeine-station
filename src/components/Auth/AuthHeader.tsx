@@ -20,7 +20,10 @@ const AuthHeader = ({ authType }: AuthHeaderProps) => {
         setTtitle('회원가입');
         break;
       case 'password':
-        setTtitle('비밀번호 변경');
+        setTtitle('비밀번호 재설정');
+        break;
+      case 'resetpassword':
+        setTtitle('비밀번호 재설정');
         break;
     }
   }, [authType]);

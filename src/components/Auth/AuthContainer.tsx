@@ -5,6 +5,7 @@ import AuthHeader from './AuthHeader';
 import LoginForm from './Login/LoginForm';
 import JoinForm from './Join/JoinForm';
 import PasswordForm from './Password/PasswordForm';
+import ResetForm from './Reset/resetForm';
 
 const AuthContainer = () => {
   const searchParams = useSearchParams();
@@ -16,6 +17,7 @@ const AuthContainer = () => {
         {!authType && <LoginForm />}
         {authType === 'join' && <JoinForm />}
         {authType === 'password' && <PasswordForm />}
+        {authType === 'resetpassword' && <ResetForm />}
       </div>
     </div>
   );

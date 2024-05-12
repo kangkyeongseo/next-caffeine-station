@@ -17,7 +17,7 @@ import FilterStates from './FilterStates';
 import useUser from '@/hooks/useUser';
 
 const FilteringController = () => {
-  const { user } = useUser();
+  const { user, isUserLoading } = useUser();
   const dispatch = useAppDispatch();
   const {
     mode: modeState,
@@ -75,6 +75,7 @@ const FilteringController = () => {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           user={user}
+          isUserLoading={isUserLoading}
         />
         <SearchFilter />
         <FilterStates

@@ -8,12 +8,14 @@ interface FilteringControllerHeaderProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
   user: any;
+  isUserLoading: boolean;
 }
 
 const FilteringControllerHeader = ({
   isOpen,
   setIsOpen,
   user,
+  isUserLoading,
 }: FilteringControllerHeaderProps) => {
   const logOut = () => {
     signOut(auth);
@@ -21,7 +23,7 @@ const FilteringControllerHeader = ({
   return (
     <div className='flex items-center justify-between bg-emerald-600 px-4 py-2 text-white  md:rounded-t-md md:py-3'>
       <span>CAFFEINESTATION</span>
-      {user ? (
+      {isUserLoading ? null : user ? (
         <span className='cursor-pointer' onClick={logOut}>
           로그아웃
         </span>

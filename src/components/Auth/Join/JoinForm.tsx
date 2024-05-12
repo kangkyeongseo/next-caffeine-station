@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Lock, User } from '@/image/svgs ';
 import { JoinFormType } from '@/types';
-import { auth } from '@/libs/server/firebase';
+import { auth, db } from '@/libs/server/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 const JoinForm = () => {
   const router = useRouter();
@@ -37,6 +38,7 @@ const JoinForm = () => {
       .then(userCredential => {
         // Signed in
         const user = userCredential.user;
+        setDoc(doc(db, 'user', user.uid), { rule: 'user' });
         router.push('/auth');
       })
       .catch(error => {
@@ -45,7 +47,6 @@ const JoinForm = () => {
         if (errorCode === 'auth/email-already-in-use') {
           setError('email', { message: '이미 사용중인 이메일 입니다.' });
         }
-        // ..
       });
   };
 

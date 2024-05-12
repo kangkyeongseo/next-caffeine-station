@@ -22,9 +22,5 @@ const fetchData = async () => {
 
 export default async function BrandPage() {
   const brands = await fetchData();
-  return (
-    <div className='mx-auto mt-20 min-h-[700px] w-[600px] border-2'>
-      <BrandContainer brands={brands} />
-    </div>
-  );
+  return <BrandContainer brands={brands} />;
 }

@@ -1,24 +1,49 @@
 'use client';
-import React from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import AuthHeader from './AuthHeader';
 import LoginForm from './Login/LoginForm';
 import JoinForm from './Join/JoinForm';
 import PasswordForm from './Password/PasswordForm';
 import ResetForm from './Reset/resetForm';
+import useUser from '@/hooks/useUser';
+
+type authPageType =
+  | 'login'
+  | 'join'
+  | 'password'
+  | 'reset-password'
+  | 'profile';
+
+export interface AuthFormProps {
+  setType: React.Dispatch<React.SetStateAction<authPageType>>;
+}
 
 const AuthContainer = () => {
-  const searchParams = useSearchParams();
-  const authType = searchParams.get('type');
+  const { user, isUserLoading } = useUser();
+  const pathname = usePathname();
+
+  const [type, setType] = useState<authPageType>('login');
+
+  useEffect(() => {
+    if (pathname.includes('reset-password')) {
+      setType('reset-password');
+    }
+  }, [pathname]);
+
   return (
     <div className='z-30 h-[806.25px] w-[500px] overflow-hidden rounded-md bg-white pb-4'>
-      <AuthHeader authType={authType} />
-      <div className='mt-20 flex justify-center'>
-        {!authType && <LoginForm />}
-        {authType === 'join' && <JoinForm />}
-        {authType === 'password' && <PasswordForm />}
-        {authType === 'resetpassword' && <ResetForm />}
-      </div>
+      {!isUserLoading && (
+        <>
+          <AuthHeader type={type} />
+          <div className='mt-20 flex justify-center'>
+            {type === 'login' && <LoginForm setType={setType} />}
+            {type === 'join' && <JoinForm setType={setType} />}
+            {type === 'password' && <PasswordForm setType={setType} />}
+            {type === 'reset-password' && <ResetForm />}
+          </div>
+        </>
+      )}
     </div>
   );
 };

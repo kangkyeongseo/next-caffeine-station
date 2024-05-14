@@ -5,8 +5,9 @@ import { PasswordFormType } from '@/types';
 import { User } from '@/image/svgs ';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '@/libs/server/firebase';
+import { AuthFormProps } from '../AuthContainer';
 
-const PasswordForm = () => {
+const PasswordForm = ({ setType }: AuthFormProps) => {
   const {
     register,
     handleSubmit,
@@ -48,17 +49,19 @@ const PasswordForm = () => {
       </div>
       <div className='px-3 text-xs text-red-500'>{errors.email?.message}</div>
       <div className='space-x-3 text-center '>
-        <Link href={'/auth'} className='text-sm text-gray-400' replace>
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('login')}
+        >
           로그인
-        </Link>
+        </span>
         <span className='text-sm text-gray-400'>/</span>
-        <Link
-          href={'/auth?type=join'}
-          className='text-sm text-gray-400'
-          replace
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('join')}
         >
           회원가입
-        </Link>
+        </span>
       </div>
       <input
         type='submit'

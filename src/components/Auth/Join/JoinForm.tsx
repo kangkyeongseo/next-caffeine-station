@@ -8,8 +8,9 @@ import { Lock, User } from '@/image/svgs ';
 import { JoinFormType } from '@/types';
 import { auth, db } from '@/libs/server/firebase';
 import { doc, setDoc } from 'firebase/firestore';
+import { AuthFormProps } from '../AuthContainer';
 
-const JoinForm = () => {
+const JoinForm = ({ setType }: AuthFormProps) => {
   const router = useRouter();
   const {
     register,
@@ -38,7 +39,14 @@ const JoinForm = () => {
       .then(userCredential => {
         // Signed in
         const user = userCredential.user;
-        setDoc(doc(db, 'user', user.uid), { rule: 'user' });
+        setDoc(doc(db, 'user', user.uid), {
+          rule: 'user',
+          keyword: {
+            costEffective: ['빽다방', '메가MGC커피', '컴포즈커피'],
+            premium: ['스타벅스', '폴바셋', '투썸플레이스'],
+            custom: [],
+          },
+        });
         router.push('/auth');
       })
       .catch(error => {
@@ -110,17 +118,19 @@ const JoinForm = () => {
         {errors.passwordConfirm?.message}
       </div>
       <div className='space-x-3 text-center '>
-        <Link href={'/auth'} className='text-sm text-gray-400' replace>
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('login')}
+        >
           로그인
-        </Link>
+        </span>
         <span className='text-sm text-gray-400'>/</span>
-        <Link
-          href={'/auth?type=password'}
-          className='text-sm text-gray-400'
-          replace
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('password')}
         >
           비밀번호 재설정
-        </Link>
+        </span>
       </div>
       <input
         type='submit'

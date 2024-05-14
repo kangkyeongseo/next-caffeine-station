@@ -7,8 +7,9 @@ import { Lock, User } from '@/image/svgs ';
 import { LoginFormType } from '@/types';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/libs/server/firebase';
+import { AuthFormProps } from '../AuthContainer';
 
-const LoginForm = () => {
+const LoginForm = ({ setType }: AuthFormProps) => {
   const router = useRouter();
   const {
     register,
@@ -68,21 +69,19 @@ const LoginForm = () => {
         {errors.password?.message}
       </div>
       <div className='space-x-3 text-center '>
-        <Link
-          href={'/auth?type=join'}
-          className='text-sm text-gray-400'
-          replace
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('join')}
         >
           회원가입
-        </Link>
+        </span>
         <span className='text-sm text-gray-400'>/</span>
-        <Link
-          href={'/auth?type=password'}
-          className='text-sm text-gray-400'
-          replace
+        <span
+          className='cursor-pointer text-sm text-gray-400'
+          onClick={() => setType('password')}
         >
           비밀번호 재설정
-        </Link>
+        </span>
       </div>
       <input
         type='submit'

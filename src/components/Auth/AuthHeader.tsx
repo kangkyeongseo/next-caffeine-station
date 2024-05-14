@@ -3,17 +3,17 @@ import { useRouter } from 'next/navigation';
 import { Close } from '@/image/svgs ';
 
 interface AuthHeaderProps {
-  authType: null | string;
+  type: null | string;
 }
 
-const AuthHeader = ({ authType }: AuthHeaderProps) => {
+const AuthHeader = ({ type }: AuthHeaderProps) => {
   const router = useRouter();
 
   const [title, setTtitle] = useState('');
 
   useEffect(() => {
-    switch (authType) {
-      case null:
+    switch (type) {
+      case 'login':
         setTtitle('로그인');
         break;
       case 'join':
@@ -22,11 +22,14 @@ const AuthHeader = ({ authType }: AuthHeaderProps) => {
       case 'password':
         setTtitle('비밀번호 재설정');
         break;
-      case 'resetpassword':
+      case 'reset-password':
         setTtitle('비밀번호 재설정');
         break;
+      case 'profile':
+        setTtitle('내 정보');
+        break;
     }
-  }, [authType]);
+  }, [type]);
 
   return (
     <div className='grid h-[45px] grid-cols-[1fr,10fr,1fr] items-center justify-center bg-emerald-600 px-4 text-white'>

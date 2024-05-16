@@ -7,9 +7,13 @@ import { BrandFormType } from '@/types';
 
 interface AddBrandModalProps {
   setIsAddBrandModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  rule: string;
 }
 
-const AddBrandModal = ({ setIsAddBrandModalOpen }: AddBrandModalProps) => {
+const AddBrandModal = ({
+  setIsAddBrandModalOpen,
+  rule,
+}: AddBrandModalProps) => {
   const router = useRouter();
   const { register, handleSubmit, setValue, watch } = useForm<BrandFormType>({
     defaultValues: {
@@ -24,6 +28,7 @@ const AddBrandModal = ({ setIsAddBrandModalOpen }: AddBrandModalProps) => {
   });
 
   const onValidToAddBrand = async (data: BrandFormType) => {
+    if (rule !== 'admin') return;
     await addDoc(collection(db, 'brand'), {
       name: data.name,
       type: data.type,

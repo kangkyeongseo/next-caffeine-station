@@ -8,11 +8,13 @@ import { useForm } from 'react-hook-form';
 interface EditBrandModalProps {
   brand: BrandType;
   setIsEditBrandModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  rule: string;
 }
 
 const EditBrandModal = ({
   brand,
   setIsEditBrandModalOpen,
+  rule,
 }: EditBrandModalProps) => {
   const router = useRouter();
   const { register, handleSubmit, setValue, watch } = useForm<BrandFormType>({
@@ -29,12 +31,14 @@ const EditBrandModal = ({
   });
 
   const onDeleteBrand = async () => {
+    if (rule !== 'admin') return;
     await deleteDoc(doc(db, 'brand', brand.id));
     setIsEditBrandModalOpen(false);
     router.refresh();
   };
 
   const onValidToEditBrand = async (data: BrandFormType) => {
+    if (rule !== 'admin') return;
     await setDoc(doc(db, 'brand', brand.id), {
       name: data.name,
       type: data.type,

@@ -8,7 +8,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/libs/server/firebase';
 import { BrandType, MenuType } from '@/types';
-import MenuContainer from '@/components/Admin/Menu/MenuContainer';
+import BrandMenuContainer from '@/components/Admin/Menu/BrandMenuContainer';
 
 // export async function generateStaticParams() {
 //   const querySnapshot = await getDocs(collection(db, 'brand'));
@@ -56,9 +56,5 @@ export default async function BrandMenuPage({
   const { menus, brand } = await fetchData(brandId);
   if (!menus) return;
   if (!brand) return;
-  return (
-    <div className='flex h-screen w-screen justify-center'>
-      <MenuContainer menus={menus} brand={brand} />
-    </div>
-  );
+  return <BrandMenuContainer menus={menus} brand={brand} />;
 }

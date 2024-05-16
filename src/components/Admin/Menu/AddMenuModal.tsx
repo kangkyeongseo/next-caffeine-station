@@ -10,11 +10,13 @@ import NutritionalInfoForm from './NutritionalInfoForm';
 interface AddMenuModalProps {
   setIsAddMenuModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   brandId: string;
+  rule: string;
 }
 
 const AddMenuModal = ({
   setIsAddMenuModalOpen,
   brandId,
+  rule,
 }: AddMenuModalProps) => {
   const router = useRouter();
 
@@ -40,6 +42,7 @@ const AddMenuModal = ({
   });
 
   const onValidToAddMenu = async (data: MenuFormType) => {
+    if (rule !== 'admin') return;
     await addDoc(collection(db, 'menu'), {
       brandId,
       menuName: data.menuName,

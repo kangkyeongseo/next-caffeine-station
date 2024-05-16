@@ -21,7 +21,6 @@ const useUser = () => {
 
   useEffect(() => {
     if (!user) return;
-
     const fetchData = async () => {
       const docRef = doc(db, 'user', user.uid);
       const docSnap = await getDoc(docRef);

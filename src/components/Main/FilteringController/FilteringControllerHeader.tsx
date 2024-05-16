@@ -17,16 +17,11 @@ const FilteringControllerHeader = ({
   user,
   isUserLoading,
 }: FilteringControllerHeaderProps) => {
-  const logOut = () => {
-    signOut(auth);
-  };
   return (
     <div className='flex items-center justify-between bg-emerald-600 px-4 py-2 text-white  md:rounded-t-md md:py-3'>
       <span>CAFFEINESTATION</span>
       {isUserLoading ? null : user ? (
-        <span className='cursor-pointer' onClick={logOut}>
-          로그아웃
-        </span>
+        <Link href={'/auth'}> 내 정보</Link>
       ) : (
         <Link href={'/auth'}>로그인</Link>
       )}

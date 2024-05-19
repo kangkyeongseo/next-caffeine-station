@@ -166,57 +166,61 @@ const ProfileContainer = ({ user }: ProfileContainerProps) => {
   return (
     <div className='w-full space-y-12 px-12'>
       <div className='flex flex-col items-center gap-2'>
-        <span className='text-lg'>{user?.email}</span>
+        <span>{user?.email}</span>
         <span
-          className='cursor-pointer text-sm text-black/70 hover:text-black'
+          className='cursor-pointer text-sm text-gray-400 hover:text-black/70'
           onClick={logout}
         >
           로그아웃
         </span>
       </div>
       <div className='space-y-3'>
-        <span>검색 카페 설정하기</span>
-        <div className='space-y-1'>
-          <span className='text-sm'>가성비</span>
-          <ul className='flex flex-wrap gap-1'>
-            {costEffectiveBrands.map(brand => (
-              <li
-                className={`cursor-pointer rounded-md border px-2 py-1 text-sm ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
-                key={brand.name}
-                onClick={() => onBrandClick(brand.type, brand.name)}
-              >
-                {brand.name}
-              </li>
-            ))}
-          </ul>
+        <div className='border-b pb-3'>
+          <span className='text-sm font-bold'>검색 카페 키워드 설정하기</span>
         </div>
-        <div className='space-y-1'>
-          <span className='text-sm'>프리미엄</span>
-          <ul className='flex flex-wrap gap-1'>
-            {premiumBrands.map(brand => (
-              <li
-                className={`cursor-pointer rounded-md border px-2 py-1 text-sm ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
-                key={brand.name}
-                onClick={() => onBrandClick(brand.type, brand.name)}
-              >
-                {brand.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className='space-y-1'>
-          <span className='text-sm'>나의 카페</span>
-          <ul className='flex flex-wrap gap-1'>
-            {customBrands.map(brand => (
-              <li
-                className={`cursor-pointer rounded-md border px-2 py-1 text-sm ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
-                key={brand.name}
-                onClick={() => onBrandClick(brand.type, brand.name)}
-              >
-                {brand.name}
-              </li>
-            ))}
-          </ul>
+        <div className='space-y-3 pb-3'>
+          <div className='space-y-1'>
+            <span className='text-xs'>가성비</span>
+            <ul className='flex flex-wrap gap-1'>
+              {costEffectiveBrands.map(brand => (
+                <li
+                  className={`cursor-pointer rounded-md border px-2 py-1 text-xs ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
+                  key={brand.name}
+                  onClick={() => onBrandClick(brand.type, brand.name)}
+                >
+                  {brand.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className='space-y-1'>
+            <span className='text-xs'>프리미엄</span>
+            <ul className='flex flex-wrap gap-1'>
+              {premiumBrands.map(brand => (
+                <li
+                  className={`cursor-pointer rounded-md border px-2 py-1 text-xs ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
+                  key={brand.name}
+                  onClick={() => onBrandClick(brand.type, brand.name)}
+                >
+                  {brand.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className='space-y-1'>
+            <span className='text-xs'>나의 카페</span>
+            <ul className='flex flex-wrap gap-1'>
+              {customBrands.map(brand => (
+                <li
+                  className={`cursor-pointer rounded-md border px-2 py-1 text-xs ${brand.isChecked ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'hover:bg-gray-100'}`}
+                  key={brand.name}
+                  onClick={() => onBrandClick(brand.type, brand.name)}
+                >
+                  {brand.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className='space-y-3'>
           <button

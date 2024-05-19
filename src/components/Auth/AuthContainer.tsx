@@ -21,7 +21,7 @@ export interface AuthFormProps {
 }
 
 const AuthContainer = () => {
-  const { user, isUserLoading, rule } = useUser();
+  const { user, isUserLoading } = useUser();
   const pathname = usePathname();
 
   const [type, setType] = useState<authPageType>('login');

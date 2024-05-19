@@ -11,10 +11,15 @@ const KeywordsFilter = ({
   onKeywordsChange,
   user,
 }: KeywordsFilterProps) => {
-  const [keywords, setKeywords] = useState(['가성비', '프리미엄']);
+  const defaulyKeywords = ['가성비', '프리미엄'];
+  const [keywords, setKeywords] = useState<string[]>(defaulyKeywords);
   useEffect(() => {
-    if (!user) return;
-    setKeywords(['가성비', '프리미엄', '나의 카페']);
+    if (!user && keywords.length === 2) return;
+    if (!user) {
+      setKeywords(defaulyKeywords);
+    } else {
+      setKeywords(['가성비', '프리미엄', '나의 카페']);
+    }
   }, [user]);
   return (
     <div

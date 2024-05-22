@@ -16,7 +16,7 @@ interface CafeListProps {
 
 const CafeList = ({ brands }: CafeListProps) => {
   const dispatch = useAppDispatch();
-  const { map, coords, isMapLoading } = useAppSelector(state => state.map);
+  const { map, coords } = useAppSelector(state => state.map);
   const { keywords, distance } = useAppSelector(state => state.filter);
 
   const [ps, setPs] = useState<any>(null);
@@ -29,11 +29,14 @@ const CafeList = ({ brands }: CafeListProps) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const placesSearchCB = (data: CafeType[], status: string) => {
-    if (status === window.kakao.maps.services.Status.OK) {
-      setCafes(pre => [...pre, ...data]);
-    } else {
-      dispatch(setIsMapLoading(false));
-    }
+    return new Promise<CafeType[]>((resolve, reject) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        resolve(data);
+      } else {
+        dispatch(setIsMapLoading(false));
+        reject();
+      }
+    });
   };
 
   const displayMarker = (place: CafeType) => {
@@ -62,15 +65,25 @@ const CafeList = ({ brands }: CafeListProps) => {
   };
 
   const keywordsSearch = (keywords: string[]) => {
-    for (let i = 0; i < keywords.length; i++) {
-      ps.keywordSearch(keywords[i], placesSearchCB, {
-        location: new window.kakao.maps.LatLng(
-          coords?.latitude,
-          coords?.longitude,
-        ),
-        radius: distance,
-      });
-    }
+    const promises = keywords.map(
+      keyword =>
+        new Promise<CafeType[]>((resolve, reject) => {
+          ps.keywordSearch(
+            keyword,
+            (data: CafeType[], status: string) =>
+              placesSearchCB(data, status).then(resolve).catch(reject),
+            {
+              location: new window.kakao.maps.LatLng(
+                coords?.latitude,
+                coords?.longitude,
+              ),
+              radius: distance,
+            },
+          );
+        }),
+    );
+
+    return Promise.allSettled(promises);
   };
 
   useEffect(() => {
@@ -91,59 +104,65 @@ const CafeList = ({ brands }: CafeListProps) => {
     if (cafes.length !== 0) {
       setCafes([]);
     }
-    keywordsSearch(keywords);
+
+    const fetchData = async () => {
+      const results = await keywordsSearch(keywords);
+      const fulfilledResults = results
+        .filter(result => result.status === 'fulfilled')
+        .flatMap(
+          result => (result as PromiseFulfilledResult<CafeType[]>).value,
+        );
+      setCafes(fulfilledResults);
+    };
+
+    fetchData();
     dispatch(setIsMapLoading(true));
   }, [isPsReady, distance, keywords, coords]);
 
   useEffect(() => {
     if (!isPsReady) return;
+    removeMarker();
+    const bounds = new window.kakao.maps.LatLngBounds();
+    for (let i = 0; i < cafes.length; i++) {
+      displayMarker(cafes[i]);
+    }
+    bounds.extend(
+      new window.kakao.maps.LatLng(
+        (coords?.latitude ? coords.latitude : 0) + distance / 1110000,
+        coords?.longitude,
+      ),
+    );
+    bounds.extend(
+      new window.kakao.maps.LatLng(
+        (coords?.latitude ? coords.latitude : 0) - distance / 1110000,
+        coords?.longitude,
+      ),
+    );
+    bounds.extend(
+      new window.kakao.maps.LatLng(
+        coords?.latitude,
+        (coords?.longitude ? coords?.longitude : 0) + distance / 111320,
+      ),
+    );
+    bounds.extend(
+      new window.kakao.maps.LatLng(
+        coords?.latitude,
+        (coords?.longitude ? coords?.longitude : 0) - distance / 111320,
+      ),
+    );
 
-    const timeoutId = setTimeout(() => {
-      removeMarker();
-      const bounds = new window.kakao.maps.LatLngBounds();
-      for (let i = 0; i < cafes.length; i++) {
-        displayMarker(cafes[i]);
-      }
-      bounds.extend(
-        new window.kakao.maps.LatLng(
-          (coords?.latitude ? coords.latitude : 0) + distance / 1110000,
-          coords?.longitude,
-        ),
-      );
-      bounds.extend(
-        new window.kakao.maps.LatLng(
-          (coords?.latitude ? coords.latitude : 0) - distance / 1110000,
-          coords?.longitude,
-        ),
-      );
-      bounds.extend(
-        new window.kakao.maps.LatLng(
-          coords?.latitude,
-          (coords?.longitude ? coords?.longitude : 0) + distance / 111320,
-        ),
-      );
-      bounds.extend(
-        new window.kakao.maps.LatLng(
-          coords?.latitude,
-          (coords?.longitude ? coords?.longitude : 0) - distance / 111320,
-        ),
-      );
+    const marker = new window.kakao.maps.Marker({
+      map,
+      position: new window.kakao.maps.LatLng(
+        coords?.latitude,
+        coords?.longitude,
+      ),
+    });
+    setMarker(marker);
 
-      const marker = new window.kakao.maps.Marker({
-        map,
-        position: new window.kakao.maps.LatLng(
-          coords?.latitude,
-          coords?.longitude,
-        ),
-      });
-      setMarker(marker);
-
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-      map.setBounds(bounds);
-      dispatch(setIsMapLoading(false));
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+    dispatch(setIsMapLoading(false));
   }, [isPsReady, cafes]);
 
   useEffect(() => {

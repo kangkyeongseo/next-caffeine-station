@@ -1,6 +1,6 @@
 import { collection, getDocs } from 'firebase/firestore';
 import Map from '@/components/Main/Map';
-import CafeList from '@/components/Main/CafeList';
+import CafeSideBar from '@/components/Main/CafeSideBar/CafeSideBar';
 import FilteringController from '@/components/Main/FilteringController';
 import SetMapButtons from '@/components/Main/SetMapButtons';
 import { db } from '@/libs/server/firebase';
@@ -23,7 +23,7 @@ export default async function Home() {
     <div className='relative h-full w-screen overflow-hidden md:h-screen'>
       <FilteringController />
       <Map />
-      <CafeList brands={brands} />
+      <CafeSideBar brands={brands} />
       <SetMapButtons />
     </div>
   );

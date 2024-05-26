@@ -4,17 +4,17 @@ import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { BrandType, CafeType } from '@/types';
 import jsxToString from '@/libs/client/jsxToString';
 import { ChevrongLeft, ChevrongRight } from '@/image/svgs ';
-import CafeItem from './CafeItem';
-import CafeOverlay from './CafeOverlay';
-import Provider from '../Provider';
+import CafeOverlay from '../CafeOverlay';
+import Provider from '../../Provider';
 import CafeFilter from './CafeFilter';
 import { setIsMapLoading } from '@/redux/slices/mapSlice';
+import CafeList from './CafeList';
 
-interface CafeListProps {
+interface CafeSideBarProps {
   brands: BrandType[];
 }
 
-const CafeList = ({ brands }: CafeListProps) => {
+const CafeSideBar = ({ brands }: CafeSideBarProps) => {
   const dispatch = useAppDispatch();
   const { map, coords } = useAppSelector(state => state.map);
   const { keywords, distance } = useAppSelector(state => state.filter);
@@ -71,7 +71,9 @@ const CafeList = ({ brands }: CafeListProps) => {
           ps.keywordSearch(
             keyword,
             (data: CafeType[], status: string) =>
-              placesSearchCB(data, status).then(resolve).catch(reject),
+              placesSearchCB(data, status)
+                .then(data => resolve(data))
+                .catch(() => reject()),
             {
               location: new window.kakao.maps.LatLng(
                 coords?.latitude,
@@ -109,10 +111,12 @@ const CafeList = ({ brands }: CafeListProps) => {
       const results = await keywordsSearch(keywords);
       const fulfilledResults = results
         .filter(result => result.status === 'fulfilled')
-        .flatMap(
-          result => (result as PromiseFulfilledResult<CafeType[]>).value,
-        );
+        .flatMap(result => (result as PromiseFulfilledResult<CafeType[]>).value)
+        .sort((a, b) => {
+          return Number(a.distance) - Number(b.distance);
+        });
       setCafes(fulfilledResults);
+      setFilteringCafes(fulfilledResults);
     };
 
     fetchData();
@@ -126,6 +130,7 @@ const CafeList = ({ brands }: CafeListProps) => {
     for (let i = 0; i < cafes.length; i++) {
       displayMarker(cafes[i]);
     }
+
     bounds.extend(
       new window.kakao.maps.LatLng(
         (coords?.latitude ? coords.latitude : 0) + distance / 1110000,
@@ -165,29 +170,12 @@ const CafeList = ({ brands }: CafeListProps) => {
     dispatch(setIsMapLoading(false));
   }, [isPsReady, cafes]);
 
-  useEffect(() => {
-    setFilteringCafes(
-      cafes.sort((a, b) => {
-        return Number(a.distance) - Number(b.distance);
-      }),
-    );
-  }, [cafes]);
-
   return (
     <div
       className={`z-10 h-full w-full bg-white pb-5 duration-200 md:absolute md:right-0 md:top-0 md:w-80 md:pb-10 md:shadow-md ${isOpen ? 'translate-x-0' : 'translate-x-80'}`}
     >
       <CafeFilter cafes={cafes} setFilteringCafes={setFilteringCafes} />
-      <ul className='hide-scroll h-full md:overflow-y-scroll'>
-        {filteringCafes.length === 0 && (
-          <li className='flex items-center justify-center p-4 text-black/30'>
-            <span>조건에 맞는 카페가 없습니다.</span>
-          </li>
-        )}
-        {filteringCafes.map(cafe => (
-          <CafeItem key={cafe.id} cafe={cafe} brands={brands} />
-        ))}
-      </ul>
+      <CafeList filteringCafes={filteringCafes} brands={brands} />
       <div
         className='absolute left-[-25px] top-[50%] hidden h-10 w-5 cursor-pointer rounded-md bg-white shadow-md md:flex'
         onClick={() => setIsOpen(pre => !pre)}
@@ -198,4 +186,4 @@ const CafeList = ({ brands }: CafeListProps) => {
   );
 };
 
-export default CafeList;
+export default CafeSideBar;

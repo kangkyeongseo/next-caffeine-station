@@ -1,16 +1,18 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { BrandType, MenuType } from '@/types';
-import AddMenuModal from './AddMenuModal';
-import EditMenuModal from './EditMenuModal';
 import MenuList from './MenuList';
 import useUser from '@/hooks/useUser';
 import Unallowed from '../Unallowed';
+import dynamic from 'next/dynamic';
 
 interface BrandMenuContainerProps {
   menus: MenuType[];
   brand: BrandType;
 }
+
+const AddMenuModal = dynamic(() => import('./AddMenuModal'));
+const EditMenuModal = dynamic(() => import('./EditMenuModal'));
 
 const BrandMenuContainer = ({ menus, brand }: BrandMenuContainerProps) => {
   const { rule, isUserLoading } = useUser();

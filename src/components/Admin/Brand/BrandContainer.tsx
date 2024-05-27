@@ -2,14 +2,16 @@
 import React, { useState } from 'react';
 import { BrandType } from '@/types';
 import BrandList from './BrandList';
-import EditBrandModal from './EditBrandModal';
-import AddBrandModal from './AddBrandModal';
 import useUser from '@/hooks/useUser';
 import Unallowed from '../Unallowed';
+import dynamic from 'next/dynamic';
 
 interface BrandContainerProps {
   brands: BrandType[];
 }
+
+const AddBrandModal = dynamic(() => import('./AddBrandModal'));
+const EditBrandModal = dynamic(() => import('./EditBrandModal'));
 
 const BrandContainer = ({ brands }: BrandContainerProps) => {
   const { rule, isUserLoading } = useUser();

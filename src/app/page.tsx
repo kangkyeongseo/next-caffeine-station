@@ -1,9 +1,9 @@
 import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/libs/server/firebase';
 import Map from '@/components/Main/Map';
 import CafeSideBar from '@/components/Main/CafeSideBar/CafeSideBar';
 import FilteringController from '@/components/Main/FilteringController';
 import SetMapButtons from '@/components/Main/SetMapButtons';
-import { db } from '@/libs/server/firebase';
 import { BrandType } from '@/types';
 
 const fetchData = async () => {

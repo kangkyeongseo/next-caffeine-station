@@ -1,8 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { setCoords, setMap } from '@/redux/slices/mapSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { CoordsType } from '@/types';
 import MapLoading from '@/components/MapLoading';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 

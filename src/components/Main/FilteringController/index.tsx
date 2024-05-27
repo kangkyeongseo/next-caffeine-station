@@ -15,8 +15,6 @@ import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
 import useUser from '@/hooks/useUser';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/libs/server/firebase';
 
 const FilteringController = () => {
   const { user, isUserLoading } = useUser();
@@ -73,6 +71,8 @@ const FilteringController = () => {
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
+      const { doc, getDoc } = await import('firebase/firestore');
+      const { db } = await import('@/libs/server/firebase');
       const docRef = doc(db, 'user', user.uid);
       const docSnap = await getDoc(docRef);
       setUserKeyword(docSnap.data()?.keyword);

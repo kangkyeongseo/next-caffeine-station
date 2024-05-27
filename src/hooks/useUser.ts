@@ -1,6 +1,3 @@
-import { auth, db } from '@/libs/server/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 const useUser = () => {
@@ -9,23 +6,32 @@ const useUser = () => {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      if (user) {
+    const loadAuth = async () => {
+      const { onAuthStateChanged } = await import('firebase/auth');
+      const { auth } = await import('@/libs/server/firebase');
+
+      const unsubscribe = onAuthStateChanged(auth, user => {
         setUser(user);
-      } else {
-        setUser(null);
-      }
-      setIsUserLoading(false);
-    });
+        setIsUserLoading(false);
+      });
+
+      return () => unsubscribe();
+    };
+
+    loadAuth();
   }, []);
 
   useEffect(() => {
     if (!user) return;
     const fetchData = async () => {
+      const { doc, getDoc } = await import('firebase/firestore');
+      const { db } = await import('@/libs/server/firebase');
+
       const docRef = doc(db, 'user', user.uid);
       const docSnap = await getDoc(docRef);
       setRule(docSnap.data()?.rule);
     };
+
     fetchData();
   }, [user]);
 

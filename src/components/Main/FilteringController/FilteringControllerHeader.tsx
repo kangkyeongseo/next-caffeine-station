@@ -1,8 +1,6 @@
 import React, { SetStateAction } from 'react';
 import { ChevrongDown, ChevrongUp } from '@/image/svgs ';
 import Link from 'next/link';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/libs/server/firebase';
 
 interface FilteringControllerHeaderProps {
   isOpen: boolean;

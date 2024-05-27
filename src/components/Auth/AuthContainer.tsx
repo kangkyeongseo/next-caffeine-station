@@ -2,12 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import AuthHeader from './AuthHeader';
-import LoginForm from './Login/LoginForm';
-import JoinForm from './Join/JoinForm';
-import PasswordForm from './Password/PasswordForm';
-import ResetForm from './Reset/resetForm';
-import ProfileContainer from './Profile/ProfileContainer';
 import useUser from '@/hooks/useUser';
+import dynamic from 'next/dynamic';
 
 type authPageType =
   | 'login'
@@ -19,6 +15,12 @@ type authPageType =
 export interface AuthFormProps {
   setType: React.Dispatch<React.SetStateAction<authPageType>>;
 }
+
+const ProfileContainer = dynamic(() => import('./Profile/ProfileContainer'));
+const LoginForm = dynamic(() => import('./Login/LoginForm'));
+const JoinForm = dynamic(() => import('./Join/JoinForm'));
+const PasswordForm = dynamic(() => import('./Password/PasswordForm'));
+const ResetForm = dynamic(() => import('./Reset/resetForm'));
 
 const AuthContainer = () => {
   const { user, isUserLoading } = useUser();

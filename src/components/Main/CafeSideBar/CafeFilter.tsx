@@ -19,11 +19,7 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
     // 필터링 검색 후 input의 값이 비어있을때 실행
     if (isFiltered && event.target.value.length === 0) {
       // 초기 검색된 전체 카페 나열
-      setFilteringCafes(
-        cafes.sort((a, b) => {
-          return Number(a.distance) - Number(b.distance);
-        }),
-      );
+      setFilteringCafes(cafes);
       setIsFiltered(false);
       // 커스텀 오버레이와 상태 공유 (input의 값에 따라 오버레이만 히든 처리)
       dispatch(setFilterdValue(null));
@@ -38,12 +34,8 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
         return cafe;
       }
     });
-    // 카페 거리별로 정렬
-    setFilteringCafes(
-      keywordFilteringCafe.sort((a, b) => {
-        return Number(a.distance) - Number(b.distance);
-      }),
-    );
+
+    setFilteringCafes(keywordFilteringCafe);
     setIsFiltered(true);
     // 커스텀 오버레이와 상태 공유 (input의 값에 따라 오버레이만 히든 처리)
     dispatch(setFilterdValue(inputValue));

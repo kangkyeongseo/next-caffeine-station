@@ -18,7 +18,7 @@ const ModalContainer = ({ menus }: ModalContainerProps) => {
   }, [isMenuOpen]);
 
   return (
-    <div className='relative flex h-full w-full items-center justify-center md:h-fit md:w-fit'>
+    <>
       <ModalMainCard
         menus={menus}
         isMenuOpen={isMenuOpen}
@@ -26,7 +26,7 @@ const ModalContainer = ({ menus }: ModalContainerProps) => {
         setIsAnimation={setIsAnimation}
       />
       {isMenuOpen && <ModalMenuCard isAnimation={isAnimation} />}
-    </div>
+    </>
   );
 };
 

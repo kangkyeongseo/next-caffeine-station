@@ -7,6 +7,7 @@ import {
   setKeywords,
   setMode,
 } from '@/redux/slices/filterSlice';
+import { setUserKeyword } from '@/redux/slices/userKeywordSlice';
 import SearchFilter from './SearchFilter';
 import DistanceFilter from './DistanceFilter';
 import KeywordsFilter from './KeywordsFilter';
@@ -24,10 +25,10 @@ const FilteringController = () => {
     isHot,
     distance: distanceState,
   } = useAppSelector(state => state.filter);
+  const { userKeyword } = useAppSelector(state => state.userKeyword);
 
   const [isOpen, setIsOpen] = useState(true);
   const [keywordType, setkeywordType] = useState('가성비');
-  const [userKeyword, setUserKeyword] = useState<any | null>(null);
 
   const onDistanceChange = (distance: number) => {
     dispatch(setDistance(distance));
@@ -75,7 +76,7 @@ const FilteringController = () => {
       const { db } = await import('@/libs/server/firebase');
       const docRef = doc(db, 'user', user.uid);
       const docSnap = await getDoc(docRef);
-      setUserKeyword(docSnap.data()?.keyword);
+      dispatch(setUserKeyword(docSnap.data()?.keyword));
     };
     fetchData();
   }, [user]);
@@ -90,8 +91,17 @@ const FilteringController = () => {
 
   useEffect(() => {
     if (!userKeyword) return;
-    dispatch(setKeywords(userKeyword.costEffective));
-    setkeywordType('가성비');
+    switch (keywordType) {
+      case '가성비':
+        dispatch(setKeywords(userKeyword.costEffective));
+        break;
+      case '프리미엄':
+        dispatch(setKeywords(userKeyword.premium));
+        break;
+      case '나의 카페':
+        dispatch(setKeywords(userKeyword.custom));
+        break;
+    }
   }, [userKeyword]);
 
   return (

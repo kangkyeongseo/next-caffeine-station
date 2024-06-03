@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { User } from 'firebase/auth';
 import { db } from '@/libs/server/firebase';
 import { BrandType } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { setUserKeyword } from '@/redux/slices/userKeywordSlice';
 import KeywordList from './KeywordList';
 
 export type BrandsforKeywordSetting = {
@@ -17,12 +20,14 @@ type UserKeyword = {
 };
 
 interface KeywordSettingProps {
-  user: any;
+  user: User;
 }
 
 const KeywordSetting = ({ user }: KeywordSettingProps) => {
+  const dispatch = useAppDispatch();
+  const { userKeyword } = useAppSelector(state => state.userKeyword);
+
   const [brands, setBrands] = useState<BrandType[]>([]);
-  const [userKeyword, setUserKeyword] = useState<UserKeyword | null>(null);
   const [costEffectiveBrands, setCostEffectiveBrands] = useState<
     BrandsforKeywordSetting[]
   >([]);
@@ -88,6 +93,13 @@ const KeywordSetting = ({ user }: KeywordSettingProps) => {
       },
     }).then(() => {
       setToastMessage('키워드가 저장되었습니다.');
+      dispatch(
+        setUserKeyword({
+          costEffective: changedCostEffectiveBrands,
+          premium: changedPremiumBrands,
+          custom: changedCustomBrands,
+        }),
+      );
     });
   };
 

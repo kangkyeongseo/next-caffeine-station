@@ -4,6 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import filterSlice from './slices/filterSlice';
 import menuSlice from './slices/menuSlice';
 import overlayCafeSlice from './slices/overlayCafeSlice';
+import userKeywordSlice from './slices/userKeywordSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     filter: filterSlice,
     menu: menuSlice,
     overlayCafe: overlayCafeSlice,
+    userKeyword: userKeywordSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

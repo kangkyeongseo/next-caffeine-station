@@ -70,27 +70,23 @@ const FilteringController = () => {
   };
 
   useEffect(() => {
-    if (!user) return;
-    const fetchData = async () => {
-      const { doc, getDoc } = await import('firebase/firestore');
-      const { db } = await import('@/libs/server/firebase');
-      const docRef = doc(db, 'user', user.uid);
-      const docSnap = await getDoc(docRef);
-      dispatch(setUserKeyword(docSnap.data()?.keyword));
-    };
-    fetchData();
-  }, [user]);
-
-  useEffect(() => {
-    if (isUserLoading) return;
     if (!user) {
       dispatch(setKeywords(['빽다방', '메가MGC커피', '컴포즈커피']));
       setkeywordType('가성비');
+    } else {
+      const fetchData = async () => {
+        const { doc, getDoc } = await import('firebase/firestore');
+        const { db } = await import('@/libs/server/firebase');
+        const docRef = doc(db, 'user', user.uid);
+        const docSnap = await getDoc(docRef);
+        dispatch(setUserKeyword(docSnap.data()?.keyword));
+      };
+      fetchData();
     }
-  }, [isUserLoading]);
+  }, [user]);
 
   useEffect(() => {
-    if (!userKeyword) return;
+    if (!user) return;
     switch (keywordType) {
       case '가성비':
         dispatch(setKeywords(userKeyword.costEffective));

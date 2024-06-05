@@ -21,9 +21,10 @@ type UserKeyword = {
 
 interface KeywordSettingProps {
   user: User;
+  rule: string;
 }
 
-const KeywordSetting = ({ user }: KeywordSettingProps) => {
+const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
   const dispatch = useAppDispatch();
   const { userKeyword } = useAppSelector(state => state.userKeyword);
 
@@ -91,6 +92,7 @@ const KeywordSetting = ({ user }: KeywordSettingProps) => {
         premium: changedPremiumBrands,
         custom: changedCustomBrands,
       },
+      rule,
     }).then(() => {
       setToastMessage('키워드가 저장되었습니다.');
       dispatch(

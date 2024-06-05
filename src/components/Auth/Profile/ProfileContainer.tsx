@@ -6,9 +6,10 @@ import AuthHeader from '../AuthHeader';
 interface ProfileContainerProps {
   type: string;
   user: any;
+  rule: string;
 }
 
-const ProfileContainer = ({ type, user }: ProfileContainerProps) => {
+const ProfileContainer = ({ type, user, rule }: ProfileContainerProps) => {
   const auth = getAuth();
   const router = useRouter();
 
@@ -42,7 +43,7 @@ const ProfileContainer = ({ type, user }: ProfileContainerProps) => {
                 검색 카페 키워드 설정하기
               </span>
             </div>
-            <KeywordSetting user={user} />
+            <KeywordSetting user={user} rule={rule} />
           </div>
         </div>
       </div>

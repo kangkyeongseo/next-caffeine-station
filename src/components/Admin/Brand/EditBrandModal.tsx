@@ -1,9 +1,7 @@
-import { db } from '@/libs/server/firebase';
-import { BrandFormType, BrandType } from '@/types';
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { deleteBrand, editBrand } from '@/libs/server/action';
+import { BrandFormType, BrandType } from '@/types';
 
 interface EditBrandModalProps {
   brand: BrandType;
@@ -16,7 +14,6 @@ const EditBrandModal = ({
   setIsEditBrandModalOpen,
   rule,
 }: EditBrandModalProps) => {
-  const router = useRouter();
   const { register, handleSubmit, setValue, watch } = useForm<BrandFormType>({
     defaultValues: {
       name: brand.name,
@@ -32,29 +29,11 @@ const EditBrandModal = ({
 
   const onDeleteBrand = async () => {
     if (rule !== 'admin') return;
-    await deleteDoc(doc(db, 'brand', brand.id));
-    setIsEditBrandModalOpen(false);
-    router.refresh();
+    deleteBrand(brand.id).then(() => setIsEditBrandModalOpen(false));
   };
 
   const onValidToEditBrand = async (data: BrandFormType) => {
-    if (rule !== 'admin') return;
-    await setDoc(doc(db, 'brand', brand.id), {
-      name: data.name,
-      type: data.type,
-      hot: {
-        price: data.hotPrice,
-        amount: data.hotAmount,
-        caffeine: data.hotCaffeine,
-      },
-      ice: {
-        price: data.icePrice,
-        amount: data.iceAmount,
-        caffeine: data.iceCaffeine,
-      },
-    });
-    setIsEditBrandModalOpen(false);
-    router.refresh();
+    editBrand(data, brand.id).then(() => setIsEditBrandModalOpen(false));
   };
 
   return (

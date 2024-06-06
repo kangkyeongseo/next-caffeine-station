@@ -33,7 +33,6 @@ const CafeSideBar = ({ brands }: CafeSideBarProps) => {
       if (status === window.kakao.maps.services.Status.OK) {
         resolve(data);
       } else {
-        dispatch(setIsMapLoading(false));
         reject();
       }
     });

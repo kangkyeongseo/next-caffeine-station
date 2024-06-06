@@ -34,7 +34,7 @@ const ResetForm = dynamic(() => import('./Reset/resetForm'), {
 });
 
 const AuthContainer = () => {
-  const { user, isUserLoading } = useUser();
+  const { user, rule, isUserLoading } = useUser();
   const pathname = usePathname();
 
   const [type, setType] = useState<authPageType>('login');
@@ -54,7 +54,7 @@ const AuthContainer = () => {
     <div className='z-30 h-[90%] w-[500px] overflow-hidden rounded-md bg-white pb-4'>
       {!isUserLoading ? (
         user ? (
-          <ProfileContainer type={type} user={user} />
+          <ProfileContainer type={type} user={user} rule={rule} />
         ) : (
           <>
             {type === 'login' && <LoginForm type={type} setType={setType} />}

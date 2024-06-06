@@ -1,9 +1,7 @@
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/libs/server/firebase';
 import { BrandFormType } from '@/types';
+import { addBrand } from '@/libs/server/action';
 
 interface AddBrandModalProps {
   setIsAddBrandModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +12,6 @@ const AddBrandModal = ({
   setIsAddBrandModalOpen,
   rule,
 }: AddBrandModalProps) => {
-  const router = useRouter();
   const { register, handleSubmit, setValue, watch } = useForm<BrandFormType>({
     defaultValues: {
       type: '가성비',
@@ -29,22 +26,7 @@ const AddBrandModal = ({
 
   const onValidToAddBrand = async (data: BrandFormType) => {
     if (rule !== 'admin') return;
-    await addDoc(collection(db, 'brand'), {
-      name: data.name,
-      type: data.type,
-      hot: {
-        price: data.hotPrice,
-        amount: data.hotAmount,
-        caffeine: data.hotCaffeine,
-      },
-      ice: {
-        price: data.icePrice,
-        amount: data.iceAmount,
-        caffeine: data.iceCaffeine,
-      },
-    });
-    setIsAddBrandModalOpen(false);
-    router.refresh();
+    addBrand(data).then(() => setIsAddBrandModalOpen(false));
   };
 
   return (

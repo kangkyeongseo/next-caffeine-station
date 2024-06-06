@@ -13,12 +13,6 @@ export type BrandsforKeywordSetting = {
   isChecked: boolean;
 };
 
-type UserKeyword = {
-  costEffective: string[];
-  premium: string[];
-  custom: string[];
-};
-
 interface KeywordSettingProps {
   user: User;
   rule: string;
@@ -29,6 +23,7 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
   const { userKeyword } = useAppSelector(state => state.userKeyword);
 
   const [brands, setBrands] = useState<BrandType[]>([]);
+
   const [costEffectiveBrands, setCostEffectiveBrands] = useState<
     BrandsforKeywordSetting[]
   >([]);
@@ -126,7 +121,7 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
       try {
         const docRef = doc(db, 'user', user.uid);
         const docSnap = await getDoc(docRef);
-        setUserKeyword(docSnap.data()?.keyword);
+        dispatch(setUserKeyword(docSnap.data()?.keyword));
       } catch (error) {
         console.log(error);
       }

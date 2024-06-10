@@ -19,7 +19,7 @@ export const addBrand = async (data: BrandFormType) => {
       caffeine: data.iceCaffeine,
     },
   });
-  revalidatePath('/admin/brand');
+  revalidatePath('/admin', 'layout');
 };
 
 export const editBrand = async (data: BrandFormType, id: string) => {
@@ -37,10 +37,10 @@ export const editBrand = async (data: BrandFormType, id: string) => {
       caffeine: data.iceCaffeine,
     },
   });
-  revalidatePath('/admin/brand');
+  revalidatePath('/admin', 'layout');
 };
 
 export const deleteBrand = async (id: string) => {
   await deleteDoc(doc(db, 'brand', id));
-  revalidatePath('/admin/brand');
+  revalidatePath('/admin', 'layout');
 };

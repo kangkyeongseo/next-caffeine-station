@@ -26,7 +26,6 @@ const ModalMenuList = ({
   };
 
   const handleMenuClick = (clickedMenu: MenuType) => {
-    console.log(1);
     if (!isMenuOpen) {
       setIsMenuOpen(true);
       dispatch(setMenu(clickedMenu));

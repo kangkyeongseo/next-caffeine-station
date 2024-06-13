@@ -3,13 +3,11 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import Provider from '@/components/Provider';
+import { rootMetadata } from './constants/metadatas';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'CaffeineStation',
-  description: '주변의 카페를 찾아보세요',
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,

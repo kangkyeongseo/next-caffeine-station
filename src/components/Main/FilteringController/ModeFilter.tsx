@@ -1,11 +1,17 @@
 import React from 'react';
+import { setMode } from '@/redux/slices/filterSlice';
+import { useAppDispatch } from '@/redux/store';
 
 interface ModeFilterProps {
   modeState: string;
-  onModeChange: (mode: string) => void;
 }
 
-const ModeFilter = ({ modeState, onModeChange }: ModeFilterProps) => {
+const ModeFilter = React.memo(({ modeState }: ModeFilterProps) => {
+  const dispatch = useAppDispatch();
+  const onModeChange = (mode: string) => {
+    dispatch(setMode(mode));
+  };
+
   return (
     <div className='grid grid-cols-3 font-light'>
       {['price', 'mlPrice', 'caffeinePrice'].map(mode => (
@@ -21,6 +27,8 @@ const ModeFilter = ({ modeState, onModeChange }: ModeFilterProps) => {
       ))}
     </div>
   );
-};
+});
+
+ModeFilter.displayName = 'ModeFilter';
 
 export default ModeFilter;

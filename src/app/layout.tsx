@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import localfont from 'next/font/local';
 import Script from 'next/script';
-import './globals.css';
 import Provider from '@/components/Provider';
 import { rootMetadata } from './constants/metadatas';
+import './globals.css';
 
 const pretendard = localfont({
   src: '../../public/fonts/PretendardVariable.woff2',

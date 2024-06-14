@@ -1,11 +1,16 @@
 import React from 'react';
+import { setIsHot } from '@/redux/slices/filterSlice';
+import { useAppDispatch } from '@/redux/store';
 
 interface TempFilterProps {
   isHot: boolean;
-  onTempChange: (temp: string) => void;
 }
 
-const TempFilter = ({ isHot, onTempChange }: TempFilterProps) => {
+const TempFilter = React.memo(({ isHot }: TempFilterProps) => {
+  const dispatch = useAppDispatch();
+  const onTempChange = (temp: string) => {
+    dispatch(setIsHot(temp === 'hot'));
+  };
   return (
     <div className='grid grid-cols-2 border font-light'>
       {['hot', 'ice'].map(temp => (
@@ -19,6 +24,8 @@ const TempFilter = ({ isHot, onTempChange }: TempFilterProps) => {
       ))}
     </div>
   );
-};
+});
+
+TempFilter.displayName = 'TempFilter';
 
 export default TempFilter;

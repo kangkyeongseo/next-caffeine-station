@@ -3,7 +3,7 @@ import { setCoords } from '@/redux/slices/mapSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import React, { useEffect, useState } from 'react';
 
-const SearchFilter = () => {
+const SearchFilter = React.memo(() => {
   const dispatch = useAppDispatch();
   const { map } = useAppSelector(state => state.map);
   const [ps, setPs] = useState<any>(null);
@@ -94,6 +94,8 @@ const SearchFilter = () => {
       )}
     </form>
   );
-};
+});
+
+SearchFilter.displayName = 'SearchFilter';
 
 export default SearchFilter;

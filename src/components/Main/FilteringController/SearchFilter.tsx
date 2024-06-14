@@ -1,12 +1,14 @@
 import { Search } from '@/image/svgs ';
 import { setCoords } from '@/redux/slices/mapSlice';
-import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { useAppDispatch } from '@/redux/store';
 import React, { useEffect, useState } from 'react';
 
-const SearchFilter = React.memo(() => {
+interface SearchFilterProps {
+  ps: any;
+}
+
+const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   const dispatch = useAppDispatch();
-  const { map } = useAppSelector(state => state.map);
-  const [ps, setPs] = useState<any>(null);
   const [value, setValue] = useState('');
   const [places, setPlaces] = useState<any[]>([]);
 
@@ -20,11 +22,6 @@ const SearchFilter = React.memo(() => {
 
   const setSearchPlace = () => {
     if (places.length === 0) return;
-    const moveLatLon = new window.kakao.maps.LatLng(
-      Number(places[0].y),
-      Number(places[0].x),
-    );
-    map.setCenter(moveLatLon);
     dispatch(
       setCoords({
         latitude: Number(places[0].y),
@@ -55,12 +52,6 @@ const SearchFilter = React.memo(() => {
     }
     ps.keywordSearch(value, placesSearchCB, { size: 5 });
   }, [value]);
-
-  useEffect(() => {
-    window.kakao.maps.load(() => {
-      setPs(new window.kakao.maps.services.Places());
-    });
-  }, []);
 
   return (
     <form className='relative' onSubmit={onSubmit}>

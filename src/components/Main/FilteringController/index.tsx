@@ -10,7 +10,12 @@ import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
 
-const FilteringController = () => {
+interface FilteringControllerProps {
+  ps: any;
+}
+
+const FilteringController = ({ ps }: FilteringControllerProps) => {
+  console.log('render');
   const { user, isUserLoading } = useUser();
 
   const { mode, isHot, distance } = useAppSelector(state => state.filter);
@@ -40,7 +45,7 @@ const FilteringController = () => {
           user={user}
           isUserLoading={isUserLoading}
         />
-        <SearchFilter />
+        <SearchFilter ps={ps} />
         <FilterStates
           distance={distance}
           keywordType={keywordType}

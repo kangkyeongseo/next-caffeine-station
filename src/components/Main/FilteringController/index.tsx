@@ -15,7 +15,6 @@ interface FilteringControllerProps {
 }
 
 const FilteringController = ({ ps }: FilteringControllerProps) => {
-  console.log('render');
   const { user, isUserLoading } = useUser();
 
   const { mode, isHot, distance } = useAppSelector(state => state.filter);

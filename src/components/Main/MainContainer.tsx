@@ -8,6 +8,7 @@ import Map from './Map';
 import CafeSideBar from './CafeSideBar/CafeSideBar';
 import SetMapButtons from './SetMapButtons';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import MapContainer from './Map/MapContainer';
 
 declare global {
   interface Window {
@@ -39,7 +40,8 @@ const MainContainer = ({ brands }: MainContainerProps) => {
   return (
     <div className='relative h-full w-screen overflow-hidden md:h-screen'>
       <FilteringController ps={ps} />
-      <Map ps={ps} brands={brands} cafes={cafes} setCafes={setCafes} />
+      <MapContainer ps={ps} brands={brands} cafes={cafes} setCafes={setCafes} />
+      {/* <Map ps={ps} brands={brands} cafes={cafes} setCafes={setCafes} /> */}
       <CafeSideBar brands={brands} cafes={cafes} />
       <SetMapButtons />
     </div>

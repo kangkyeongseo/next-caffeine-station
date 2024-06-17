@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useAppSelector } from '@/redux/store';
+import { User } from 'firebase/auth';
 import SearchFilter from './SearchFilter';
-import useUser from '@/hooks/useUser';
 import DistanceFilter from './DistanceFilter';
 import KeywordsFilter from './KeywordsFilter';
 import ModeFilter from './ModeFilter';
@@ -12,11 +12,15 @@ import FilterStates from './FilterStates';
 
 interface FilteringControllerProps {
   ps: any;
+  user: User;
+  isUserLoading: boolean;
 }
 
-const FilteringController = ({ ps }: FilteringControllerProps) => {
-  const { user, isUserLoading } = useUser();
-
+const FilteringController = ({
+  ps,
+  user,
+  isUserLoading,
+}: FilteringControllerProps) => {
   const { mode, isHot, distance } = useAppSelector(state => state.filter);
 
   const [isOpen, setIsOpen] = useState(true);

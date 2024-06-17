@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setIsMapLoading } from '@/redux/slices/mapSlice';
+import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 import { BrandType, CafeType } from '@/types';
 import Provider from '@/components/Provider';
 import jsxToString from '@/libs/client/jsxToString';
@@ -10,9 +11,15 @@ interface MarkerManagerProps {
   brands: BrandType[];
   cafes: CafeType[];
   isPsReady: boolean;
+  isSearchReady: boolean;
 }
 
-const MarkerManager = ({ brands, cafes, isPsReady }: MarkerManagerProps) => {
+const MarkerManager = ({
+  brands,
+  cafes,
+  isPsReady,
+  isSearchReady,
+}: MarkerManagerProps) => {
   const dispatch = useAppDispatch();
   const { map, coords } = useAppSelector(state => state.map);
   const { distance } = useAppSelector(state => state.filter);
@@ -47,6 +54,7 @@ const MarkerManager = ({ brands, cafes, isPsReady }: MarkerManagerProps) => {
 
   useEffect(() => {
     if (!isPsReady) return;
+    if (!isSearchReady) return;
     removeMarker();
     const bounds = new window.kakao.maps.LatLngBounds();
     for (let i = 0; i < cafes.length; i++) {
@@ -90,7 +98,13 @@ const MarkerManager = ({ brands, cafes, isPsReady }: MarkerManagerProps) => {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     map.setBounds(bounds);
     dispatch(setIsMapLoading(false));
-  }, [isPsReady, cafes]);
+    dispatch(setIsOpen(true));
+    if (cafes.length > 0) {
+      dispatch(setContent('주변 카페를 검색했습니다.'));
+    } else {
+      dispatch(setContent('조건에 만족한 카페가 없습니다.'));
+    }
+  }, [isPsReady, isSearchReady, cafes]);
 
   return null;
 };

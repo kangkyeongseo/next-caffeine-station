@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setIsMapLoading } from '@/redux/slices/mapSlice';
 import { CafeType } from '@/types';
+import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 
 interface SearchManagerProps {
   ps: any;
@@ -9,6 +10,7 @@ interface SearchManagerProps {
   setCafes: React.Dispatch<React.SetStateAction<CafeType[]>>;
   isPsReady: boolean;
   setIsPsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearchReady: boolean;
 }
 
 const SearchManager: React.FC<SearchManagerProps> = ({
@@ -17,6 +19,7 @@ const SearchManager: React.FC<SearchManagerProps> = ({
   setCafes,
   isPsReady,
   setIsPsReady,
+  isSearchReady,
 }) => {
   const dispatch = useAppDispatch();
   const { map, coords } = useAppSelector(state => state.map);
@@ -65,6 +68,7 @@ const SearchManager: React.FC<SearchManagerProps> = ({
 
   useEffect(() => {
     if (!isPsReady) return;
+    if (!isSearchReady) return;
     if (cafes.length !== 0) {
       setCafes([]);
     }
@@ -82,7 +86,10 @@ const SearchManager: React.FC<SearchManagerProps> = ({
 
     fetchData();
     dispatch(setIsMapLoading(true));
-  }, [isPsReady, distance, keywords, coords]);
+
+    dispatch(setIsOpen(false));
+    dispatch(setContent(''));
+  }, [isPsReady, isSearchReady, distance, keywords, coords]);
 
   return null;
 };

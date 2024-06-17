@@ -5,6 +5,7 @@ import filterSlice from './slices/filterSlice';
 import menuSlice from './slices/menuSlice';
 import overlayCafeSlice from './slices/overlayCafeSlice';
 import userKeywordSlice from './slices/userKeywordSlice';
+import toastSlice from './slices/toastSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     menu: menuSlice,
     overlayCafe: overlayCafeSlice,
     userKeyword: userKeywordSlice,
+    toast: toastSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

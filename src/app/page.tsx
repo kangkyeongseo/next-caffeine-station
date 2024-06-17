@@ -1,10 +1,7 @@
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/libs/server/firebase';
-import Map from '@/components/Main/Map';
-import CafeSideBar from '@/components/Main/CafeSideBar/CafeSideBar';
-import FilteringController from '@/components/Main/FilteringController';
-import SetMapButtons from '@/components/Main/SetMapButtons';
 import { BrandType } from '@/types';
+import MainContainer from '@/components/Main/MainContainer';
 
 const fetchData = async () => {
   try {
@@ -19,12 +16,5 @@ const fetchData = async () => {
 
 export default async function Home() {
   const brands = await fetchData();
-  return (
-    <div className='relative h-full w-screen overflow-hidden md:h-screen'>
-      <FilteringController />
-      <Map />
-      <CafeSideBar brands={brands} />
-      <SetMapButtons />
-    </div>
-  );
+  return <MainContainer brands={brands} />;
 }

@@ -1,14 +1,18 @@
 import React from 'react';
+import { setDistance } from '@/redux/slices/filterSlice';
+import { useAppDispatch } from '@/redux/store';
 
 interface DistanceFilterProps {
   distanceState: number;
-  onDistanceChange: (distance: number) => void;
 }
 
-const DistanceFilter = ({
-  distanceState,
-  onDistanceChange,
-}: DistanceFilterProps) => {
+const DistanceFilter = React.memo(({ distanceState }: DistanceFilterProps) => {
+  const dispatch = useAppDispatch();
+
+  const onDistanceChange = (distance: number) => {
+    dispatch(setDistance(distance));
+  };
+
   return (
     <div className='grid border-collapse grid-cols-3 font-light'>
       {[300, 500, 1000].map(distance => (
@@ -22,6 +26,8 @@ const DistanceFilter = ({
       ))}
     </div>
   );
-};
+});
+
+DistanceFilter.displayName = 'DistanceFilter';
 
 export default DistanceFilter;

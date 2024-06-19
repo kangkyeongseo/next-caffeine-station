@@ -6,6 +6,7 @@ import { BrandType } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setUserKeyword } from '@/redux/slices/userKeywordSlice';
 import KeywordList from './KeywordList';
+import Spinner from '@/components/Spinner';
 
 export type BrandsforKeywordSetting = {
   type: string;
@@ -23,6 +24,7 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
   const { userKeyword } = useAppSelector(state => state.userKeyword);
 
   const [brands, setBrands] = useState<BrandType[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
 
   const [costEffectiveBrands, setCostEffectiveBrands] = useState<
     BrandsforKeywordSetting[]
@@ -34,6 +36,20 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
     [],
   );
   const [toastMessage, setToastMessage] = useState('');
+
+  let timer: NodeJS.Timeout;
+  const debounce = (func: () => void, delay: number) => {
+    setIsSaving(true);
+    setToastMessage('');
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      func();
+    }, delay);
+  };
 
   const onBrandClick = (type: string, name: string) => {
     switch (type) {
@@ -89,6 +105,7 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
       },
       rule,
     }).then(() => {
+      setIsSaving(false);
       setToastMessage('키워드가 저장되었습니다.');
       dispatch(
         setUserKeyword({
@@ -201,10 +218,10 @@ const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {
       </div>
       <div className='space-y-3'>
         <button
-          className='h-12 w-full cursor-pointer rounded-full bg-black/70 text-white hover:bg-black/80'
-          onClick={onSave}
+          className='flex h-12 w-full cursor-pointer items-center justify-center rounded-full bg-black/70 text-white hover:bg-black/80'
+          onClick={() => debounce(onSave, 3000)}
         >
-          저장하기
+          {isSaving ? <Spinner size='small' color='white' /> : '저장하기'}
         </button>
         <div className='text-center text-emerald-700'>{toastMessage}</div>
       </div>

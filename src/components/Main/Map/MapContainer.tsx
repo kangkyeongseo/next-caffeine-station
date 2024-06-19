@@ -30,7 +30,6 @@ const MapContainer = ({
       <Map />
       <SearchManager
         ps={ps}
-        cafes={cafes}
         setCafes={setCafes}
         isPsReady={isPsReady}
         setIsPsReady={setIsPsReady}

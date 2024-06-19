@@ -50,7 +50,12 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
       setPlaces([]);
       return;
     }
-    ps.keywordSearch(value, placesSearchCB, { size: 5 });
+
+    const debounce = setTimeout(() => {
+      ps.keywordSearch(value, placesSearchCB, { size: 5 });
+    }, 500);
+
+    return () => clearTimeout(debounce);
   }, [value]);
 
   return (

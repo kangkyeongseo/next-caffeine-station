@@ -6,7 +6,6 @@ import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 
 interface SearchManagerProps {
   ps: any;
-  cafes: CafeType[];
   setCafes: React.Dispatch<React.SetStateAction<CafeType[]>>;
   isPsReady: boolean;
   setIsPsReady: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +14,6 @@ interface SearchManagerProps {
 
 const SearchManager: React.FC<SearchManagerProps> = ({
   ps,
-  cafes,
   setCafes,
   isPsReady,
   setIsPsReady,
@@ -69,9 +67,6 @@ const SearchManager: React.FC<SearchManagerProps> = ({
   useEffect(() => {
     if (!isPsReady) return;
     if (!isSearchReady) return;
-    if (cafes.length !== 0) {
-      setCafes([]);
-    }
 
     const fetchData = async () => {
       const results = await keywordsSearch(keywords);
@@ -84,11 +79,16 @@ const SearchManager: React.FC<SearchManagerProps> = ({
       setCafes(fulfilledResults);
     };
 
-    fetchData();
+    const debounce = setTimeout(() => {
+      fetchData();
+    }, 400);
+
     dispatch(setIsMapLoading(true));
 
     dispatch(setIsOpen(false));
     dispatch(setContent(''));
+
+    return () => clearTimeout(debounce);
   }, [isPsReady, isSearchReady, distance, keywords, coords]);
 
   return null;

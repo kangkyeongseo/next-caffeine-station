@@ -24,7 +24,7 @@ export const rootMetadata: Metadata = {
   verification: {
     google: 'ER0dxxsbLTB27B3Ik-QNEoJcUddyUUh9g9t4pkustmg',
     other: {
-      'naver-site-verification': '32fb5601d5a8db1e9783b1b2c20ba3d71e072c6d',
+      'naver-site-verification': '5_AfPYUspWVQOxVzVVG0tXHr_jXVSkCKMfV6FnBf4G8',
     },
   },
 };

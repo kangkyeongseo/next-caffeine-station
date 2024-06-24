@@ -9,6 +9,7 @@ import ModeFilter from './ModeFilter';
 import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
+import { ChevrongDown, ChevrongUp } from '@/image/svgs ';
 
 interface FilteringControllerProps {
   ps: any;
@@ -27,9 +28,9 @@ const FilteringController = ({
   const [keywordType, setkeywordType] = useState('가성비');
 
   return (
-    <div className='z-20 flex w-full flex-col-reverse md:fixed md:left-4 md:top-4 md:w-80'>
+    <div className='z-20 flex w-full flex-col-reverse lg:fixed lg:left-4 lg:top-4 lg:w-80'>
       <div
-        className={`h-fit text-sm shadow-lg ${isOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-full opacity-0'}`}
+        className={`fixed top-[-50px] z-20 h-fit w-full text-sm shadow-lg transition-all lg:static lg:transition-none ${isOpen ? 'translate-y-[132px] lg:visible lg:translate-y-0' : 'lg:invisible'}`}
       >
         <DistanceFilter distanceState={distance} />
         <KeywordsFilter
@@ -40,6 +41,14 @@ const FilteringController = ({
         />
         <ModeFilter modeState={mode} />
         <TempFilter isHot={isHot} />
+        <div className='absolute right-[50%] flex h-8 w-12 translate-x-[50%] items-center justify-center rounded-b-xl bg-emerald-600 text-white lg:hidden'>
+          <span
+            className='h-6 w-6 cursor-pointer'
+            onClick={() => setIsOpen(pre => !pre)}
+          >
+            {isOpen ? <ChevrongDown /> : <ChevrongUp />}
+          </span>
+        </div>
       </div>
       <div className='z-20'>
         <FilteringControllerHeader

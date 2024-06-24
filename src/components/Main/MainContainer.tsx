@@ -62,7 +62,7 @@ const MainContainer = ({ brands }: MainContainerProps) => {
   }, []);
 
   return (
-    <div className='relative h-full w-screen overflow-hidden md:h-screen'>
+    <div className='relative h-full w-screen overflow-hidden lg:h-screen'>
       <FilteringController ps={ps} user={user} isUserLoading={isUserLoading} />
       <MapContainer
         ps={ps}
@@ -71,7 +71,6 @@ const MainContainer = ({ brands }: MainContainerProps) => {
         setCafes={setCafes}
         isSearchReady={isSearchReady}
       />
-      {/* <Map ps={ps} brands={brands} cafes={cafes} setCafes={setCafes} /> */}
       <CafeSideBar brands={brands} cafes={cafes} />
       <SetMapButtons />
       {isOpen && (

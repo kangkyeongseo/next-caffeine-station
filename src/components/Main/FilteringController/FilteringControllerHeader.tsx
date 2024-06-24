@@ -19,7 +19,7 @@ const FilteringControllerHeader = React.memo(
     isUserLoading,
   }: FilteringControllerHeaderProps) => {
     return (
-      <div className='flex items-center justify-between bg-emerald-600 px-4 py-2 text-white  md:rounded-t-md md:py-3'>
+      <div className='flex items-center justify-between bg-emerald-600 px-4 py-2 text-white lg:rounded-t-md'>
         <span>CAFFEINESTATION</span>
         <div className='flex items-center gap-3'>
           <Link href={'/auth'} className='text-sm'>
@@ -32,7 +32,7 @@ const FilteringControllerHeader = React.memo(
             )}
           </Link>
           <span
-            className='hidden h-5 w-5 cursor-pointer md:block'
+            className='hidden h-5 w-5 cursor-pointer lg:block'
             onClick={() => setIsOpen(pre => !pre)}
           >
             {isOpen ? <ChevrongDown /> : <ChevrongUp />}

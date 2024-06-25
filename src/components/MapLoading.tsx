@@ -2,7 +2,7 @@ import React from 'react';
 
 function MapLoading() {
   return (
-    <div className='absolute top-0 z-10 flex aspect-square w-full items-center justify-center bg-black/20 md:h-screen md:w-screen'>
+    <div className='absolute left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black/20'>
       <svg className='h-6 w-6 animate-spin fill-green-900' viewBox='3 3 18 18'>
         <path
           className='opacity-10'

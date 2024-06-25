@@ -24,12 +24,7 @@ const Map = () => {
       });
     }
   }, [coords]);
-  return (
-    <div
-      ref={mapRef}
-      className={`aspect-square w-full md:h-screen md:w-screen`}
-    ></div>
-  );
+  return <div ref={mapRef} className={`h-screen w-screen`}></div>;
 };
 
 export default Map;

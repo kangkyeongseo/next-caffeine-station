@@ -47,11 +47,15 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   }, [isEnterLink]);
 
   return (
-    <li onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <li
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className='min-w-[80%] translate-x-[10%] snap-center'
+    >
       <Link
         ref={linkRef}
         href={`/cafe/${brand?.id}?name=${cafe.place_name}`}
-        className={` flex items-center justify-between px-4 py-2 hover:bg-gray-100 md:pointer-events-auto ${cafe.id === id && 'bg-gray-100'}`}
+        className={`mx-auto flex h-full w-[95%] items-center justify-between rounded-xl border bg-white p-4 hover:bg-gray-100  lg:pointer-events-auto lg:w-full lg:rounded-none lg:border-none lg:py-2 ${cafe.id === id && 'bg-gray-100'}`}
       >
         <div className='flex flex-col'>
           <span className='font-medium'>{placeName}</span>

@@ -30,7 +30,7 @@ const FilteringController = ({
   return (
     <div className='z-20 flex w-full flex-col-reverse lg:fixed lg:left-4 lg:top-4 lg:w-80'>
       <div
-        className={`fixed top-[-50px] z-20 h-fit w-full text-sm shadow-lg transition-all lg:static lg:transition-none ${isOpen ? 'translate-y-[132px] lg:visible lg:translate-y-0' : 'lg:invisible'}`}
+        className={`fixed bottom-0 z-20 h-fit w-full text-sm shadow-lg lg:static ${isOpen ? 'lg:visible lg:translate-y-0' : 'lg:invisible'}`}
       >
         <DistanceFilter distanceState={distance} />
         <KeywordsFilter
@@ -41,14 +41,14 @@ const FilteringController = ({
         />
         <ModeFilter modeState={mode} />
         <TempFilter isHot={isHot} />
-        <div className='absolute right-[50%] flex h-8 w-12 translate-x-[50%] items-center justify-center rounded-b-xl bg-emerald-600 text-white lg:hidden'>
+        {/* <div className='absolute right-[50%] flex h-8 w-12 translate-x-[50%] items-center justify-center rounded-b-xl bg-emerald-600 text-white lg:hidden'>
           <span
             className='h-6 w-6 cursor-pointer'
             onClick={() => setIsOpen(pre => !pre)}
           >
             {isOpen ? <ChevrongDown /> : <ChevrongUp />}
           </span>
-        </div>
+        </div> */}
       </div>
       <div className='z-20'>
         <FilteringControllerHeader

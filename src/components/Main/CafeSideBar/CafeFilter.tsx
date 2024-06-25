@@ -42,7 +42,7 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
   };
 
   return (
-    <div className='sticky top-0 w-full'>
+    <div className='sticky top-0 hidden w-full lg:block'>
       <form className='relative' onSubmit={handleKeywordSearch}>
         <input
           type='text'

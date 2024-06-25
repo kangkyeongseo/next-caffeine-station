@@ -20,12 +20,12 @@ const CafeSideBar = ({ brands, cafes }: CafeSideBarProps) => {
 
   return (
     <div
-      className={`z-10 h-full w-full bg-white pb-5 duration-200 md:absolute md:right-0 md:top-0 md:w-80 md:pb-10 md:shadow-md ${isOpen ? 'translate-x-0' : 'translate-x-80'}`}
+      className={`absolute bottom-[150px] z-10 h-20 w-full duration-200 lg:right-0 lg:top-0 lg:h-full lg:w-80 lg:bg-white lg:pb-10 lg:shadow-md ${isOpen ? 'translate-x-0' : 'translate-x-80'}`}
     >
       <CafeFilter cafes={cafes} setFilteringCafes={setFilteringCafes} />
       <CafeList filteringCafes={filteringCafes} brands={brands} />
       <div
-        className='absolute left-[-25px] top-[50%] hidden h-10 w-5 cursor-pointer rounded-md bg-white shadow-md md:flex'
+        className='absolute left-[-25px] top-[50%] hidden h-10 w-5 cursor-pointer rounded-md bg-white shadow-md lg:flex'
         onClick={() => setIsOpen(pre => !pre)}
       >
         {isOpen ? <ChevrongRight /> : <ChevrongLeft />}

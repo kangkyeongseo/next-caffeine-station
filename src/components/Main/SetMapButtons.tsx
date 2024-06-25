@@ -27,15 +27,15 @@ const SetMapButtons = () => {
   };
 
   return (
-    <div className='absolute left-3 top-[220px] z-10 flex flex-col gap-2 text-xs text-white md:left-[350px] md:top-5'>
+    <div className='absolute left-3 top-[100px] z-10 flex flex-col gap-2 text-xs text-white lg:left-[350px] lg:top-5'>
       <button
-        className='rounded-md bg-emerald-600 px-2 py-1 hover:bg-emerald-700 md:px-4'
+        className='rounded-md bg-emerald-600 px-2 py-1 hover:bg-emerald-700 lg:px-4'
         onClick={onMapPositionClick}
       >
         이 지역 재검색
       </button>
       <button
-        className='rounded-md bg-black/70 px-2 py-1 hover:bg-black/90 md:px-4'
+        className='rounded-md bg-black/70 px-2 py-1 hover:bg-black/90 lg:px-4'
         onClick={onCurrentPositionClick}
       >
         나의 위치 검색

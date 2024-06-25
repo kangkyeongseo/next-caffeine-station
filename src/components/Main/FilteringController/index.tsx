@@ -28,7 +28,7 @@ const FilteringController = ({
   const [keywordType, setkeywordType] = useState('가성비');
 
   return (
-    <div className='z-20 flex w-full flex-col-reverse lg:fixed lg:left-4 lg:top-4 lg:w-80'>
+    <div className='fixed top-0 z-20 flex w-full flex-col-reverse lg:left-4 lg:top-4 lg:w-80'>
       <div
         className={`fixed bottom-0 z-20 h-fit w-full text-sm shadow-lg lg:static ${isOpen ? 'lg:visible lg:translate-y-0' : 'lg:invisible'}`}
       >

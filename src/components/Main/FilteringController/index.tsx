@@ -9,7 +9,6 @@ import ModeFilter from './ModeFilter';
 import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
-import { ChevrongDown, ChevrongUp } from '@/image/svgs ';
 
 interface FilteringControllerProps {
   ps: any;

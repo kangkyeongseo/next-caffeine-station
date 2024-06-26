@@ -29,7 +29,7 @@ const PasswordForm = ({ type, setType }: AuthFormProps) => {
       <AuthHeader type={type} />
       <div className='mt-20 flex justify-center'>
         <form
-          className='w-full space-y-3 px-12'
+          className='w-full space-y-3 px-10 lg:px-12'
           onSubmit={handleSubmit(onLoginValid)}
         >
           <div className='relative'>

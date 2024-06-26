@@ -28,7 +28,7 @@ export default async function CafeDetail({
 }) {
   const menus = await fetchData(id);
   return (
-    <div className='absolute right-0 top-0 z-[100] flex h-screen w-screen items-center justify-center bg-black/80'>
+    <div className='absolute right-0 top-0 z-[100] flex h-dvh w-screen items-center justify-center bg-black/80'>
       <ModalContainer menus={menus} />
     </div>
   );

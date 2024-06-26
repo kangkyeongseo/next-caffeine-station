@@ -62,7 +62,7 @@ const MainContainer = ({ brands }: MainContainerProps) => {
   }, []);
 
   return (
-    <div className='relative h-screen w-screen overflow-hidden'>
+    <div className='relative h-dvh w-screen overflow-hidden'>
       <FilteringController ps={ps} user={user} isUserLoading={isUserLoading} />
       <MapContainer
         ps={ps}

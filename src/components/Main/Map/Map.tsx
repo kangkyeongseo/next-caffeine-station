@@ -24,7 +24,7 @@ const Map = () => {
       });
     }
   }, [coords]);
-  return <div ref={mapRef} className={`h-screen w-screen`}></div>;
+  return <div ref={mapRef} className={`h-dvh w-screen`}></div>;
 };
 
 export default Map;

@@ -51,7 +51,7 @@ const AuthContainer = () => {
   }, [user]);
 
   return (
-    <div className='z-30 h-[90%] w-[500px] overflow-hidden rounded-md bg-white pb-4'>
+    <div className='z-30 h-[90%] w-[90%] overflow-hidden rounded-md bg-white pb-4 lg:w-[500px]'>
       {!isUserLoading ? (
         user ? (
           <ProfileContainer type={type} user={user} rule={rule} />

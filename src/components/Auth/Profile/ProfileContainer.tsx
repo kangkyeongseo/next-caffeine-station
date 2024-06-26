@@ -26,8 +26,8 @@ const ProfileContainer = ({ type, user, rule }: ProfileContainerProps) => {
   return (
     <>
       <AuthHeader type={type} />
-      <div className='mt-20 flex justify-center'>
-        <div className='w-full space-y-12 px-12'>
+      <div className='mt-14 flex justify-center lg:mt-20'>
+        <div className='w-full space-y-10 px-10 lg:space-y-12 lg:px-12'>
           <div className='flex flex-col items-center gap-2'>
             <span>{user?.email}</span>
             <span

@@ -51,10 +51,10 @@ const ModalMenuList = ({
   }, [selectedCategory]);
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex h-[calc(90dvh-125px-(100vw/16)*9)] flex-col gap-2 lg:h-[calc(90dvh-145px-(500px/16)*9)]'>
       <div className='space-y-2 px-4'>
-        <span className='text-sm font-bold md:text-base'>메뉴</span>
-        <nav className='text-sm md:text-base'>
+        <span className='text-sm lg:text-base lg:font-bold'>메뉴</span>
+        <nav className='text-sm lg:text-base'>
           <span
             onClick={() => handleNavClick('coffee')}
             className={`cursor-pointer rounded-md px-4 py-1 ${selectedCategory === 'coffee' ? 'bg-emerald-600 text-white' : 'bg-white'}`}
@@ -75,16 +75,16 @@ const ModalMenuList = ({
           </span>
         </nav>
       </div>
-      <ul className='hide-scroll mt-2 h-[300px] list-none overflow-y-scroll border-t'>
+      <ul className='hide-scroll mt-2 max-h-[300px] list-none overflow-y-scroll border-t'>
         {selectedMenus?.map(menu => (
           <li
             key={menu.menuName}
-            className='pointer-events-none flex cursor-pointer items-center justify-between rounded-md border-b p-4 hover:bg-gray-100 md:pointer-events-auto '
+            className='pointer-events-none flex cursor-pointer flex-col justify-between gap-2 rounded-md border-b p-4 hover:bg-gray-100 lg:pointer-events-auto lg:flex-row lg:items-center '
             onClick={() => handleMenuClick(menu)}
           >
             <div className='flex flex-col gap-[2px]'>
               <div className='flex items-center gap-1'>
-                <span className='text-sm font-bold'>{menu.menuName}</span>
+                <span className='text-sm lg:font-bold'>{menu.menuName}</span>
                 <div className='space-x-1 text-[10px] text-white'>
                   {menu.types.map((type: string) => (
                     <span
@@ -102,7 +102,7 @@ const ModalMenuList = ({
                   : menu.description.substring(0, 32).concat('...')}
               </span>
             </div>
-            <div className='flex flex-col items-end gap-2'>
+            <div className='flex flex-col gap-2 lg:items-end'>
               <div className='space-x-1 text-xs text-gray-800'>
                 {menu.sizes.map((size: string) => (
                   <span

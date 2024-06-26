@@ -13,7 +13,7 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
   };
   return (
     <div
-      className='absolute right-0 top-0 z-[100] flex h-screen w-screen items-center justify-center bg-[rgba(0,0,0,0.8)]'
+      className='absolute right-0 top-0 z-[100] flex h-dvh w-screen items-center justify-center bg-[rgba(0,0,0,0.8)]'
       ref={overlayRef}
       onClick={handleOverlayClick}
     >

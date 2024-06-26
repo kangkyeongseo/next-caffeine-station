@@ -38,11 +38,11 @@ const ModalMap = ({ coords }: ModalMapProps) => {
   return (
     <>
       {isLoading && (
-        <div className='aspect-video w-full bg-gray-50 md:w-[500px]' />
+        <div className='aspect-video w-full bg-gray-50 lg:w-[500px]' />
       )}
       <div
         ref={mapRef}
-        className={`aspect-video w-full md:w-[500px] ${isLoading ? 'hidden' : 'block'}`}
+        className={`aspect-video w-full lg:w-[500px] ${isLoading ? 'hidden' : 'block'}`}
       ></div>
     </>
   );

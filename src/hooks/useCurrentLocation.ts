@@ -5,6 +5,10 @@ const useCurrentLocation = () => {
   const [coords, setCoords] = useState<CoordsType | null>(null);
   const [error, setError] = useState<GeolocationPositionError | null>(null);
 
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  };
+
   const onSuccess = ({
     coords: { latitude, longitude },
   }: GeolocationPosition) => {
@@ -16,10 +20,10 @@ const useCurrentLocation = () => {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    getCurrentLocation();
   }, []);
 
-  return { coords, error };
+  return { getCurrentLocation, coords, error };
 };
 
 export default useCurrentLocation;

@@ -23,12 +23,12 @@ const SetMapButtons = () => {
 
   useEffect(() => {
     if (isMapLoading) return;
-    const moveLatLon = new window.kakao.maps.LatLng(
-      coords?.latitude,
-      coords?.longitude,
-    );
+    // const moveLatLon = new window.kakao.maps.LatLng(
+    //   coords?.latitude,
+    //   coords?.longitude,
+    // );
     dispatch(setCoords(coords));
-    map.setCenter(moveLatLon);
+    // map.setCenter(moveLatLon);
   }, [coords]);
 
   return (

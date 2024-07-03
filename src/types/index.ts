@@ -1,3 +1,5 @@
+export type PsType = any;
+
 export interface CoordsType {
   latitude: number;
   longitude: number;
@@ -17,6 +19,8 @@ export interface CafeType {
   x: string;
   y: string;
 }
+
+export interface PlaceType extends CafeType {}
 
 export interface NutritionalInfoType {
   type: string;

@@ -1,18 +1,19 @@
-import { Search } from '@/image/svgs ';
-import { setCoords } from '@/redux/slices/mapSlice';
-import { useAppDispatch } from '@/redux/store';
 import React, { useEffect, useState } from 'react';
+import { useAppDispatch } from '@/redux/store';
+import { setCoords } from '@/redux/slices/mapSlice';
+import { Search } from '@/image/svgs ';
+import { PlaceType, PsType } from '@/types';
 
 interface SearchFilterProps {
-  ps: any;
+  ps: PsType;
 }
 
 const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState('');
-  const [places, setPlaces] = useState<any[]>([]);
+  const [places, setPlaces] = useState<PlaceType[]>([]);
 
-  const placesSearchCB = (data: any, status: string) => {
+  const placesSearchCB = (data: PlaceType[], status: string) => {
     if (status === window.kakao.maps.services.Status.OK) {
       setPlaces(data);
     } else {
@@ -56,7 +57,7 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
     }, 500);
 
     return () => clearTimeout(debounce);
-  }, [value]);
+  }, [ps, value]);
 
   return (
     <form className='relative' onSubmit={onSubmit}>

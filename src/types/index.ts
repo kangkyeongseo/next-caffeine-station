@@ -1,3 +1,4 @@
+export type KakaoType = any;
 export type PsType = any;
 
 export interface CoordsType {

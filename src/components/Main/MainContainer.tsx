@@ -2,18 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setCoords } from '@/redux/slices/mapSlice';
-import { BrandType, CafeType } from '@/types';
+import { setPs } from '@/redux/slices/psSlice';
+import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
+import { BrandType, CafeType, KakaoType } from '@/types';
 import FilteringController from './FilteringController';
 import CafeSideBar from './CafeSideBar/CafeSideBar';
 import SetMapButtons from './SetMapButtons';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import MapContainer from './Map/MapContainer';
 import useUser from '@/hooks/useUser';
-import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 
 declare global {
   interface Window {
-    kakao: any;
+    kakao: KakaoType;
   }
 }
 
@@ -24,11 +25,11 @@ interface MainContainerProps {
 const MainContainer = ({ brands }: MainContainerProps) => {
   const dispatch = useAppDispatch();
   const { isOpen, content } = useAppSelector(state => state.toast);
+  const { ps } = useAppSelector(state => state.ps);
 
   const { coords, error } = useCurrentLocation();
   const { user, isUserLoading } = useUser();
 
-  const [ps, setPs] = useState<any>(null);
   const [cafes, setCafes] = useState<CafeType[]>([]);
   const [isSearchReady, setIsSearchReady] = useState(false);
 
@@ -57,7 +58,8 @@ const MainContainer = ({ brands }: MainContainerProps) => {
 
   useEffect(() => {
     window.kakao.maps.load(() => {
-      setPs(new window.kakao.maps.services.Places());
+      const ps = new window.kakao.maps.services.Places();
+      dispatch(setPs(ps));
     });
   }, []);
 

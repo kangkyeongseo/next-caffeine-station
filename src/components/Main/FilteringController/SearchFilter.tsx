@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/redux/store';
 import { setCoords } from '@/redux/slices/mapSlice';
 import { Search } from '@/image/svgs ';
 import { PlaceType, PsType } from '@/types';
+import useSearchPlace from '@/hooks/useSearchPlace';
 
 interface SearchFilterProps {
   ps: PsType;
@@ -11,34 +12,28 @@ interface SearchFilterProps {
 const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState('');
-  const [places, setPlaces] = useState<PlaceType[]>([]);
 
-  const placesSearchCB = (data: PlaceType[], status: string) => {
-    if (status === window.kakao.maps.services.Status.OK) {
-      setPlaces(data);
-    } else {
-      setPlaces([]);
-    }
-  };
+  const { places, setSearchKeyword } = useSearchPlace(ps);
 
-  const setSearchPlace = () => {
+  const setSearchPlace = (place: PlaceType) => {
     if (places.length === 0) return;
     dispatch(
       setCoords({
-        latitude: Number(places[0].y),
-        longitude: Number(places[0].x),
+        latitude: Number(place.y),
+        longitude: Number(place.x),
       }),
     );
-    setPlaces([]);
+    setValue('');
   };
 
   const onSubmit = (event: React.FormEvent) => {
+    if (places.length === 0) return;
     event.preventDefault();
-    setSearchPlace();
+    setSearchPlace(places[0]);
   };
 
-  const onLinkClick = (keyword: string) => {
-    setValue(keyword);
+  const onLinkClick = (place: PlaceType) => {
+    setSearchPlace(place);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,18 +41,8 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   };
 
   useEffect(() => {
-    if (!ps) return;
-    if (value.length === 0) {
-      setPlaces([]);
-      return;
-    }
-
-    const debounce = setTimeout(() => {
-      ps.keywordSearch(value, placesSearchCB, { size: 5 });
-    }, 500);
-
-    return () => clearTimeout(debounce);
-  }, [ps, value]);
+    setSearchKeyword(value);
+  }, [value, setSearchKeyword]);
 
   return (
     <form className='relative' onSubmit={onSubmit}>
@@ -70,7 +55,7 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
       />
       <span
         className='absolute right-4 top-[50%] h-5 w-5 translate-y-[-50%] cursor-pointer'
-        onClick={setSearchPlace}
+        onClick={() => setSearchPlace(places[0])}
       >
         <Search />
       </span>
@@ -81,7 +66,7 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
               <li
                 key={place.id}
                 className='rounded-md px-2 py-1 hover:bg-gray-100'
-                onClick={() => onLinkClick(place.place_name)}
+                onClick={() => onLinkClick(place)}
               >
                 {place.place_name}
               </li>

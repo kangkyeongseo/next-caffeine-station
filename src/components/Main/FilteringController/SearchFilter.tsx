@@ -27,8 +27,8 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   };
 
   const onSubmit = (event: React.FormEvent) => {
-    if (places.length === 0) return;
     event.preventDefault();
+    if (places.length === 0) return;
     setSearchPlace(places[0]);
   };
 

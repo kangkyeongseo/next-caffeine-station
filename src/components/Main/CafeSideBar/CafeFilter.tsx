@@ -2,11 +2,11 @@ import React, { SetStateAction, useState } from 'react';
 import { Search } from '@/image/svgs ';
 import { setFilterdValue } from '@/redux/slices/overlayCafeSlice';
 import { useAppDispatch } from '@/redux/store';
-import { CafeType } from '@/types';
+import { PlaceType } from '@/types';
 
 interface CafeFilterProps {
-  cafes: CafeType[];
-  setFilteringCafes: React.Dispatch<SetStateAction<CafeType[]>>;
+  cafes: PlaceType[];
+  setFilteringCafes: React.Dispatch<SetStateAction<PlaceType[]>>;
 }
 
 const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {

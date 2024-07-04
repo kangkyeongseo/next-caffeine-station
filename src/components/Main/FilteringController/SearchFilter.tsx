@@ -13,7 +13,7 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState('');
 
-  const { places, setSearchKeyword } = useSearchPlace(ps);
+  const { places } = useSearchPlace({ keyword: value });
 
   const setSearchPlace = (place: PlaceType) => {
     if (places.length === 0) return;
@@ -39,10 +39,6 @@ const SearchFilter = React.memo(({ ps }: SearchFilterProps) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
-
-  useEffect(() => {
-    setSearchKeyword(value);
-  }, [value, setSearchKeyword]);
 
   return (
     <form className='relative' onSubmit={onSubmit}>

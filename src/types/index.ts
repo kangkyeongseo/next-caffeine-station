@@ -1,12 +1,19 @@
 export type KakaoType = any;
 export type PsType = any;
+export type MarkerType = any;
+export type OverlayType = any;
 
 export interface CoordsType {
   latitude: number;
   longitude: number;
 }
 
-export interface CafeType {
+export interface SearchOptionType {
+  location: any;
+  radius: number;
+}
+
+export interface PlaceType {
   address_name: string;
   category_group_code: string;
   category_group_name: string;
@@ -20,8 +27,6 @@ export interface CafeType {
   x: string;
   y: string;
 }
-
-export interface PlaceType extends CafeType {}
 
 export interface NutritionalInfoType {
   type: string;

@@ -1,9 +1,9 @@
-import { BrandType, CafeType } from '@/types';
+import { BrandType, PlaceType } from '@/types';
 import React from 'react';
 import CafeItem from './CafeItem';
 
 interface CafeListProps {
-  filteringCafes: CafeType[];
+  filteringCafes: PlaceType[];
   brands: BrandType[];
 }
 

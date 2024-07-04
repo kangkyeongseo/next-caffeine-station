@@ -4,10 +4,10 @@ import {
   setOverlayCafeId,
 } from '@/redux/slices/overlayCafeSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
-import { BrandType, CafeType } from '@/types';
+import { BrandType, PlaceType } from '@/types';
 
 interface CafeOverlayProps {
-  cafe: CafeType;
+  cafe: PlaceType;
   brands: BrandType[];
 }
 

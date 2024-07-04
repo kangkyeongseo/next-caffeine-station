@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { BrandType, CafeType } from '@/types';
+import { BrandType, PlaceType } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import {
   setIsEnterLink,
@@ -8,7 +8,7 @@ import {
 } from '@/redux/slices/overlayCafeSlice';
 
 interface CafeItemProps {
-  cafe: CafeType;
+  cafe: PlaceType;
   brands: BrandType[];
 }
 

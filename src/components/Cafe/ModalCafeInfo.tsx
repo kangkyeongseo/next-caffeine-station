@@ -1,10 +1,10 @@
 import React from 'react';
 import ModalMap from './ModalMap';
-import { CafeType } from '@/types';
+import { PlaceType } from '@/types';
 import ModalCafeDescription from './ModalCafeDescription';
 
 interface ModalCafeInfoProps {
-  cafe: CafeType | null;
+  cafe: PlaceType | null;
 }
 
 const ModalCafeInfo = ({ cafe }: ModalCafeInfoProps) => {

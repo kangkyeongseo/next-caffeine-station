@@ -13,11 +13,13 @@ interface CafeOverlayProps {
 
 const CafeOverlay = ({ cafe, brands }: CafeOverlayProps) => {
   const dispatch = useAppDispatch();
-  const brand = brands.find(brand => {
-    if (cafe.place_name.includes(brand.name)) {
-      return brand;
-    }
-  });
+  const brand = cafe.place_name.includes('메가엠지씨커피')
+    ? brands.find(brand => brand.name === '메가MGC커피')
+    : brands.find(brand => {
+        if (cafe.place_name.includes(brand.name)) {
+          return brand;
+        }
+      });
 
   const { mode, isHot } = useAppSelector(state => state.filter);
   // 카페 리스트와 상태 공유

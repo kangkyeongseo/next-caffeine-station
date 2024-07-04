@@ -6,10 +6,12 @@ import menuSlice from './slices/menuSlice';
 import overlayCafeSlice from './slices/overlayCafeSlice';
 import userKeywordSlice from './slices/userKeywordSlice';
 import toastSlice from './slices/toastSlice';
+import psSlice from './slices/psSlice';
 
 export const store = configureStore({
   reducer: {
     map: mapSlice,
+    ps: psSlice,
     filter: filterSlice,
     menu: menuSlice,
     overlayCafe: overlayCafeSlice,

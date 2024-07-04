@@ -7,7 +7,7 @@ import Spinner from '@/components/Spinner';
 interface FilteringControllerHeaderProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<SetStateAction<boolean>>;
-  user: User;
+  user: User | null;
   isUserLoading: boolean;
 }
 

@@ -1,7 +1,8 @@
+import { User } from 'firebase/auth/cordova';
 import { useEffect, useState } from 'react';
 
 const useUser = () => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [rule, setRule] = useState('guest');
   const [isUserLoading, setIsUserLoading] = useState(true);
 

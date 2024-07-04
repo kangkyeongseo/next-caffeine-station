@@ -1,17 +1,17 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { BrandType, CafeType } from '@/types';
+import { BrandType, PlaceType } from '@/types';
 import { ChevrongLeft, ChevrongRight } from '@/image/svgs ';
 import CafeFilter from './CafeFilter';
 import CafeList from './CafeList';
 
 interface CafeSideBarProps {
   brands: BrandType[];
-  cafes: CafeType[];
+  cafes: PlaceType[];
 }
 
 const CafeSideBar = ({ brands, cafes }: CafeSideBarProps) => {
-  const [filteringCafes, setFilteringCafes] = useState<CafeType[]>([]);
+  const [filteringCafes, setFilteringCafes] = useState<PlaceType[]>([]);
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {

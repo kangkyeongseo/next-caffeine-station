@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export type DistanceType = 300 | 500 | 1000;
+export type ModeType = 'price' | 'mlPrice' | 'caffeinePrice';
+export type TempType = 'hot' | 'ice';
+
 interface FilterType {
-  mode: 'price' | 'mlPrice' | 'caffeinePrice';
+  mode: ModeType;
   isHot: boolean;
-  distance: number;
+  distance: DistanceType;
   keywords: string[];
 }
 

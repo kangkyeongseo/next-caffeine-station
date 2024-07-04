@@ -9,10 +9,11 @@ import ModeFilter from './ModeFilter';
 import TempFilter from './TempFilter';
 import FilteringControllerHeader from './FilteringControllerHeader';
 import FilterStates from './FilterStates';
+import { PsType } from '@/types';
 
 interface FilteringControllerProps {
-  ps: any;
-  user: User;
+  ps: PsType;
+  user: User | null;
   isUserLoading: boolean;
 }
 
@@ -38,16 +39,8 @@ const FilteringController = ({
           user={user}
           isUserLoading={isUserLoading}
         />
-        <ModeFilter modeState={mode} />
+        <ModeFilter mode={mode} />
         <TempFilter isHot={isHot} />
-        {/* <div className='absolute right-[50%] flex h-8 w-12 translate-x-[50%] items-center justify-center rounded-b-xl bg-emerald-600 text-white lg:hidden'>
-          <span
-            className='h-6 w-6 cursor-pointer'
-            onClick={() => setIsOpen(pre => !pre)}
-          >
-            {isOpen ? <ChevrongDown /> : <ChevrongUp />}
-          </span>
-        </div> */}
       </div>
       <div className='z-20'>
         <FilteringControllerHeader

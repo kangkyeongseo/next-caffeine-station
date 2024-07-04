@@ -1,9 +1,9 @@
 import React from 'react';
 import { Phone, Place } from '@/image/svgs ';
-import { CafeType } from '@/types';
+import { PlaceType } from '@/types';
 
 interface ModalCafeDescriptionProps {
-  cafe: CafeType | null;
+  cafe: PlaceType | null;
 }
 
 const ModalCafeDescription = ({ cafe }: ModalCafeDescriptionProps) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { BrandType, CafeType } from '@/types';
+import { BrandType, PlaceType } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import {
   setIsEnterLink,
@@ -8,7 +8,7 @@ import {
 } from '@/redux/slices/overlayCafeSlice';
 
 interface CafeItemProps {
-  cafe: CafeType;
+  cafe: PlaceType;
   brands: BrandType[];
 }
 
@@ -16,11 +16,13 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
   // 브랜드 검색
-  const brand = brands.find(brand => {
-    if (cafe.place_name.includes(brand.name)) {
-      return brand;
-    }
-  });
+  const brand = cafe.place_name.includes('메가엠지씨커피')
+    ? brands.find(brand => brand.name === '메가MGC커피')
+    : brands.find(brand => {
+        if (cafe.place_name.includes(brand.name)) {
+          return brand;
+        }
+      });
   // 카페 이름 길이 제한
   const placeName =
     cafe.place_name.length <= 15

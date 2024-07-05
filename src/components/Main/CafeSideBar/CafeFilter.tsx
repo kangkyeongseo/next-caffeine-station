@@ -14,20 +14,7 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
   const [inputValue, setInputValue] = useState('');
   const [isFiltered, setIsFiltered] = useState(false);
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    // 필터링 검색 후 input의 값이 비어있을때 실행
-    if (isFiltered && event.target.value.length === 0) {
-      // 초기 검색된 전체 카페 나열
-      setFilteringCafes(cafes);
-      setIsFiltered(false);
-      // 커스텀 오버레이와 상태 공유 (input의 값에 따라 오버레이만 히든 처리)
-      dispatch(setFilterdValue(null));
-    }
-  };
-
-  const handleKeywordSearch = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleKeywordSearch = () => {
     // input의 값에 따라 카페 필터링
     const keywordFilteringCafe = cafes.filter(cafe => {
       if (cafe.place_name.includes(inputValue)) {
@@ -41,9 +28,30 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
     dispatch(setFilterdValue(inputValue));
   };
 
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleKeywordSearch();
+  };
+
+  const onClick = () => {
+    handleKeywordSearch();
+  };
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    // 필터링 검색 후 input의 값이 비어있을때 실행
+    if (isFiltered && event.target.value.length === 0) {
+      // 초기 검색된 전체 카페 나열
+      setFilteringCafes(cafes);
+      setIsFiltered(false);
+      // 커스텀 오버레이와 상태 공유 (input의 값에 따라 오버레이만 히든 처리)
+      dispatch(setFilterdValue(null));
+    }
+  };
+
   return (
     <div className='sticky top-0 hidden w-full lg:block'>
-      <form className='relative' onSubmit={handleKeywordSearch}>
+      <form className='relative' onSubmit={onSubmit}>
         <input
           type='text'
           className='w-full border py-2 pl-4 pr-10 outline-none'
@@ -51,7 +59,10 @@ const CafeFilter = ({ cafes, setFilteringCafes }: CafeFilterProps) => {
           value={inputValue}
           onChange={onChange}
         />
-        <span className='absolute right-4 top-[50%] h-5 w-5 translate-y-[-50%] cursor-pointer'>
+        <span
+          className='absolute right-4 top-[50%] h-5 w-5 translate-y-[-50%] cursor-pointer'
+          onClick={onClick}
+        >
           <Search />
         </span>
       </form>

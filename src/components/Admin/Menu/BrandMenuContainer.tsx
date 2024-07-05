@@ -5,6 +5,7 @@ import MenuList from './MenuList';
 import useUser from '@/hooks/useUser';
 import Unallowed from '../Unallowed';
 import dynamic from 'next/dynamic';
+import CheckAuthority from '../CheckAuthority';
 
 interface BrandMenuContainerProps {
   menus: MenuType[];
@@ -37,7 +38,9 @@ const BrandMenuContainer = ({ menus, brand }: BrandMenuContainerProps) => {
 
   return (
     <>
-      {isUserLoading ? null : rule === 'admin' ? (
+      {isUserLoading ? (
+        <CheckAuthority />
+      ) : rule === 'admin' ? (
         <div className='flex h-screen w-screen justify-center'>
           <div className='mt-20 h-[700px] w-[600px] overflow-hidden border-2'>
             <div className='relative bg-black/80 py-2 text-center'>

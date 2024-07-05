@@ -18,11 +18,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   // 브랜드 검색
   const brand = cafe.place_name.includes('메가엠지씨커피')
     ? brands.find(brand => brand.name === '메가MGC커피')
-    : brands.find(brand => {
-        if (cafe.place_name.includes(brand.name)) {
-          return brand;
-        }
-      });
+    : brands.find(brand => cafe.place_name.includes(brand.name));
   // 카페 이름 길이 제한
   const placeName =
     cafe.place_name.length <= 15
@@ -41,12 +37,11 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   };
   // 커스텀 오버레이에서 클릭 시 Link태그 클릭
   useEffect(() => {
-    if (!linkRef.current) return;
-    if (!isEnterLink) return;
-    if (id === cafe.id) linkRef.current.click();
-
-    dispatch(setIsEnterLink(false));
-  }, [isEnterLink]);
+    if (linkRef.current && isEnterLink && id === cafe.id) {
+      linkRef.current.click();
+      dispatch(setIsEnterLink(false));
+    }
+  }, [isEnterLink, id, cafe.id, dispatch]);
 
   return (
     <li

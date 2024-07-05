@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { BrandType } from '@/types';
 import useUser from '@/hooks/useUser';
 import Unallowed from '../Unallowed';
+import CheckAuthority from '../CheckAuthority';
 
 interface MenuContainerProps {
   brands: BrandType[];
@@ -13,7 +14,9 @@ const MenuContainer = ({ brands }: MenuContainerProps) => {
   const { rule, isUserLoading } = useUser();
   return (
     <>
-      {isUserLoading ? null : rule === 'admin' ? (
+      {isUserLoading ? (
+        <CheckAuthority />
+      ) : rule === 'admin' ? (
         <div className='mx-auto mt-20 min-h-[700px] w-[600px] border-2'>
           <div className='bg-black/80 py-2 text-center'>
             <span className='text-white'>메뉴</span>

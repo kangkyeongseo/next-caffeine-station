@@ -16,7 +16,7 @@ export type BrandsforKeywordSetting = {
 
 interface KeywordSettingProps {
   user: User;
-  rule: string;
+  rule: string | null;
 }
 
 const KeywordSetting = ({ user, rule }: KeywordSettingProps) => {

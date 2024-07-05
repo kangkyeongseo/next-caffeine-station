@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 
 const useUser = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [rule, setRule] = useState('guest');
+  const [rule, setRule] = useState<string | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
+  const [isAuthChangedLoading, setisAuthChangedLoading] = useState(true);
 
   useEffect(() => {
     const loadAuth = async () => {
@@ -13,7 +14,7 @@ const useUser = () => {
 
       const unsubscribe = onAuthStateChanged(auth, user => {
         setUser(user);
-        setIsUserLoading(false);
+        setisAuthChangedLoading(false);
       });
 
       return () => unsubscribe();
@@ -23,6 +24,7 @@ const useUser = () => {
   }, []);
 
   useEffect(() => {
+    if (isAuthChangedLoading) return;
     if (!user) {
       setRule('guest');
     } else {
@@ -36,7 +38,12 @@ const useUser = () => {
       };
       fetchData();
     }
-  }, [user]);
+  }, [user, isAuthChangedLoading]);
+
+  useEffect(() => {
+    if (!rule) return;
+    setIsUserLoading(false);
+  }, [rule]);
 
   return { user, rule, isUserLoading };
 };

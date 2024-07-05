@@ -92,7 +92,7 @@ const KeywordsFilter = React.memo(
 
     return (
       <div
-        className={`grid border font-light ${user ? 'grid-cols-3' : 'grid-cols-2'}`}
+        className={`grid border font-light ${user && !isUserLoading ? 'grid-cols-3' : 'grid-cols-2'}`}
       >
         {displayKeywords.map(keyword => (
           <span

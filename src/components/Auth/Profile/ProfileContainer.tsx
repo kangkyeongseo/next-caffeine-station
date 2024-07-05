@@ -6,7 +6,7 @@ import AuthHeader from '../AuthHeader';
 interface ProfileContainerProps {
   type: string;
   user: any;
-  rule: string;
+  rule: string | null;
 }
 
 const ProfileContainer = ({ type, user, rule }: ProfileContainerProps) => {

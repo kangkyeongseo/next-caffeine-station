@@ -4,6 +4,8 @@ import ModalContainer from '../../../../components/Cafe/ModalContainer';
 import { db } from '@/libs/server/firebase';
 import { MenuType } from '@/types';
 
+export const revalidate = 10;
+
 const fetchData = async (brandId: string) => {
   try {
     const menuQuery = query(

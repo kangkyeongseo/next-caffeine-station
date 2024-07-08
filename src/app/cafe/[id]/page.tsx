@@ -15,6 +15,8 @@ export async function generateStaticParams() {
   }));
 }
 
+export const revalidate = 10;
+
 const fetchData = async (brandId: string) => {
   try {
     const menuQuery = query(

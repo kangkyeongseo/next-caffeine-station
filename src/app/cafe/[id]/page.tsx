@@ -1,8 +1,19 @@
 import ModalContainer from '@/components/Cafe/ModalContainer';
 import { db } from '@/libs/server/firebase';
-import { MenuType } from '@/types';
+import { BrandType, MenuType } from '@/types';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React from 'react';
+
+export async function generateStaticParams() {
+  const querySnapshot = await getDocs(collection(db, 'brand'));
+  const brands = querySnapshot.docs.map(doc => {
+    return { id: doc.id, ...doc.data() } as BrandType;
+  });
+
+  return brands.map(brand => ({
+    id: brand.id,
+  }));
+}
 
 const fetchData = async (brandId: string) => {
   try {

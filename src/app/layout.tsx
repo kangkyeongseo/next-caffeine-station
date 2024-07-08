@@ -4,6 +4,9 @@ import Script from 'next/script';
 import Provider from '@/components/Provider';
 import { rootMetadata } from '@/constants/metadatas';
 import './globals.css';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/libs/server/firebase';
+import { BrandType } from '@/types';
 
 const pretendard = localfont({
   src: '../../public/fonts/PretendardVariable.woff2',
@@ -11,6 +14,17 @@ const pretendard = localfont({
 });
 
 export const metadata: Metadata = rootMetadata;
+
+export async function generateStaticParams() {
+  const querySnapshot = await getDocs(collection(db, 'brand'));
+  const brands = querySnapshot.docs.map(doc => {
+    return { id: doc.id, ...doc.data() } as BrandType;
+  });
+
+  return brands.map(brand => ({
+    id: brand.id,
+  }));
+}
 
 export default function RootLayout({
   children,

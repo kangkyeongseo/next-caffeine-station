@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setCoords } from '@/redux/slices/mapSlice';
 import { setPs } from '@/redux/slices/psSlice';
-import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 import { BrandType, PlaceType, KakaoType } from '@/types';
 import FilteringController from './FilteringController';
 import CafeSideBar from './CafeSideBar/CafeSideBar';
@@ -21,6 +20,8 @@ declare global {
 interface MainContainerProps {
   brands: BrandType[];
 }
+
+const defaultCoords = { latitude: 37.5760222, longitude: 126.9769 };
 
 const MainContainer = ({ brands }: MainContainerProps) => {
   const dispatch = useAppDispatch();
@@ -42,15 +43,9 @@ const MainContainer = ({ brands }: MainContainerProps) => {
   }, [isUserLoading, ps, map]);
 
   useEffect(() => {
-    // getCurrentPosition 실패 시 토스트 메시지 생성
+    // getCurrentPosition 실패 시 defaultCoords로 위치 설정
     if (!error) return;
-    dispatch(setIsOpen(true));
-    dispatch(setContent('위치 검색에 실패했습니다.'));
-    const timer = setTimeout(() => {
-      dispatch(setIsOpen(false));
-      dispatch(setContent(''));
-    }, 5000);
-    return () => clearTimeout(timer);
+    dispatch(setCoords(defaultCoords));
   }, [error, dispatch]);
 
   useEffect(() => {

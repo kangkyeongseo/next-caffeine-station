@@ -3,10 +3,11 @@ import React, { useEffect } from 'react';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import { setCoords } from '@/redux/slices/mapSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { setContent, setIsOpen } from '@/redux/slices/toastSlice';
 
 const SetMapButtons = () => {
   const dispatch = useAppDispatch();
-  const { getCurrentLocation, coords } = useCurrentLocation();
+  const { getCurrentLocation, coords, error } = useCurrentLocation();
 
   const { map, isMapLoading } = useAppSelector(state => state.map);
 
@@ -18,7 +19,16 @@ const SetMapButtons = () => {
   };
 
   const onCurrentPositionClick = () => {
-    getCurrentLocation();
+    if (error) {
+      dispatch(setIsOpen(true));
+      dispatch(setContent('위치 접근을 허용해주세요.'));
+      setTimeout(() => {
+        dispatch(setIsOpen(false));
+        dispatch(setContent(''));
+      }, 5000);
+    } else {
+      getCurrentLocation();
+    }
   };
 
   useEffect(() => {

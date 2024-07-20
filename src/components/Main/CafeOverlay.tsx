@@ -13,7 +13,7 @@ interface CafeOverlayProps {
 
 const CafeOverlay = ({ cafe, brands }: CafeOverlayProps) => {
   const dispatch = useAppDispatch();
-  const brand = cafe.place_name.includes('메가엠지씨커피')
+  const brand = cafe.place_name.includes('메가')
     ? brands.find(brand => brand.name === '메가MGC커피')
     : brands.find(brand => cafe.place_name.includes(brand.name));
 

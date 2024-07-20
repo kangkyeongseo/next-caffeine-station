@@ -16,7 +16,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
   // 브랜드 검색
-  const brand = cafe.place_name.includes('메가엠지씨커피')
+  const brand = cafe.place_name.includes('메가')
     ? brands.find(brand => brand.name === '메가MGC커피')
     : brands.find(brand => cafe.place_name.includes(brand.name));
   // 카페 이름 길이 제한

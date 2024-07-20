@@ -7,6 +7,8 @@ import { useAppSelector } from '@/redux/store';
  * @param option 중심 좌표 및 중심 좌표로부터의 거리
  */
 
+const CAFE_CATEGORY_CODE = 'CE7';
+
 const useSearchPlace = ({
   keyword,
   option,
@@ -39,7 +41,7 @@ const useSearchPlace = ({
           placesSearchCB(data, status)
             .then(data => setPlaces(data))
             .catch(() => setPlaces([])),
-        { size: 5, ...option },
+        { size: 5 },
       );
     },
     [ps, option, placesSearchCB],
@@ -66,6 +68,23 @@ const useSearchPlace = ({
     [ps, option, placesSearchCB],
   );
 
+  const searchForCategoryKeyword = useCallback(() => {
+    ps.categorySearch(
+      CAFE_CATEGORY_CODE,
+      (data: PlaceType[], status: string) =>
+        placesSearchCB(data, status)
+          .then(data =>
+            setPlaces(
+              data.sort((a, b) => {
+                return Number(a.distance) - Number(b.distance);
+              }),
+            ),
+          )
+          .catch(() => setPlaces([])),
+      option,
+    );
+  }, [ps, option, placesSearchCB]);
+
   useEffect(() => {
     if (!ps) return;
     if (keyword.length === 0) {
@@ -77,16 +96,20 @@ const useSearchPlace = ({
       // 키워드의 타입 별 함수 호출
       if (Array.isArray(keyword)) {
         if (!option) return;
-        const results = await searchForMultipleKeywords(keyword);
-        const fulfilledResults = results
-          .filter(result => result.status === 'fulfilled')
-          .flatMap(
-            result => (result as PromiseFulfilledResult<PlaceType[]>).value,
-          )
-          .sort((a, b) => {
-            return Number(a.distance) - Number(b.distance);
-          });
-        setPlaces(fulfilledResults);
+        if (keyword[0] === '모든 카페') {
+          searchForCategoryKeyword();
+        } else {
+          const results = await searchForMultipleKeywords(keyword);
+          const fulfilledResults = results
+            .filter(result => result.status === 'fulfilled')
+            .flatMap(
+              result => (result as PromiseFulfilledResult<PlaceType[]>).value,
+            )
+            .sort((a, b) => {
+              return Number(a.distance) - Number(b.distance);
+            });
+          setPlaces(fulfilledResults);
+        }
       } else {
         searchForSingleKeyword(keyword);
       }

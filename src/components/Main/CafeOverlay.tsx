@@ -13,11 +13,11 @@ interface CafeOverlayProps {
 
 const CafeOverlay = ({ cafe, brands }: CafeOverlayProps) => {
   const dispatch = useAppDispatch();
-  const brand = cafe.place_name.includes('메가엠지씨커피')
+  const brand = cafe.place_name.includes('메가')
     ? brands.find(brand => brand.name === '메가MGC커피')
     : brands.find(brand => cafe.place_name.includes(brand.name));
 
-  const { mode, isHot } = useAppSelector(state => state.filter);
+  const { mode, isHot, keywords } = useAppSelector(state => state.filter);
   // 카페 리스트와 상태 공유
   const { id, filterdValue } = useAppSelector(state => state.overlayCafe);
 
@@ -45,11 +45,26 @@ const CafeOverlay = ({ cafe, brands }: CafeOverlayProps) => {
     }
   }, [filterdValue]);
 
+  if (keywords[0] === '모든 카페') {
+    return (
+      <div
+        className={`relative flex cursor-pointer overflow-hidden text-xs font-light text-white  duration-100 hover:scale-105 ${cafe.id === id && 'scale-105'} ${isHidden ? 'hidden' : 'block'}`}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        <div className='flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600'>
+          <span>카페</span>
+        </div>
+      </div>
+    );
+  }
+
   if (!brand) return;
 
   return (
     <div
-      className={`relative flex cursor-pointer overflow-hidden rounded-sm bg-white text-xs font-light text-white  shadow-xl duration-100 hover:scale-105 ${cafe.id === id && 'scale-105'} ${isHidden ? 'hidden' : 'block'}`}
+      className={`relative flex cursor-pointer overflow-hidden rounded-sm bg-white text-xs font-light text-white shadow-xl duration-100 hover:scale-105 ${cafe.id === id && 'scale-105'} ${isHidden ? 'hidden' : 'block'}`}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

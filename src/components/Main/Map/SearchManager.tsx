@@ -7,10 +7,19 @@ import useSearchPlace from '@/hooks/useSearchPlace';
 
 interface SearchManagerProps {
   setCafes: React.Dispatch<React.SetStateAction<PlaceType[]>>;
+  setIsCafesLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchReady: boolean;
+  page: number;
+  setIsObserverLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchManager = ({ setCafes, isSearchReady }: SearchManagerProps) => {
+const SearchManager = ({
+  setCafes,
+  setIsCafesLoading,
+  isSearchReady,
+  page,
+  setIsObserverLoading,
+}: SearchManagerProps) => {
   const dispatch = useAppDispatch();
   const { coords } = useAppSelector(state => state.map);
   const { distance, keywords } = useAppSelector(state => state.filter);
@@ -23,7 +32,12 @@ const SearchManager = ({ setCafes, isSearchReady }: SearchManagerProps) => {
     };
   }, [isSearchReady, coords, distance]);
 
-  const { places } = useSearchPlace({ keyword: keywords, option });
+  const { places, isPlacesLoading } = useSearchPlace({
+    keyword: keywords,
+    option,
+    page,
+    setIsObserverLoading,
+  });
 
   useEffect(() => {
     // 키워드 및 옵션 변경 시 지도 로딩과 토스트 메세지를 설정합니다.
@@ -35,7 +49,8 @@ const SearchManager = ({ setCafes, isSearchReady }: SearchManagerProps) => {
 
   useEffect(() => {
     setCafes(places);
-  }, [places, setCafes]);
+    setIsCafesLoading(isPlacesLoading);
+  }, [places, isPlacesLoading, setCafes, setIsCafesLoading]);
 
   return null;
 };

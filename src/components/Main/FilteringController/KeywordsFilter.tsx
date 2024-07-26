@@ -11,7 +11,7 @@ interface KeywordsFilterProps {
   isUserLoading: boolean;
 }
 
-const DEFAULT_KEYWORDS = ['가성비', '프리미엄'];
+const DEFAULT_KEYWORDS = ['가성비', '프리미엄', '모든 카페'];
 const COSTEFFECTIVE_KEYWORDS = ['빽다방', '메가MGC커피', '컴포즈커피'];
 const PREMIUM_KEYWORDS = ['스타벅스', '폴바셋', '투썸플레이스'];
 
@@ -55,6 +55,9 @@ const KeywordsFilter = React.memo(
           case '나의 카페':
             dispatch(setKeywords(userKeyword.custom));
             break;
+          case '모든 카페':
+            dispatch(setKeywords(['모든 카페']));
+            break;
           default:
             break;
         }
@@ -92,7 +95,7 @@ const KeywordsFilter = React.memo(
 
     return (
       <div
-        className={`grid border font-light ${user && !isUserLoading ? 'grid-cols-3' : 'grid-cols-2'}`}
+        className={`grid border font-light ${user && !isUserLoading ? 'grid-cols-4' : 'grid-cols-3'}`}
       >
         {displayKeywords.map(keyword => (
           <span

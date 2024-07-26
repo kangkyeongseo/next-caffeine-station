@@ -47,12 +47,12 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
     <li
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className='min-w-[80%] translate-x-[10%] snap-center'
+      className='min-w-[80%] translate-x-[10%] snap-center lg:translate-x-0'
     >
       <Link
         ref={linkRef}
         href={`/cafe/${brand ? brand.id : 'cafe-catagory'}?name=${cafe.place_name}`}
-        className={`mx-auto flex h-full w-[95%] items-center justify-between rounded-xl border bg-white p-4 hover:bg-gray-100  lg:pointer-events-auto lg:w-full lg:rounded-none lg:border-none lg:py-2 ${cafe.id === id && 'bg-gray-100'}`}
+        className={`mx-auto flex h-full w-[95%] items-center justify-between rounded-xl border bg-white p-4 hover:bg-gray-100  lg:pointer-events-auto lg:w-full lg:rounded-none lg:border-none lg:py-3 ${cafe.id === id && 'bg-gray-100'}`}
       >
         <div className='flex flex-col'>
           <span className='font-medium'>{placeName}</span>

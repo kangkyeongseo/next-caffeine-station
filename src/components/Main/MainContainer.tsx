@@ -25,15 +25,30 @@ const defaultCoords = { latitude: 37.5760222, longitude: 126.9769 };
 
 const MainContainer = ({ brands }: MainContainerProps) => {
   const dispatch = useAppDispatch();
-  const { map } = useAppSelector(state => state.map);
+  const { coords: coordsState, map } = useAppSelector(state => state.map);
   const { ps } = useAppSelector(state => state.ps);
   const { isOpen, content } = useAppSelector(state => state.toast);
+  const { distance, keywords } = useAppSelector(state => state.filter);
 
   const { coords, error } = useCurrentLocation();
   const { user, isUserLoading } = useUser();
 
   const [cafes, setCafes] = useState<PlaceType[]>([]);
+  const [isCafesLoading, setIsCafesLoading] = useState(false);
   const [isSearchReady, setIsSearchReady] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isObserverLoading, setIsObserverLoading] = useState(false);
+
+  useEffect(() => {
+    setPage(1);
+  }, [keywords]);
+
+  useEffect(() => {
+    if (keywords[0] === '모든 카페') {
+      setPage(1);
+      setIsObserverLoading(true);
+    }
+  }, [distance, coordsState, keywords]);
 
   useEffect(() => {
     // 키워드 검색 및 카페 오버레이를 표시하기 위한 검색 객체와 지도, 유저 정보를 대기합니다.
@@ -70,9 +85,18 @@ const MainContainer = ({ brands }: MainContainerProps) => {
         brands={brands}
         cafes={cafes}
         setCafes={setCafes}
+        setIsCafesLoading={setIsCafesLoading}
         isSearchReady={isSearchReady}
+        page={page}
+        setIsObserverLoading={setIsObserverLoading}
       />
-      <CafeSideBar brands={brands} cafes={cafes} />
+      <CafeSideBar
+        brands={brands}
+        cafes={cafes}
+        isCafesLoading={isCafesLoading}
+        setPage={setPage}
+        isObserverLoading={isObserverLoading}
+      />
       <SetMapButtons />
       {isOpen && (
         <div className='fixed left-1/2 top-4 z-30 w-72 translate-x-[-50%] translate-y-[-100px] animate-toast rounded-full bg-white text-center shadow-lg'>

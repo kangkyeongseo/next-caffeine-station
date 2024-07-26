@@ -10,14 +10,20 @@ interface MapContainerProps {
   brands: BrandType[];
   cafes: PlaceType[];
   setCafes: React.Dispatch<React.SetStateAction<PlaceType[]>>;
+  setIsCafesLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchReady: boolean;
+  page: number;
+  setIsObserverLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const MapContainer = ({
   brands,
   cafes,
   setCafes,
+  setIsCafesLoading,
   isSearchReady,
+  page,
+  setIsObserverLoading,
 }: MapContainerProps) => {
   const { isMapLoading } = useAppSelector(state => state.map);
 
@@ -27,7 +33,13 @@ const MapContainer = ({
       <Map />
       {isSearchReady && (
         <>
-          <SearchManager setCafes={setCafes} isSearchReady={isSearchReady} />
+          <SearchManager
+            setCafes={setCafes}
+            setIsCafesLoading={setIsCafesLoading}
+            isSearchReady={isSearchReady}
+            page={page}
+            setIsObserverLoading={setIsObserverLoading}
+          />
           <MarkerManager
             brands={brands}
             cafes={cafes}

@@ -7,6 +7,7 @@ import ModalMainHeader from './ModalMainHeader';
 
 interface ModalMainCardProps {
   menus: MenuType[];
+  isAllCafeMode: boolean;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +15,7 @@ interface ModalMainCardProps {
 
 const ModalMainCard = ({
   menus,
+  isAllCafeMode,
   isMenuOpen,
   setIsMenuOpen,
   setIsAnimation,
@@ -21,7 +23,7 @@ const ModalMainCard = ({
   const params = useSearchParams();
   const cafeName = params.get('name');
   const [cafe, setCafe] = useState<PlaceType | null>(null);
-
+  console.log(isAllCafeMode);
   useEffect(() => {
     if (!cafeName) return;
     window.kakao.maps.load(() => {
@@ -42,12 +44,14 @@ const ModalMainCard = ({
       <ModalMainHeader cafePlaceName={cafe?.place_name} />
       <div className='space-y-2'>
         <ModalCafeInfo cafe={cafe} />
-        <ModalMenu
-          menus={menus}
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-          setIsAnimation={setIsAnimation}
-        />
+        {!isAllCafeMode && (
+          <ModalMenu
+            menus={menus}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            setIsAnimation={setIsAnimation}
+          />
+        )}
       </div>
     </div>
   );

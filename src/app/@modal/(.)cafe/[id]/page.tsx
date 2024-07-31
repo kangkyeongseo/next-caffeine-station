@@ -31,10 +31,18 @@ export default async function CafeModal({
 }: {
   params: { id: string };
 }) {
-  const menus = await fetchData(id);
+  let isAllCafeMode = false;
+  let menus = [] as MenuType[];
+
+  if (id !== 'cafe-catagory') {
+    menus = await fetchData(id);
+  } else {
+    isAllCafeMode = true;
+  }
+
   return (
     <Modal>
-      <ModalContainer menus={menus} />
+      <ModalContainer menus={menus} isAllCafeMode={isAllCafeMode} />
     </Modal>
   );
 }

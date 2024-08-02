@@ -4,9 +4,11 @@ import { PlaceType, MenuType } from '@/types';
 import ModalCafeInfo from './ModalCafeInfo';
 import ModalMenu from './ModalMenuList';
 import ModalMainHeader from './ModalMainHeader';
+import CafeReviewContainer from './CafeReviewContainer';
 
 interface ModalMainCardProps {
   menus: MenuType[];
+  isAllCafeMode: boolean;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +16,7 @@ interface ModalMainCardProps {
 
 const ModalMainCard = ({
   menus,
+  isAllCafeMode,
   isMenuOpen,
   setIsMenuOpen,
   setIsAnimation,
@@ -42,12 +45,15 @@ const ModalMainCard = ({
       <ModalMainHeader cafePlaceName={cafe?.place_name} />
       <div className='space-y-2'>
         <ModalCafeInfo cafe={cafe} />
-        <ModalMenu
-          menus={menus}
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-          setIsAnimation={setIsAnimation}
-        />
+        {!isAllCafeMode && (
+          <ModalMenu
+            menus={menus}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            setIsAnimation={setIsAnimation}
+          />
+        )}
+        {isAllCafeMode && <CafeReviewContainer />}
       </div>
     </div>
   );

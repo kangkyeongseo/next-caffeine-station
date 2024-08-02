@@ -6,9 +6,10 @@ import { MenuType } from '@/types';
 
 interface ModalContainerProps {
   menus: MenuType[];
+  isAllCafeMode: boolean;
 }
 
-const ModalContainer = ({ menus }: ModalContainerProps) => {
+const ModalContainer = ({ menus, isAllCafeMode }: ModalContainerProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
 
@@ -21,11 +22,14 @@ const ModalContainer = ({ menus }: ModalContainerProps) => {
     <div className='relative flex h-[90%] w-[90%] items-center justify-center lg:w-fit'>
       <ModalMainCard
         menus={menus}
+        isAllCafeMode={isAllCafeMode}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         setIsAnimation={setIsAnimation}
       />
-      {isMenuOpen && <ModalMenuCard isAnimation={isAnimation} />}
+      {isMenuOpen && !isAllCafeMode && (
+        <ModalMenuCard isAnimation={isAnimation} />
+      )}
     </div>
   );
 };

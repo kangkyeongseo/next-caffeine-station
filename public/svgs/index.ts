@@ -8,6 +8,8 @@ import ChevrongRight from './chevron-right.svg';
 import Search from './search.svg';
 import User from './user.svg';
 import Lock from './lock.svg';
+import Smile from './face-smile.svg';
+import Frown from './face-frown.svg';
 
 export {
   Close,
@@ -20,4 +22,6 @@ export {
   Search,
   User,
   Lock,
+  Smile,
+  Frown,
 };

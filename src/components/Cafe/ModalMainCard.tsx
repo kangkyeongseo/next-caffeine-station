@@ -4,6 +4,7 @@ import { PlaceType, MenuType } from '@/types';
 import ModalCafeInfo from './ModalCafeInfo';
 import ModalMenu from './ModalMenuList';
 import ModalMainHeader from './ModalMainHeader';
+import CafeReviewContainer from './CafeReviewContainer';
 
 interface ModalMainCardProps {
   menus: MenuType[];
@@ -23,7 +24,7 @@ const ModalMainCard = ({
   const params = useSearchParams();
   const cafeName = params.get('name');
   const [cafe, setCafe] = useState<PlaceType | null>(null);
-  console.log(isAllCafeMode);
+
   useEffect(() => {
     if (!cafeName) return;
     window.kakao.maps.load(() => {
@@ -52,6 +53,7 @@ const ModalMainCard = ({
             setIsAnimation={setIsAnimation}
           />
         )}
+        {isAllCafeMode && <CafeReviewContainer />}
       </div>
     </div>
   );

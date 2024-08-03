@@ -51,7 +51,7 @@ const CafeItem = ({ cafe, brands }: CafeItemProps) => {
     >
       <Link
         ref={linkRef}
-        href={`/cafe/${brand ? brand.id : 'cafe-catagory'}?name=${cafe.place_name}`}
+        href={`/cafe/${brand ? brand.id : cafe.id}?name=${cafe.place_name}&type=${brand ? 'brand' : 'all-cafe'}`}
         className={`mx-auto flex h-full w-[95%] items-center justify-between rounded-xl border bg-white p-4 hover:bg-gray-100  lg:pointer-events-auto lg:w-full lg:rounded-none lg:border-none lg:py-3 ${cafe.id === id && 'bg-gray-100'}`}
       >
         <div className='flex flex-col'>

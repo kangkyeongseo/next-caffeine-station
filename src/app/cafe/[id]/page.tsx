@@ -39,18 +39,11 @@ export default async function CafeDetail({
 }: {
   params: { id: string };
 }) {
-  let isAllCafeMode = false;
-  let menus = [] as MenuType[];
-
-  if (id !== 'cafe-catagory') {
-    menus = await fetchData(id);
-  } else {
-    isAllCafeMode = true;
-  }
+  const menus = await fetchData(id);
 
   return (
     <div className='absolute right-0 top-0 z-[100] flex h-dvh w-screen items-center justify-center bg-black/80'>
-      <ModalContainer menus={menus} isAllCafeMode={isAllCafeMode} />
+      <ModalContainer menus={menus} />
     </div>
   );
 }

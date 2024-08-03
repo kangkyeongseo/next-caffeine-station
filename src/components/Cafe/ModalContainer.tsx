@@ -3,13 +3,16 @@ import React, { useEffect, useState } from 'react';
 import ModalMenuCard from './ModalMenuCard';
 import ModalMainCard from './ModalMainCard';
 import { MenuType } from '@/types';
+import { useSearchParams } from 'next/navigation';
 
 interface ModalContainerProps {
   menus: MenuType[];
-  isAllCafeMode: boolean;
 }
 
-const ModalContainer = ({ menus, isAllCafeMode }: ModalContainerProps) => {
+const ModalContainer = ({ menus }: ModalContainerProps) => {
+  const params = useSearchParams();
+  const type = params.get('type');
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
 
@@ -22,12 +25,12 @@ const ModalContainer = ({ menus, isAllCafeMode }: ModalContainerProps) => {
     <div className='relative flex h-[90%] w-[90%] items-center justify-center lg:w-fit'>
       <ModalMainCard
         menus={menus}
-        isAllCafeMode={isAllCafeMode}
+        type={type}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         setIsAnimation={setIsAnimation}
       />
-      {isMenuOpen && !isAllCafeMode && (
+      {isMenuOpen && type === 'brand' && (
         <ModalMenuCard isAnimation={isAnimation} />
       )}
     </div>

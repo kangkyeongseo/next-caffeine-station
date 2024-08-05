@@ -2,16 +2,13 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import Modal from '../../../../components/Modal';
 import ModalContainer from '../../../../components/Cafe/ModalContainer';
 import { db } from '@/libs/server/firebase';
-import { MenuType } from '@/types';
+import { MenuType, ReviewType } from '@/types';
 
 export const revalidate = 10;
 
-const fetchData = async (brandId: string) => {
+const fetchData = async (id: string) => {
   try {
-    const menuQuery = query(
-      collection(db, 'menu'),
-      where('brandId', '==', brandId),
-    );
+    const menuQuery = query(collection(db, 'menu'), where('brandId', '==', id));
     const menuQuerySnapshot = await getDocs(menuQuery);
     const menus = menuQuerySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() } as MenuType;
@@ -20,9 +17,22 @@ const fetchData = async (brandId: string) => {
       return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
     });
 
-    return menus;
+    if (menus.length === 0) {
+      const reviewQuery = query(
+        collection(db, 'review'),
+        where('cafeId', '==', id),
+      );
+      const reviewQuerySnapshot = await getDocs(reviewQuery);
+      const reviews = reviewQuerySnapshot.docs.map(doc => {
+        return { id: doc.id, ...doc.data() } as ReviewType;
+      });
+      const review = reviews[0];
+      return { menus: [], review };
+    }
+
+    return { menus, review: null };
   } catch (error) {
-    return [];
+    return { menus: [], review: null };
   }
 };
 
@@ -31,11 +41,11 @@ export default async function CafeModal({
 }: {
   params: { id: string };
 }) {
-  const menus = await fetchData(id);
+  const { menus, review } = await fetchData(id);
 
   return (
     <Modal>
-      <ModalContainer menus={menus} />
+      <ModalContainer menus={menus} review={review} />
     </Modal>
   );
 }

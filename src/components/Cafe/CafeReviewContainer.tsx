@@ -1,15 +1,16 @@
 import React from 'react';
 import { Frown, Smile } from '@/image/svgs ';
+import { ReviewType } from '@/types';
 
 interface CafeReviewContainerProps {
-  negative?: number;
-  positive?: number;
+  review: ReviewType | null;
 }
 
-const CafeReviewContainer = ({
-  negative = 1,
-  positive = 1,
-}: CafeReviewContainerProps) => {
+const CafeReviewContainer = ({ review }: CafeReviewContainerProps) => {
+  const { negative, positive } = review
+    ? { negative: review.negative, positive: review.positive }
+    : { negative: 1, positive: 1 };
+
   const negativePercent = (negative / (negative + positive)) * 100;
   const positivePercent = (positive / (negative + positive)) * 100;
 

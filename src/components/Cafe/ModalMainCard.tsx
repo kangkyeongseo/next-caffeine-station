@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { PlaceType, MenuType } from '@/types';
+import { PlaceType, MenuType, ReviewType } from '@/types';
 import ModalCafeInfo from './ModalCafeInfo';
 import ModalMenu from './ModalMenuList';
 import ModalMainHeader from './ModalMainHeader';
@@ -8,6 +8,7 @@ import CafeReviewContainer from './CafeReviewContainer';
 
 interface ModalMainCardProps {
   menus: MenuType[];
+  review: ReviewType | null;
   type: string | null;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,7 @@ interface ModalMainCardProps {
 
 const ModalMainCard = ({
   menus,
+  review,
   type,
   isMenuOpen,
   setIsMenuOpen,
@@ -54,7 +56,7 @@ const ModalMainCard = ({
             setIsAnimation={setIsAnimation}
           />
         )}
-        {type === 'all-cafe' && <CafeReviewContainer />}
+        {type === 'all-cafe' && <CafeReviewContainer review={review} />}
       </div>
     </div>
   );

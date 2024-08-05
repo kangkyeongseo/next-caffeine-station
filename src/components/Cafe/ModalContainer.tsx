@@ -2,14 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import ModalMenuCard from './ModalMenuCard';
 import ModalMainCard from './ModalMainCard';
-import { MenuType } from '@/types';
+import { MenuType, ReviewType } from '@/types';
 import { useSearchParams } from 'next/navigation';
 
 interface ModalContainerProps {
   menus: MenuType[];
+  review: ReviewType | null;
 }
 
-const ModalContainer = ({ menus }: ModalContainerProps) => {
+const ModalContainer = ({ menus, review }: ModalContainerProps) => {
   const params = useSearchParams();
   const type = params.get('type');
 
@@ -25,6 +26,7 @@ const ModalContainer = ({ menus }: ModalContainerProps) => {
     <div className='relative flex h-[90%] w-[90%] items-center justify-center lg:w-fit'>
       <ModalMainCard
         menus={menus}
+        review={review}
         type={type}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}

@@ -37,6 +37,13 @@ export interface NutritionalInfoType {
   caffeine: number;
 }
 
+export interface ReviewType {
+  id: string;
+  cafeId: string;
+  negative: string[];
+  positive: string[];
+}
+
 export interface MenuType {
   id: string;
   brandId: string;

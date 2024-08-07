@@ -1,28 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { PlaceType, MenuType } from '@/types';
+import { PlaceType, MenuType, ReviewType } from '@/types';
 import ModalCafeInfo from './ModalCafeInfo';
 import ModalMenu from './ModalMenuList';
 import ModalMainHeader from './ModalMainHeader';
 import CafeReviewContainer from './CafeReviewContainer';
 
 interface ModalMainCardProps {
+  id: string;
+  reviewId: string | undefined;
   menus: MenuType[];
-  isAllCafeMode: boolean;
+  review: ReviewType | null;
+  type: string | null;
   isMenuOpen: boolean;
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAnimation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalMainCard = ({
+  id,
+  reviewId,
   menus,
-  isAllCafeMode,
+  review,
+  type,
   isMenuOpen,
   setIsMenuOpen,
   setIsAnimation,
 }: ModalMainCardProps) => {
   const params = useSearchParams();
   const cafeName = params.get('name');
+
   const [cafe, setCafe] = useState<PlaceType | null>(null);
 
   useEffect(() => {
@@ -45,7 +52,7 @@ const ModalMainCard = ({
       <ModalMainHeader cafePlaceName={cafe?.place_name} />
       <div className='space-y-2'>
         <ModalCafeInfo cafe={cafe} />
-        {!isAllCafeMode && (
+        {type === 'brand' && (
           <ModalMenu
             menus={menus}
             isMenuOpen={isMenuOpen}
@@ -53,7 +60,9 @@ const ModalMainCard = ({
             setIsAnimation={setIsAnimation}
           />
         )}
-        {isAllCafeMode && <CafeReviewContainer />}
+        {type === 'all-cafe' && (
+          <CafeReviewContainer id={id} reviewId={reviewId} review={review} />
+        )}
       </div>
     </div>
   );

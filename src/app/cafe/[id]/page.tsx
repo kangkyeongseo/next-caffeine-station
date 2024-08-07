@@ -1,8 +1,7 @@
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import ModalContainer from '@/components/Cafe/ModalContainer';
 import { db } from '@/libs/server/firebase';
-import { BrandType, MenuType } from '@/types';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import React from 'react';
+import { BrandType, MenuType, ReviewType } from '@/types';
 
 export async function generateStaticParams() {
   const querySnapshot = await getDocs(collection(db, 'brand'));
@@ -17,20 +16,33 @@ export async function generateStaticParams() {
 
 export const revalidate = 10;
 
-const fetchData = async (brandId: string) => {
+const fetchData = async (id: string) => {
   try {
-    const menuQuery = query(
-      collection(db, 'menu'),
-      where('brandId', '==', brandId),
-    );
+    const menuQuery = query(collection(db, 'menu'), where('brandId', '==', id));
     const menuQuerySnapshot = await getDocs(menuQuery);
     const menus = menuQuerySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() } as MenuType;
     });
+    menus.sort((a, b) => {
+      return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
+    });
 
-    return menus;
+    if (menus.length === 0) {
+      const reviewQuery = query(
+        collection(db, 'review'),
+        where('cafeId', '==', id),
+      );
+      const reviewQuerySnapshot = await getDocs(reviewQuery);
+      const reviews = reviewQuerySnapshot.docs.map(doc => {
+        return { id: doc.id, ...doc.data() } as ReviewType;
+      });
+      const review = reviews[0];
+      return { menus: [], review };
+    }
+
+    return { menus, review: null };
   } catch (error) {
-    return [];
+    return { menus: [], review: null };
   }
 };
 
@@ -39,18 +51,16 @@ export default async function CafeDetail({
 }: {
   params: { id: string };
 }) {
-  let isAllCafeMode = false;
-  let menus = [] as MenuType[];
-
-  if (id !== 'cafe-catagory') {
-    menus = await fetchData(id);
-  } else {
-    isAllCafeMode = true;
-  }
+  const { menus, review } = await fetchData(id);
 
   return (
     <div className='absolute right-0 top-0 z-[100] flex h-dvh w-screen items-center justify-center bg-black/80'>
-      <ModalContainer menus={menus} isAllCafeMode={isAllCafeMode} />
+      <ModalContainer
+        id={id}
+        reviewId={review?.id}
+        menus={menus}
+        review={review}
+      />
     </div>
   );
 }

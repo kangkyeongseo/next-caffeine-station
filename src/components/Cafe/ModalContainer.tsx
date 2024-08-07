@@ -2,14 +2,25 @@
 import React, { useEffect, useState } from 'react';
 import ModalMenuCard from './ModalMenuCard';
 import ModalMainCard from './ModalMainCard';
-import { MenuType } from '@/types';
+import { MenuType, ReviewType } from '@/types';
+import { useSearchParams } from 'next/navigation';
 
 interface ModalContainerProps {
+  id: string;
+  reviewId: string | undefined;
   menus: MenuType[];
-  isAllCafeMode: boolean;
+  review: ReviewType | null;
 }
 
-const ModalContainer = ({ menus, isAllCafeMode }: ModalContainerProps) => {
+const ModalContainer = ({
+  id,
+  reviewId,
+  menus,
+  review,
+}: ModalContainerProps) => {
+  const params = useSearchParams();
+  const type = params.get('type');
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
 
@@ -21,13 +32,16 @@ const ModalContainer = ({ menus, isAllCafeMode }: ModalContainerProps) => {
   return (
     <div className='relative flex h-[90%] w-[90%] items-center justify-center lg:w-fit'>
       <ModalMainCard
+        id={id}
+        reviewId={reviewId}
         menus={menus}
-        isAllCafeMode={isAllCafeMode}
+        review={review}
+        type={type}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
         setIsAnimation={setIsAnimation}
       />
-      {isMenuOpen && !isAllCafeMode && (
+      {isMenuOpen && type === 'brand' && (
         <ModalMenuCard isAnimation={isAnimation} />
       )}
     </div>

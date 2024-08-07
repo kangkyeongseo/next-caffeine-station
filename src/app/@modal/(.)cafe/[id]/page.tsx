@@ -45,7 +45,12 @@ export default async function CafeModal({
 
   return (
     <Modal>
-      <ModalContainer menus={menus} review={review} />
+      <ModalContainer
+        id={id}
+        reviewId={review?.id}
+        menus={menus}
+        review={review}
+      />
     </Modal>
   );
 }

@@ -40,8 +40,8 @@ export interface NutritionalInfoType {
 export interface ReviewType {
   id: string;
   cafeId: string;
-  negative: number;
-  positive: number;
+  negative: string[];
+  positive: string[];
 }
 
 export interface MenuType {

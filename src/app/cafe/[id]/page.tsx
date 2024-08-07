@@ -55,7 +55,12 @@ export default async function CafeDetail({
 
   return (
     <div className='absolute right-0 top-0 z-[100] flex h-dvh w-screen items-center justify-center bg-black/80'>
-      <ModalContainer menus={menus} review={review} />
+      <ModalContainer
+        id={id}
+        reviewId={review?.id}
+        menus={menus}
+        review={review}
+      />
     </div>
   );
 }

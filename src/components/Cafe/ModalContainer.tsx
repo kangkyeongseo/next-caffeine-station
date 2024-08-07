@@ -6,11 +6,18 @@ import { MenuType, ReviewType } from '@/types';
 import { useSearchParams } from 'next/navigation';
 
 interface ModalContainerProps {
+  id: string;
+  reviewId: string | undefined;
   menus: MenuType[];
   review: ReviewType | null;
 }
 
-const ModalContainer = ({ menus, review }: ModalContainerProps) => {
+const ModalContainer = ({
+  id,
+  reviewId,
+  menus,
+  review,
+}: ModalContainerProps) => {
   const params = useSearchParams();
   const type = params.get('type');
 
@@ -25,6 +32,8 @@ const ModalContainer = ({ menus, review }: ModalContainerProps) => {
   return (
     <div className='relative flex h-[90%] w-[90%] items-center justify-center lg:w-fit'>
       <ModalMainCard
+        id={id}
+        reviewId={reviewId}
         menus={menus}
         review={review}
         type={type}

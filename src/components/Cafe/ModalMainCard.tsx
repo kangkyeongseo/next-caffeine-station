@@ -8,7 +8,6 @@ import CafeReviewContainer from './CafeReviewContainer';
 
 interface ModalMainCardProps {
   id: string;
-  reviewId: string | undefined;
   menus: MenuType[];
   review: ReviewType | null;
   type: string | null;
@@ -19,7 +18,6 @@ interface ModalMainCardProps {
 
 const ModalMainCard = ({
   id,
-  reviewId,
   menus,
   review,
   type,
@@ -60,9 +58,7 @@ const ModalMainCard = ({
             setIsAnimation={setIsAnimation}
           />
         )}
-        {type === 'all-cafe' && (
-          <CafeReviewContainer id={id} reviewId={reviewId} review={review} />
-        )}
+        {type === 'all-cafe' && <CafeReviewContainer id={id} review={review} />}
       </div>
     </div>
   );

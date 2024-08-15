@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import useUser from '@/hooks/useUser';
 import { Frown, Smile } from '@/image/svgs ';
@@ -8,20 +7,16 @@ import { db } from '@/libs/server/firebase';
 
 interface CafeReviewContainerProps {
   id: string;
-  reviewId: string | undefined;
   review: ReviewType | null;
 }
 
-const CafeReviewContainer = ({
-  id,
-  reviewId,
-  review,
-}: CafeReviewContainerProps) => {
-  const router = useRouter();
+const CafeReviewContainer = ({ id, review }: CafeReviewContainerProps) => {
   const { user, rule, isUserLoading } = useUser();
 
-  const { negative, positive } = review
-    ? { negative: review.negative, positive: review.positive }
+  const [cafeReview, setCafeReview] = useState<ReviewType | null>(review);
+
+  const { negative, positive } = cafeReview
+    ? { negative: cafeReview.negative, positive: cafeReview.positive }
     : { negative: [1], positive: [1] };
 
   const negativePercent =
@@ -29,20 +24,23 @@ const CafeReviewContainer = ({
   const positivePercent =
     (positive.length / (negative.length + positive.length)) * 100;
 
+  const isNegativeVote = user && cafeReview?.negative.includes(user.uid);
+  const isPositiveVote = user && cafeReview?.positive.includes(user.uid);
+
   const onClickItem = async (type: 'negative' | 'positive') => {
     if (isUserLoading) return;
     if (rule === 'guest' || !user) return;
-    if (!reviewId) {
-      await addDoc(collection(db, 'review'), {
+    let updatedReview;
+    if (!review?.id) {
+      updatedReview = {
         cafeId: id,
         negative: type === 'negative' ? [user?.uid] : [],
         positive: type === 'positive' ? [user?.uid] : [],
-      });
+      } as ReviewType;
+      await addDoc(collection(db, 'review'), updatedReview);
+      setCafeReview(updatedReview);
     } else if (review) {
-      const isNegativeVote = review.negative.includes(user.uid);
-      const isPositiveVote = review.positive.includes(user.uid);
-
-      await setDoc(doc(db, 'review', reviewId), {
+      updatedReview = {
         cafeId: id,
         negative:
           type === 'negative' && !isNegativeVote
@@ -56,7 +54,10 @@ const CafeReviewContainer = ({
             : type === 'negative' && isPositiveVote
               ? review.positive.filter(item => item !== user.uid)
               : review.positive,
-      });
+      } as ReviewType;
+
+      await setDoc(doc(db, 'review', review.id), updatedReview);
+      setCafeReview(updatedReview);
     }
   };
 
@@ -68,19 +69,23 @@ const CafeReviewContainer = ({
         </span>
         <ul className='grid grid-cols-2 text-gray-700'>
           <li
-            className='group flex flex-col items-center gap-2'
+            className='group flex cursor-pointer flex-col items-center gap-2'
             onClick={() => onClickItem('negative')}
           >
-            <div className='size-14 text-red-400 group-hover:text-red-500'>
+            <div
+              className={`size-14  group-hover:text-red-500 ${isNegativeVote ? 'text-red-500' : 'text-red-300'}`}
+            >
               <Frown />
             </div>
             <span className='text-sm'>추천하지 않아요</span>
           </li>
           <li
-            className='group flex flex-col items-center gap-2'
+            className='group flex cursor-pointer flex-col items-center gap-2'
             onClick={() => onClickItem('positive')}
           >
-            <div className='size-14 text-blue-400 group-hover:text-blue-500'>
+            <div
+              className={`size-14  group-hover:text-blue-500 ${isPositiveVote ? 'text-blue-500' : 'text-blue-300'}`}
+            >
               <Smile />
             </div>
             <span className='text-sm'>추천해요</span>

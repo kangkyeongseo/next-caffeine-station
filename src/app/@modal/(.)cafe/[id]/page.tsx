@@ -13,9 +13,6 @@ const fetchData = async (id: string) => {
     const menus = menuQuerySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() } as MenuType;
     });
-    menus.sort((a, b) => {
-      return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
-    });
 
     if (menus.length === 0) {
       const reviewQuery = query(
@@ -29,6 +26,10 @@ const fetchData = async (id: string) => {
       const review = reviews[0];
       return { menus: [], review };
     }
+
+    menus.sort((a, b) => {
+      return a.nutritionalInfos[0].price - b.nutritionalInfos[0].price;
+    });
 
     return { menus, review: null };
   } catch (error) {
@@ -45,12 +46,7 @@ export default async function CafeModal({
 
   return (
     <Modal>
-      <ModalContainer
-        id={id}
-        reviewId={review?.id}
-        menus={menus}
-        review={review}
-      />
+      <ModalContainer id={id} menus={menus} review={review} />
     </Modal>
   );
 }
